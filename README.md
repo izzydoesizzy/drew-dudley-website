@@ -10,6 +10,7 @@ A best-in-class speaker site for **Drew Dudley** — WSJ bestselling author and 
 |--|------|-----------|-------|
 | **V1** | `/index.html` | Minimal · ember particles | Dark, centered, restrained |
 | **V2** | `/v2/` | The Marquee · editorial | Dark + light contrast, asymmetric, serif display, credential ticker |
+| **V2B** | `/v2b/` | The Marquee + bio + dark proof | V2 design with a "The Speaker" bio section and a dark social-proof band (animated counters, company wall, media) |
 | **V3** | `/v3/` | The Spotlight · theatrical | Deep black, cursor-follow spotlight, scene-based, indigo counterpoint |
 | **V4** | `/v4/` | The Editorial · premium light | Ivory/cream magazine, drop-cap, keynote index, dark "watch" interlude |
 | **V5** | `/v5/` | The Bento · modern modular | Glassy rounded bento tiles, gradients, kinetic hover + count-ups |
