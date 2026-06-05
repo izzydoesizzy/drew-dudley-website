@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book Drew Dudley — Keynote Inquiry</title>
+<meta name="description" content="Tell Drew about your event and get an estimated range in two minutes. Keynotes, workshops, and virtual sessions on everyday leadership." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --bg:#0a0907;--card:#13100c;--card2:#181410;--text:#f3eee4;--muted:#a89b89;--muted2:#6f6453;
+    --line:#241f18;--gold:#d6a23a;--gold-br:#f0c862;--green:#7fbf8f;
+    --serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+  }
+  html{-webkit-text-size-adjust:100%;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+    background:radial-gradient(800px circle at 50% -10%, rgba(214,162,58,.10), transparent 55%);}
+  a{color:inherit;text-decoration:none;}
+  .serif{font-family:var(--serif);}
+
+  .shell{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:2.5rem 1.5rem 4rem;min-height:100vh;display:flex;flex-direction:column;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;}
+  .brand{font-family:var(--serif);font-weight:700;font-size:1.4rem;}
+  .home-link{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+  .home-link:hover{color:var(--gold);}
+
+  /* progress */
+  .progress{margin-bottom:2.4rem;}
+  .progress-meta{display:flex;justify-content:space-between;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:.7rem;}
+  .progress-meta b{color:var(--gold);}
+  .bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-br));border-radius:3px;transition:width .5s cubic-bezier(.2,.7,.2,1);}
+
+  /* steps */
+  .step{display:none;animation:fade .45s ease both;}
+  .step.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  .q-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .q-title{font-family:var(--serif);font-weight:700;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:.6rem;}
+  .q-help{color:var(--muted);font-size:1rem;margin-bottom:2rem;}
+
+  /* option cards */
+  .opts{display:flex;flex-direction:column;gap:.8rem;}
+  .opt{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.4rem;border:1px solid var(--line);border-radius:14px;
+    background:var(--card);cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:left;width:100%;}
+  .opt:hover{border-color:var(--gold);background:var(--card2);}
+  .opt.sel{border-color:var(--gold);background:linear-gradient(160deg,#1d1810,#13100c);box-shadow:0 0 0 1px var(--gold) inset;}
+  .opt .tick{width:22px;height:22px;border-radius:50%;border:1px solid var(--muted2);flex-shrink:0;display:grid;place-items:center;transition:border-color .2s,background .2s;}
+  .opt.sel .tick{border-color:var(--gold);background:var(--gold);}
+  .opt.sel .tick svg{opacity:1;}
+  .opt .tick svg{width:12px;height:12px;color:#1a1305;opacity:0;}
+  .opt>span:not(.tick):not(.oprice){flex:1;min-width:0;}
+  .opt .ot{display:block;font-weight:600;font-size:1.02rem;}
+  .opt .os{display:block;font-size:.85rem;color:var(--muted);margin-top:.15rem;}
+  .opt .oprice{margin-left:auto;font-family:var(--serif);font-size:1.05rem;color:var(--gold);white-space:nowrap;flex-shrink:0;}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:.7rem;}
+  .chip{padding:.8rem 1.3rem;border:1px solid var(--line);border-radius:100px;background:var(--card);cursor:pointer;font-size:.92rem;transition:border-color .2s,background .2s,color .2s;}
+  .chip:hover{border-color:var(--gold);}
+  .chip.sel{border-color:var(--gold);background:var(--gold);color:#1a1305;font-weight:600;}
+
+  /* inputs */
+  .field{margin-bottom:1.1rem;}
+  .field label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted2);margin-bottom:.5rem;}
+  .field input,.field textarea{width:100%;padding:.95rem 1.1rem;background:var(--card);border:1px solid var(--line);color:var(--text);
+    font-family:inherit;font-size:.95rem;border-radius:12px;outline:none;transition:border-color .2s;}
+  .field input:focus,.field textarea:focus{border-color:var(--gold);}
+  .field textarea{resize:none;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+  @media(max-width:480px){.row2{grid-template-columns:1fr;}}
+
+  /* nav buttons */
+  .navrow{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:2.2rem;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:1rem 1.9rem;border-radius:100px;transition:transform .2s,background .2s,opacity .2s,color .2s,border-color .2s;cursor:pointer;border:1px solid transparent;font-family:inherit;}
+  .btn-gold{background:var(--gold);color:#1a1305;}
+  .btn-gold:hover{background:var(--gold-br);transform:translateY(-2px);}
+  .btn-gold[disabled]{opacity:.35;pointer-events:none;}
+  .btn-back{background:transparent;color:var(--muted);border-color:var(--line);}
+  .btn-back:hover{color:var(--text);border-color:var(--muted2);}
+  .btn svg{width:14px;height:14px;}
+
+  /* result */
+  .result{text-align:center;}
+  .result .badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    padding:.5rem 1rem;border-radius:100px;border:1px solid var(--line);color:var(--muted);margin-bottom:1.6rem;}
+  .result .badge.good{color:var(--green);border-color:rgba(127,191,143,.4);}
+  .estimate{font-family:var(--serif);font-weight:700;font-size:clamp(2.6rem,9vw,4.4rem);line-height:1;letter-spacing:-.01em;
+    background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:.4rem 0;}
+  .est-cap{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:1.6rem;}
+  .result .msg{color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:30rem;margin:0 auto 2rem;}
+  .summary{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem;margin:0 auto 2rem;max-width:34rem;}
+  .summary h4{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:1rem;}
+  .summary .row{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.92rem;}
+  .summary .row:last-child{border-bottom:none;}
+  .summary .row span:first-child{color:var(--muted);}
+  .summary .row span:last-child{text-align:right;font-weight:500;}
+  .disclaimer{font-size:.75rem;color:var(--muted2);margin-top:1.4rem;line-height:1.6;}
+  .result .alt{display:block;margin-top:1.2rem;font-size:.82rem;color:var(--muted);}
+  .result .alt a{color:var(--gold);}
+
+  .hide{display:none!important;}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <a href="../index.html" class="brand">Drew Dudley</a>
+    <a href="../index.html" class="home-link">← Back to site</a>
+  </div>
+
+  <div class="progress" id="progress">
+    <div class="progress-meta"><span>Booking Inquiry</span><span>Step <b id="stepNum">1</b> of 5</span></div>
+    <div class="bar"><i id="barFill"></i></div>
+  </div>
+
+  <form id="wiz" onsubmit="return false;">
+
+    <!-- STEP 1: engagement -->
+    <section class="step active" data-step="1">
+      <p class="q-eyebrow">Let's begin</p>
+      <h2 class="q-title">What kind of engagement?</h2>
+      <p class="q-help">Pick the format closest to what you have in mind. You can adjust details later.</p>
+      <div class="opts" data-group="engagement">
+        <button type="button" class="opt" data-val="keynote" data-lo="15000" data-hi="22000">
+          <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="ot">Keynote</span><span class="os">A signature talk, 45–75 minutes</span></span>
+          <span class="oprice">$15k–22k</span>
+        </button>
+        <button type="button" class="opt" data-val="workshop" data-lo="22000" data-hi="32000">
+          <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="ot">Keynote + Workshop</span><span class="os">A talk plus a hands-on session</span></span>
+          <span class="oprice">$22k–32k</span>
+        </button>
+        <button type="button" class="opt" data-val="retreat" data-lo="30000" data-hi="45000">
+          <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="ot">Half-Day / Executive Retreat</span><span class="os">Deeper, immersive leadership work</span></span>
+          <span class="oprice">$30k–45k</span>
+        </button>
+        <button type="button" class="opt" data-val="virtual" data-lo="8000" data-hi="15000">
+          <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="ot">Virtual</span><span class="os">Remote keynote or session</span></span>
+          <span class="oprice">$8k–15k</span>
+        </button>
+        <button type="button" class="opt" data-val="probono" data-lo="0" data-hi="0">
+          <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="ot">Nonprofit / Pro-bono</span><span class="os">Drew reserves a few of these each year</span></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: when & where -->
+    <section class="step" data-step="2">
+      <p class="q-eyebrow">Logistics</p>
+      <h2 class="q-title">When and where?</h2>
+      <p class="q-help">A rough date is fine. Season affects availability and the estimate.</p>
+      <div class="field"><label>Event date(s)</label><input type="text" id="f_date" placeholder="e.g. October 14, 2026" /></div>
+      <div class="field"><label>Location</label><input type="text" id="f_location" placeholder="City, or Virtual" /></div>
+    </section>
+
+    <!-- STEP 3: audience -->
+    <section class="step" data-step="3">
+      <p class="q-eyebrow">Your room</p>
+      <h2 class="q-title">Tell us about the audience.</h2>
+      <p class="q-help">Drew tailors every talk to the people in the room.</p>
+      <div class="field"><label>Organization</label><input type="text" id="f_org" placeholder="Company or organization" /></div>
+      <div class="field"><label>Audience size</label>
+        <div class="chips" data-group="size">
+          <button type="button" class="chip" data-val="Under 100">Under 100</button>
+          <button type="button" class="chip" data-val="100–500">100–500</button>
+          <button type="button" class="chip" data-val="500–1,500">500–1,500</button>
+          <button type="button" class="chip" data-val="1,500+">1,500+</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- STEP 4: budget (or cause for pro-bono) -->
+    <section class="step" data-step="4">
+      <div id="budgetBlock">
+        <p class="q-eyebrow">Investment</p>
+        <h2 class="q-title">What's the budget?</h2>
+        <p class="q-help">An honest range helps Drew get you a real answer, fast. No one is penalized for asking.</p>
+        <div class="opts" data-group="budget">
+          <button type="button" class="opt" data-val="Under $10K" data-tier="low">
+            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><span class="ot">Under $10,000</span><span class="os">We'll explore what's possible</span></span>
+          </button>
+          <button type="button" class="opt" data-val="$10K–$20K" data-tier="mid">
+            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><span class="ot">$10,000 – $20,000</span></span>
+          </button>
+          <button type="button" class="opt" data-val="$20K+" data-tier="high">
+            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><span class="ot">$20,000+</span></span>
+          </button>
+          <button type="button" class="opt" data-val="Flexible / not sure" data-tier="flex">
+            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span><span class="ot">Flexible / not sure yet</span></span>
+          </button>
+        </div>
+      </div>
+      <div id="causeBlock" class="hide">
+        <p class="q-eyebrow">Your cause</p>
+        <h2 class="q-title">Tell us about the work.</h2>
+        <p class="q-help">Drew reserves a handful of reduced-fee and pro-bono talks each year for causes that resonate.</p>
+        <div class="field"><label>Who you serve / your mission</label><textarea id="f_cause" rows="4" placeholder="A sentence or two about the organization and the cause."></textarea></div>
+      </div>
+    </section>
+
+    <!-- STEP 5: contact + details -->
+    <section class="step" data-step="5">
+      <p class="q-eyebrow">Almost there</p>
+      <h2 class="q-title">Where should Drew reply?</h2>
+      <p class="q-help">You'll hear back, usually the same day.</p>
+      <div class="row2">
+        <div class="field"><label>Your name</label><input type="text" id="f_name" placeholder="Full name" /></div>
+        <div class="field"><label>Email</label><input type="email" id="f_email" placeholder="you@org.com" /></div>
+      </div>
+      <div class="field"><label>What would make this a win?</label><textarea id="f_notes" rows="3" placeholder="The theme, the outcome you want, anything Drew should know."></textarea></div>
+    </section>
+
+    <!-- RESULT -->
+    <section class="step" data-step="6">
+      <div class="result">
+        <div class="badge" id="resBadge">Estimated range</div>
+        <div id="estWrap">
+          <div class="estimate" id="estVal">—</div>
+          <div class="est-cap" id="estCap">Estimated investment</div>
+        </div>
+        <p class="msg" id="resMsg"></p>
+        <div class="summary" id="resSummary"></div>
+        <a href="#" id="sendBtn" class="btn btn-gold" style="justify-content:center;">Send to Drew</a>
+        <span class="alt">or email directly: <a href="mailto:drew@dayoneleadership.com">drew@dayoneleadership.com</a></span>
+        <p class="disclaimer">This estimate is a guide, not a quote. Final pricing is confirmed with Drew and flexes with date, format, and scope. Nothing is booked until you both agree.</p>
+      </div>
+    </section>
+
+    <!-- NAV -->
+    <div class="navrow" id="navrow">
+      <button type="button" class="btn btn-back" id="backBtn" style="visibility:hidden;">← Back</button>
+      <button type="button" class="btn btn-gold" id="nextBtn" disabled>Continue
+        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+(function(){
+  var state={engagement:null,engLo:0,engHi:0,date:'',location:'',org:'',size:'',budget:'',tier:'',cause:'',name:'',email:'',notes:''};
+  var step=1, TOTAL=6;
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var nextBtn=document.getElementById('nextBtn'), backBtn=document.getElementById('backBtn');
+  var barFill=document.getElementById('barFill'), stepNum=document.getElementById('stepNum');
+  var navrow=document.getElementById('navrow'), progress=document.getElementById('progress');
+
+  function show(n){
+    step=n;
+    steps.forEach(function(s){s.classList.toggle('active', +s.getAttribute('data-step')===n);});
+    // progress (over the 5 input steps)
+    var p=Math.min(n,5);
+    barFill.style.width=((p-1)/4*100)+'%';
+    stepNum.textContent=Math.min(n,5);
+    backBtn.style.visibility = n>1 && n<6 ? 'visible':'hidden';
+    if(n===6){ navrow.classList.add('hide'); progress.classList.add('hide'); buildResult(); }
+    else { navrow.classList.remove('hide'); progress.classList.remove('hide'); barFill.style.width=((n-1)/4*100)+'%'; }
+    nextBtn.textContent = n===5 ? 'See my estimate' : 'Continue';
+    if(n===5){ var s=document.createElementNS('http://www.w3.org/2000/svg','svg'); }
+    validate();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  // option groups (single-select)
+  document.querySelectorAll('.opts').forEach(function(grp){
+    grp.querySelectorAll('.opt').forEach(function(opt){
+      opt.addEventListener('click',function(){
+        grp.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
+        opt.classList.add('sel');
+        var g=grp.getAttribute('data-group');
+        if(g==='engagement'){
+          state.engagement=opt.getAttribute('data-val');
+          state.engLo=+opt.getAttribute('data-lo'); state.engHi=+opt.getAttribute('data-hi');
+          toggleProBono(state.engagement==='probono');
+        }
+        if(g==='budget'){ state.budget=opt.getAttribute('data-val'); state.tier=opt.getAttribute('data-tier'); }
+        validate();
+      });
+    });
+  });
+  // chips
+  document.querySelectorAll('.chips').forEach(function(grp){
+    grp.querySelectorAll('.chip').forEach(function(c){
+      c.addEventListener('click',function(){
+        grp.querySelectorAll('.chip').forEach(function(x){x.classList.remove('sel');});
+        c.classList.add('sel'); state.size=c.getAttribute('data-val'); validate();
+      });
+    });
+  });
+  // inputs
+  function bind(id,key){var el=document.getElementById(id);if(el)el.addEventListener('input',function(){state[key]=el.value;validate();});}
+  bind('f_date','date');bind('f_location','location');bind('f_org','org');bind('f_cause','cause');
+  bind('f_name','name');bind('f_email','email');bind('f_notes','notes');
+
+  function toggleProBono(on){
+    document.getElementById('budgetBlock').classList.toggle('hide',on);
+    document.getElementById('causeBlock').classList.toggle('hide',!on);
+  }
+
+  function emailOk(v){return /.+@.+\..+/.test(v);}
+
+  function validate(){
+    var ok=true;
+    if(step===1) ok=!!state.engagement;
+    else if(step===2) ok=state.date.trim().length>1;
+    else if(step===3) ok=state.org.trim().length>1 && !!state.size;
+    else if(step===4) ok = state.engagement==='probono' ? state.cause.trim().length>3 : !!state.budget;
+    else if(step===5) ok=state.name.trim().length>1 && emailOk(state.email);
+    nextBtn.disabled=!ok;
+  }
+
+  nextBtn.addEventListener('click',function(){ if(nextBtn.disabled)return; show(Math.min(step+1,TOTAL)); });
+  backBtn.addEventListener('click',function(){ show(Math.max(step-1,1)); });
+
+  // ── pricing engine ────────────────────────────────
+  function seasonFactor(dateStr){
+    var s=(dateStr||'').toLowerCase(), m=-1;
+    var months=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+    for(var i=0;i<12;i++){ if(s.indexOf(months[i])>-1){m=i;break;} }
+    if(m<0){ var mm=s.match(/\b(0?[1-9]|1[0-2])[\/\-]/); if(mm)m=+mm[1]-1; }
+    // peak: Sep–Nov (8,9,10) and Feb–Apr (1,2,3); low: Jul,Aug,Dec (6,7,11)
+    if([8,9,10,1,2,3].indexOf(m)>-1) return {f:1.12,label:'peak season'};
+    if([6,7,11].indexOf(m)>-1) return {f:0.92,label:'off-peak'};
+    return {f:1,label:''};
+  }
+  function fmt(n){ return '$'+Math.round(n/500)*500/1000+'k'; }
+  function fmtRange(lo,hi){ return '$'+(Math.round(lo/500)*500).toLocaleString('en-US')+' – $'+(Math.round(hi/500)*500).toLocaleString('en-US'); }
+
+  function buildResult(){
+    var badge=document.getElementById('resBadge'), estVal=document.getElementById('estVal'),
+        estCap=document.getElementById('estCap'), msg=document.getElementById('resMsg'),
+        estWrap=document.getElementById('estWrap');
+
+    var rows=[
+      ['Engagement', engLabel(state.engagement)],
+      ['Date', state.date||'—'],
+      ['Location', state.location||'—'],
+      ['Organization', state.org||'—'],
+      ['Audience', state.size||'—']
+    ];
+
+    if(state.engagement==='probono'){
+      estWrap.classList.add('hide');
+      badge.textContent='Pro-bono / reduced fee';
+      badge.className='badge';
+      msg.innerHTML='Thank you for thinking of Drew. He sets aside a handful of reduced-fee and pro-bono talks each year for causes that resonate. Send the details and he’ll personally take a look, usually within a few days.';
+      rows.push(['Cause', state.cause? (state.cause.slice(0,60)+(state.cause.length>60?'…':'')) : '—']);
+    } else {
+      var sf=seasonFactor(state.date);
+      var lo=state.engLo*sf.f, hi=state.engHi*sf.f;
+      if(state.size==='1,500+'){ lo*=1.05; hi*=1.08; }
+      estVal.textContent=fmtRange(lo,hi);
+      estCap.textContent='Estimated investment'+(sf.label?(' · '+sf.label):'');
+      rows.push(['Budget indicated', state.budget||'—']);
+
+      if(state.tier==='low'){
+        badge.textContent='Let’s find a way';
+        badge.className='badge';
+        msg.innerHTML='You’re a little under Drew’s typical range for this format, and that’s okay. For the right room he’ll often find a path, a virtual session, a shorter format, or a reduced fee. Send the details and he’ll tell you honestly what’s possible.';
+      } else if(state.tier==='high' || state.tier==='mid'){
+        badge.textContent='Great fit';
+        badge.className='badge good';
+        msg.innerHTML='This looks like a strong fit. Send the details and Drew will confirm availability and a firm quote, usually the same day.';
+      } else {
+        badge.textContent='Estimated range';
+        badge.className='badge';
+        msg.innerHTML='Here’s a ballpark to plan around. Send the details and Drew will come back with a firm number and availability.';
+      }
+    }
+
+    var sumHtml='<h4>Your inquiry</h4>';
+    rows.forEach(function(r){ sumHtml+='<div class="row"><span>'+r[0]+'</span><span>'+escapeHtml(r[1])+'</span></div>'; });
+    document.getElementById('resSummary').innerHTML=sumHtml;
+
+    // build mailto
+    var body=
+      'New keynote inquiry from the website:\n\n'+
+      'Engagement: '+engLabel(state.engagement)+'\n'+
+      'Date(s): '+(state.date||'-')+'\n'+
+      'Location: '+(state.location||'-')+'\n'+
+      'Organization: '+(state.org||'-')+'\n'+
+      'Audience size: '+(state.size||'-')+'\n'+
+      (state.engagement==='probono' ? ('Cause: '+(state.cause||'-')+'\n') : ('Budget indicated: '+(state.budget||'-')+'\n'))+
+      (state.engagement!=='probono' ? ('Estimated range shown: '+estVal.textContent+'\n') : '')+
+      '\nName: '+(state.name||'-')+'\n'+
+      'Email: '+(state.email||'-')+'\n'+
+      '\nNotes: '+(state.notes||'-')+'\n';
+    var subject='Keynote Inquiry — '+(state.org||state.name||'New');
+    document.getElementById('sendBtn').setAttribute('href',
+      'mailto:drew@dayoneleadership.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body));
+  }
+
+  function engLabel(v){return {keynote:'Keynote',workshop:'Keynote + Workshop',retreat:'Half-Day / Retreat',virtual:'Virtual',probono:'Nonprofit / Pro-bono'}[v]||'—';}
+  function escapeHtml(s){return (s+'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  show(1);
+})();
+</script>
+</body>
+</html>

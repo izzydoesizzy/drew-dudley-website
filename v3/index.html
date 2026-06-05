@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Drew Dudley — Keynote Speaker | Everyday Leadership</title>
+<meta name="description" content="Drew Dudley. WSJ bestselling author and TED speaker (5M+ views) on everyday leadership. The keynote your audience quotes for months. Book Drew." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+
+  :root{
+    --black:#070605;
+    --black2:#0c0a08;
+    --indigo:#0a0d18;
+    --indigo2:#0d1224;
+    --text:#f5f2ec;
+    --muted:#a59a8c;
+    --muted2:#6f6557;
+    --line:#211d18;
+    --gold:#d6a23a;
+    --gold-bright:#f0c25e;
+    --serif:'Cormorant Garamond',Georgia,serif;
+    --sans:'Inter',system-ui,sans-serif;
+  }
+
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{background:var(--black);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;overflow-x:hidden;line-height:1.5;}
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 2rem;}
+  .serif{font-family:var(--serif);}
+  .label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.36em;color:var(--gold);}
+
+  /* cursor spotlight */
+  #spot{position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:radial-gradient(600px circle at 50% 32%, rgba(214,162,58,.10), transparent 60%);
+    transition:background .25s ease-out;mix-blend-mode:screen;}
+
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity 1s cubic-bezier(.2,.7,.2,1),transform 1s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1;transform:none;}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none;}#spot{display:none;}}
+
+  /* NAV */
+  .nav{position:fixed;top:0;left:0;right:0;z-index:60;display:flex;align-items:center;justify-content:space-between;
+    padding:1.5rem 2.2rem;transition:background .3s,padding .3s,border-color .3s;border-bottom:1px solid transparent;}
+  .nav.scrolled{background:rgba(7,6,5,.7);backdrop-filter:blur(14px);border-bottom-color:var(--line);padding:1rem 2.2rem;}
+  .nav-brand{font-family:var(--serif);font-weight:700;font-size:1.45rem;letter-spacing:.02em;}
+  .nav-cta{font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--black);
+    background:var(--gold);padding:.72rem 1.5rem;border-radius:100px;transition:box-shadow .3s,transform .2s,background .2s;}
+  .nav-cta:hover{background:var(--gold-bright);box-shadow:0 0 30px rgba(214,162,58,.4);transform:translateY(-1px);}
+
+  /* progress dots */
+  .dots{position:fixed;right:1.6rem;top:50%;transform:translateY(-50%);z-index:55;display:flex;flex-direction:column;gap:.85rem;}
+  .dots a{width:7px;height:7px;border-radius:50%;background:var(--muted2);opacity:.5;transition:opacity .3s,background .3s,transform .3s;}
+  .dots a.active{background:var(--gold);opacity:1;transform:scale(1.5);}
+  @media(max-width:900px){.dots{display:none;}}
+  @media(max-width:560px){.nav{padding:1.1rem 1.25rem;}.nav.scrolled{padding:.85rem 1.25rem;}.nav-brand{font-size:1.25rem;}.ted-badge{font-size:.66rem;flex-wrap:wrap;justify-content:center;}}
+
+  /* buttons */
+  .btn{display:inline-flex;align-items:center;gap:.6rem;font-family:var(--sans);font-size:.8rem;font-weight:600;letter-spacing:.14em;
+    text-transform:uppercase;padding:1.1rem 2.3rem;border-radius:100px;transition:transform .25s,box-shadow .3s,background .2s,border-color .2s,color .2s;cursor:pointer;border:1px solid transparent;}
+  .btn-gold{background:var(--gold);color:var(--black);}
+  .btn-gold:hover{background:var(--gold-bright);transform:translateY(-2px);box-shadow:0 0 40px rgba(214,162,58,.35);}
+  .btn-ghost{border-color:var(--line);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+  .btn svg{width:15px;height:15px;}
+
+  /* SCENE */
+  .scene{position:relative;z-index:2;}
+  .scene-full{min-height:100vh;display:flex;flex-direction:column;justify-content:center;}
+
+  /* HERO */
+  .hero{text-align:center;overflow:hidden;}
+  .hero-glow{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%);width:min(90vw,1100px);height:min(90vw,1100px);
+    background:radial-gradient(circle, rgba(214,162,58,.16) 0%, rgba(214,162,58,.05) 30%, transparent 62%);z-index:1;pointer-events:none;}
+  .hero-stage{position:absolute;left:0;right:0;bottom:0;height:42%;
+    background:radial-gradient(ellipse 60% 100% at 50% 100%, rgba(13,18,36,.7), transparent 75%);z-index:1;pointer-events:none;}
+  .hero-inner{position:relative;z-index:3;}
+  .ted-badge{display:inline-flex;align-items:center;gap:.7rem;border:1px solid var(--line);background:rgba(12,10,8,.6);
+    padding:.55rem 1.1rem;border-radius:100px;font-size:.74rem;letter-spacing:.1em;color:var(--muted);margin-bottom:2.4rem;}
+  .ted-badge b{color:var(--gold);font-weight:700;}
+  .ted-badge .red{color:#e62b1e;font-weight:800;letter-spacing:.02em;}
+  .hero h1{font-family:var(--serif);font-weight:700;line-height:.9;letter-spacing:-.01em;
+    font-size:clamp(2.8rem,12vw,11rem);margin-bottom:1.6rem;
+    background:linear-gradient(180deg,#fff 0%,#f0e6cf 55%,#c9a049 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .hero-tag{font-size:clamp(1.1rem,2.6vw,1.6rem);color:var(--text);font-weight:400;margin-bottom:.4rem;}
+  .hero-tag .rot{color:var(--gold);font-family:var(--serif);font-style:italic;font-weight:600;}
+  .hero-tag2{color:var(--muted);font-size:1rem;letter-spacing:.02em;margin-bottom:3rem;}
+  .hero-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+  .scrollcue{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:3;color:var(--muted2);font-size:10px;letter-spacing:.25em;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:.5rem;}
+  .scrollcue .bar{width:1px;height:34px;background:linear-gradient(var(--gold),transparent);animation:cue 2s ease-in-out infinite;}
+  @keyframes cue{0%,100%{opacity:.3;transform:scaleY(.7);}50%{opacity:1;transform:scaleY(1);}}
+
+  /* IDEA scene */
+  .idea{padding:9rem 0;}
+  .idea .statement{font-family:var(--serif);font-weight:600;line-height:1.12;letter-spacing:-.01em;font-size:clamp(2.2rem,5.5vw,4.6rem);max-width:18ch;}
+  .idea .statement em{font-style:italic;color:var(--gold);}
+  .idea .sub{margin-top:2.4rem;color:var(--muted);font-size:1.15rem;line-height:1.7;max-width:38rem;}
+
+  /* NUMBERS scene */
+  .numbers{background:linear-gradient(180deg,var(--black) 0%,var(--indigo) 50%,var(--black) 100%);padding:8rem 0;}
+  .num-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem;}
+  @media(max-width:820px){.num-grid{grid-template-columns:repeat(2,1fr);gap:3.5rem 2rem;}}
+  .nstat{text-align:center;}
+  .nstat .n{font-family:var(--serif);font-weight:700;font-size:clamp(3.2rem,8vw,6rem);line-height:1;letter-spacing:-.02em;
+    background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .nstat .c{margin-top:.9rem;font-size:.8rem;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);}
+
+  /* TOPICS — expanding list */
+  .topics-wrap{padding:8rem 0;}
+  .tlist{border-top:1px solid var(--line);margin-top:3rem;}
+  .trow{border-bottom:1px solid var(--line);padding:2.2rem 0;cursor:pointer;transition:padding .3s;}
+  .trow:hover{padding-left:1.2rem;}
+  .trow-head{display:flex;align-items:baseline;gap:1.5rem;}
+  .trow-num{font-family:var(--serif);font-size:1.1rem;color:var(--gold);flex-shrink:0;width:2rem;}
+  .trow-title{font-family:var(--serif);font-weight:600;font-size:clamp(1.6rem,3.6vw,2.6rem);line-height:1.1;transition:color .3s;flex:1;}
+  .trow:hover .trow-title{color:var(--gold);}
+  .trow-plus{color:var(--muted2);font-size:1.4rem;transition:transform .35s,color .3s;}
+  .trow:hover .trow-plus{color:var(--gold);}
+  .trow.open .trow-plus{transform:rotate(45deg);color:var(--gold);}
+  .trow-body{max-height:0;overflow:hidden;transition:max-height .45s cubic-bezier(.4,0,.2,1),margin .45s,opacity .45s;opacity:0;margin-top:0;}
+  .trow.open .trow-body{max-height:200px;opacity:1;margin-top:1.2rem;}
+  .trow-body p{color:var(--muted);font-size:1.05rem;line-height:1.7;max-width:46rem;padding-left:3.5rem;}
+
+  /* WATCH */
+  .watch{padding:8rem 0;}
+  .vframe{position:relative;aspect-ratio:16/9;border-radius:8px;overflow:hidden;border:1px solid var(--line);
+    box-shadow:0 0 80px rgba(214,162,58,.12);background:#000;}
+  .vframe iframe{width:100%;height:100%;border:0;}
+
+  /* TESTIMONIAL marquee */
+  .testi{padding:7rem 0;overflow:hidden;}
+  .testi-track{display:flex;gap:1.5rem;width:max-content;animation:tscroll 40s linear infinite;}
+  .testi:hover .testi-track{animation-play-state:paused;}
+  @keyframes tscroll{to{transform:translateX(-50%);}}
+  @media(prefers-reduced-motion:reduce){.testi-track{animation:none;flex-wrap:wrap;width:auto;}}
+  .tcard{width:380px;flex-shrink:0;border:1px solid var(--line);border-radius:8px;padding:2.2rem;background:var(--black2);}
+  .tcard .stars{color:var(--gold);letter-spacing:.2em;margin-bottom:1rem;font-size:.9rem;}
+  .tcard p{font-family:var(--serif);font-style:italic;font-size:1.3rem;line-height:1.4;color:var(--text);}
+  .tcard .by{margin-top:1.4rem;font-size:.76rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted2);}
+
+  /* BOOK finale */
+  .finale{position:relative;text-align:center;padding:9rem 0;overflow:hidden;}
+  .finale-glow{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:900px;height:900px;
+    background:radial-gradient(circle,rgba(214,162,58,.12),transparent 60%);z-index:1;pointer-events:none;}
+  .finale .inner{position:relative;z-index:2;max-width:620px;margin:0 auto;}
+  .finale h2{font-family:var(--serif);font-weight:700;line-height:1;letter-spacing:-.01em;font-size:clamp(2.8rem,7vw,5rem);margin-bottom:1.4rem;}
+  .finale p{color:var(--muted);font-size:1.1rem;line-height:1.6;margin-bottom:2.6rem;}
+  .miniform{display:flex;gap:.7rem;max-width:480px;margin:0 auto;flex-wrap:wrap;justify-content:center;}
+  .miniform input{flex:1;min-width:220px;padding:1.05rem 1.3rem;background:var(--black2);border:1px solid var(--line);color:var(--text);
+    font-family:inherit;font-size:.9rem;border-radius:100px;outline:none;transition:border-color .2s;}
+  .miniform input:focus{border-color:var(--gold);}
+  .finale .fine{margin-top:1.6rem;font-size:.75rem;color:var(--muted2);}
+
+  /* footer */
+  footer{border-top:1px solid var(--line);padding:3.5rem 0;position:relative;z-index:2;}
+  .foot{display:flex;justify-content:space-between;align-items:center;gap:1.5rem;flex-wrap:wrap;}
+  .foot-brand{font-family:var(--serif);font-weight:700;font-size:1.6rem;}
+  .foot-links{display:flex;gap:1.6rem;}
+  .foot-links a{font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+  .foot-links a:hover{color:var(--gold);}
+</style>
+</head>
+<body>
+
+<div id="spot"></div>
+
+<nav class="nav" id="nav">
+  <a href="#hero" class="nav-brand">Drew Dudley</a>
+  <a href="../book/" class="nav-cta">Book Drew</a>
+</nav>
+
+<div class="dots">
+  <a href="#hero" data-dot="hero" class="active"></a>
+  <a href="#idea" data-dot="idea"></a>
+  <a href="#numbers" data-dot="numbers"></a>
+  <a href="#topics" data-dot="topics"></a>
+  <a href="#watch" data-dot="watch"></a>
+  <a href="#book" data-dot="book"></a>
+</div>
+
+<!-- HERO -->
+<section id="hero" class="scene scene-full hero">
+  <div class="hero-glow"></div>
+  <div class="hero-stage"></div>
+  <div class="hero-inner wrap">
+    <div class="ted-badge reveal"><span class="red">TED</span> · <b>5M+</b> views · one of the 15 most inspiring talks of all time</div>
+    <h1 class="reveal">Drew Dudley</h1>
+    <p class="hero-tag reveal">Keynotes on leadership that is <span class="rot" id="rot">everyday</span></p>
+    <p class="hero-tag2 reveal">Wall Street Journal bestselling author · 1,000+ stages worldwide</p>
+    <div class="hero-actions reveal">
+      <a href="#book" class="btn btn-gold">Book Drew
+        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#watch" class="btn btn-ghost">Watch the Talk</a>
+    </div>
+  </div>
+  <div class="scrollcue"><span>Scroll</span><span class="bar"></span></div>
+</section>
+
+<!-- IDEA -->
+<section id="idea" class="scene idea">
+  <div class="wrap">
+    <p class="label reveal" style="margin-bottom:2rem;">The Idea</p>
+    <h2 class="statement reveal">Leadership isn't about changing the world. It's about <em>changing someone's world.</em></h2>
+    <p class="sub reveal">It's the moment you said something to someone, maybe years ago, that changed the course of their life. You probably don't even remember it. Drew has spent two decades teaching people to notice those moments, and to create more of them on purpose.</p>
+  </div>
+</section>
+
+<!-- NUMBERS -->
+<section id="numbers" class="scene numbers">
+  <div class="wrap">
+    <div class="num-grid">
+      <div class="nstat reveal"><div class="n" data-count="5" data-suffix="M+">0</div><div class="c">TED Talk Views</div></div>
+      <div class="nstat reveal"><div class="n" data-count="1000" data-suffix="+">0</div><div class="c">Keynotes Delivered</div></div>
+      <div class="nstat reveal"><div class="n" data-count="20" data-suffix="+">0</div><div class="c">Years on Stage</div></div>
+      <div class="nstat reveal"><div class="n serif">#1</div><div class="c">WSJ Bestseller</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TOPICS -->
+<section id="topics" class="scene topics-wrap">
+  <div class="wrap">
+    <p class="label reveal" style="margin-bottom:.6rem;">Signature Keynotes</p>
+    <h2 class="serif reveal" style="font-weight:600;font-size:clamp(2.2rem,5vw,3.6rem);line-height:1.05;letter-spacing:-.01em;">Pick the room.<br>He'll build the talk.</h2>
+    <div class="tlist reveal">
+      <div class="trow open">
+        <div class="trow-head"><span class="trow-num">01</span><span class="trow-title">The Leadership Test</span><span class="trow-plus">+</span></div>
+        <div class="trow-body"><p>Fewer than 1% of people will call themselves a leader. Drew's six-question Leadership Test, built on impact, courage, growth, empowerment, class, and self-respect, changes that, and the behavior that follows it.</p></div>
+      </div>
+      <div class="trow">
+        <div class="trow-head"><span class="trow-num">02</span><span class="trow-title">This Is Day One</span><span class="trow-plus">+</span></div>
+        <div class="trow-body"><p>Leadership is a daily choice, not a title. Treating every day as Day One, audiences define their core values and turn them into the behaviors that build cultures of leadership.</p></div>
+      </div>
+      <div class="trow">
+        <div class="trow-head"><span class="trow-num">03</span><span class="trow-title">Courage: Leadership in Action</span><span class="trow-plus">+</span></div>
+        <div class="trow-body"><p>Why we delay the changes that matter, and how to act anyway. The difference between confidence and courage, and how to treat failure as a strategy rather than a verdict.</p></div>
+      </div>
+      <div class="trow">
+        <div class="trow-head"><span class="trow-num">04</span><span class="trow-title">Elevate Don't Escalate</span><span class="trow-plus">+</span></div>
+        <div class="trow-body"><p>"More and more, we've come to expect less and less from one another." The tools to build psychologically safe, high-class cultures, and to elevate instead of escalate.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WATCH -->
+<section id="watch" class="scene watch">
+  <div class="wrap">
+    <p class="label reveal" style="margin-bottom:.6rem;text-align:center;">See Him Work</p>
+    <h2 class="serif reveal" style="font-weight:600;font-size:clamp(2rem,4.5vw,3.2rem);text-align:center;margin-bottom:3rem;line-height:1.1;">The room tells you everything.</h2>
+    <div class="vframe reveal">
+      <!-- Drew Dudley — official Speaker Demo Reel (Vimeo) -->
+      <iframe src="https://player.vimeo.com/video/910976563?title=0&byline=0&portrait=0" title="Drew Dudley — Speaker Demo Reel" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="scene testi">
+  <p class="label reveal" style="text-align:center;margin-bottom:3rem;">What Rooms Say After</p>
+  <div class="testi-track">
+    <div class="tcard"><div class="stars">★★★★★</div><p>"Most great speakers have a schtick, but Drew has soul. His talk brought many folks to tears and uplifted us all."</p><div class="by">Redfin</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"I never expected to receive life-changing words, but I did. We all did. Drew is engaging, thought-provoking, and will change your life too."</p><div class="by">United States Air Force</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"I've been in the events business for 15 years and Drew is one of my all-time favourite guest speakers. No speaker cares more about the audience."</p><div class="by">Monster</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"Drew blew us away. There was not a dry eye in the place. When he sat down the audience stood up."</p><div class="by">Blissdom Canada</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"We have never had a keynote speaker that everyone ranked so high. He ranked 5.30 out of 5.00 on our evaluations."</p><div class="by">Halton Industry Education Council</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"Every once in a while a speaker challenges your mind and touches your heart. Someone you are better off having seen. Drew is that speaker."</p><div class="by">California Grocers Association</div></div>
+    <!-- duplicate set for seamless loop -->
+    <div class="tcard"><div class="stars">★★★★★</div><p>"Most great speakers have a schtick, but Drew has soul. His talk brought many folks to tears and uplifted us all."</p><div class="by">Redfin</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"I never expected to receive life-changing words, but I did. We all did. Drew is engaging, thought-provoking, and will change your life too."</p><div class="by">United States Air Force</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"I've been in the events business for 15 years and Drew is one of my all-time favourite guest speakers. No speaker cares more about the audience."</p><div class="by">Monster</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"Drew blew us away. There was not a dry eye in the place. When he sat down the audience stood up."</p><div class="by">Blissdom Canada</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"We have never had a keynote speaker that everyone ranked so high. He ranked 5.30 out of 5.00 on our evaluations."</p><div class="by">Halton Industry Education Council</div></div>
+    <div class="tcard"><div class="stars">★★★★★</div><p>"Every once in a while a speaker challenges your mind and touches your heart. Someone you are better off having seen. Drew is that speaker."</p><div class="by">California Grocers Association</div></div>
+  </div>
+</section>
+
+<!-- BOOK FINALE -->
+<section id="book" class="scene finale">
+  <div class="finale-glow"></div>
+  <div class="inner">
+    <p class="label reveal" style="margin-bottom:1.6rem;">Book Drew</p>
+    <h2 class="reveal">Let's fill the room.</h2>
+    <p class="reveal">Tell me about your event and you'll hear back, usually the same day. Drop your email to start, or send the full details.</p>
+    <form class="miniform reveal" onsubmit="this.action='mailto:drew@dayoneleadership.com?subject=Keynote%20Inquiry';return true;" action="mailto:drew@dayoneleadership.com?subject=Keynote%20Inquiry" method="post" enctype="text/plain">
+      <input type="email" name="email" placeholder="you@organization.com" required />
+      <button type="submit" class="btn btn-gold">Start the Conversation</button>
+    </form>
+    <p class="fine reveal">Prefer email? <a href="mailto:drew@dayoneleadership.com" style="color:var(--gold);">drew@dayoneleadership.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <div class="foot-brand">Drew Dudley</div>
+    <div class="foot-links">
+      <a href="https://www.ted.com/talks/drew_dudley_everyday_leadership" target="_blank" rel="noopener">TED</a>
+      <a href="https://www.amazon.com/This-Day-One-Practical-Leadership/dp/0316523070" target="_blank" rel="noopener">Book</a>
+      <a href="#book">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+// cursor spotlight (desktop, pointer:fine only)
+(function(){
+  var spot=document.getElementById('spot');
+  if(!spot||!window.matchMedia||!window.matchMedia('(pointer:fine)').matches)return;
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  window.addEventListener('pointermove',function(e){
+    var x=(e.clientX/window.innerWidth*100).toFixed(1),y=(e.clientY/window.innerHeight*100).toFixed(1);
+    spot.style.background='radial-gradient(600px circle at '+x+'% '+y+'%, rgba(214,162,58,.12), transparent 60%)';
+  },{passive:true});
+})();
+// reveal
+(function(){
+  var els=[].slice.call(document.querySelectorAll('.reveal'));
+  if(!('IntersectionObserver'in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.15,rootMargin:'0px 0px -8% 0px'});
+  els.forEach(function(e){io.observe(e);});
+})();
+// nav scrolled
+(function(){var n=document.getElementById('nav');function s(){n.classList.toggle('scrolled',window.scrollY>30);}window.addEventListener('scroll',s,{passive:true});s();})();
+// rotating word
+(function(){
+  var el=document.getElementById('rot');if(!el)return;
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;
+  var words=['everyday','human','lasting','a choice','contagious','everyday'];var i=0;
+  setInterval(function(){i=(i+1)%words.length;el.style.opacity='0';setTimeout(function(){el.textContent=words[i];el.style.opacity='1';},250);},2400);
+  el.style.transition='opacity .25s';
+})();
+// count-up
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var nums=[].slice.call(document.querySelectorAll('.n[data-count]'));
+  function run(el){
+    var target=+el.getAttribute('data-count'),suf=el.getAttribute('data-suffix')||'';
+    if(reduce){el.textContent=(target>=1000?target.toLocaleString('en-US'):target)+suf;return;}
+    var dur=1500,st=null;
+    function step(t){if(st===null)st=t;var p=Math.min((t-st)/dur,1);var e=1-Math.pow(1-p,3);
+      var v=Math.floor(e*target);el.textContent=(target>=1000?v.toLocaleString('en-US'):v)+suf;
+      if(p<1)requestAnimationFrame(step);else el.textContent=(target>=1000?target.toLocaleString('en-US'):target)+suf;}
+    requestAnimationFrame(step);
+  }
+  if(!('IntersectionObserver'in window)){nums.forEach(function(el){var t=+el.getAttribute('data-count');el.textContent=(t>=1000?t.toLocaleString('en-US'):t)+(el.getAttribute('data-suffix')||'');});return;}
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){run(e.target);io.unobserve(e.target);}});},{threshold:.6});
+  nums.forEach(function(el){io.observe(el);});
+})();
+// topic accordion
+(function(){
+  [].slice.call(document.querySelectorAll('.trow')).forEach(function(row){
+    row.addEventListener('click',function(){
+      var open=row.classList.contains('open');
+      [].slice.call(document.querySelectorAll('.trow')).forEach(function(r){r.classList.remove('open');});
+      if(!open)row.classList.add('open');
+    });
+  });
+})();
+// progress dots
+(function(){
+  var dots=[].slice.call(document.querySelectorAll('.dots a'));
+  var secs=dots.map(function(d){return document.getElementById(d.getAttribute('data-dot'));}).filter(Boolean);
+  if(!('IntersectionObserver'in window))return;
+  var io=new IntersectionObserver(function(en){en.forEach(function(e){if(e.isIntersecting){
+    var id=e.target.id;dots.forEach(function(d){d.classList.toggle('active',d.getAttribute('data-dot')===id);});
+  }});},{threshold:.5});
+  secs.forEach(function(s){io.observe(s);});
+})();
+</script>
+</body>
+</html>
