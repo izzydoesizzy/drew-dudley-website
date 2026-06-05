@@ -56,6 +56,8 @@
   .opt>span:not(.tick):not(.oprice){flex:1;min-width:0;}
   .opt .ot{display:block;font-weight:600;font-size:1.02rem;}
   .opt .os{display:block;font-size:.85rem;color:var(--muted);margin-top:.15rem;}
+  .opt .obest{display:block;font-size:.76rem;color:var(--muted2);margin-top:.4rem;line-height:1.45;}
+  .opt .obest b{color:var(--gold);font-weight:600;}
   .opt .oprice{margin-left:auto;font-family:var(--serif);font-size:1.05rem;color:var(--gold);white-space:nowrap;flex-shrink:0;}
 
   /* chips */
@@ -143,23 +145,23 @@
     <section class="step active" data-key="engagement" data-auto="1">
       <p class="q-eyebrow">Let's begin</p>
       <h2 class="q-title">What kind of engagement?</h2>
-      <p class="q-help">Pick the format closest to what you have in mind. You can change it later.</p>
+      <p class="q-help">Keynotes, interactive workshops, and multi-day programs are all on the table. Pick the format closest to what you have in mind. You can change it later.</p>
       <div class="opts" data-group="engagement">
         <button type="button" class="opt" data-val="keynote" data-lo="15000" data-hi="22000">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><span class="ot">Keynote</span><span class="os">A signature talk, 45 to 75 minutes</span></span>
+          <span><span class="ot">Keynote</span><span class="os">A signature talk, in person or virtual. Usually 45 to 75 minutes.</span></span>
         </button>
         <button type="button" class="opt" data-val="workshop" data-lo="22000" data-hi="32000">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><span class="ot">Keynote + Workshop</span><span class="os">A talk plus a hands-on session</span></span>
+          <span><span class="ot">Keynote + Workshop</span><span class="os">A talk plus a hands-on, interactive working session.</span></span>
         </button>
         <button type="button" class="opt" data-val="retreat" data-lo="30000" data-hi="45000">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><span class="ot">Half-Day / Executive Retreat</span><span class="os">Deeper, immersive leadership work</span></span>
+          <span><span class="ot">Half-Day / Executive Retreat</span><span class="os">Immersive, hands-on leadership work. Half day, full day, or multi day.</span></span>
         </button>
         <button type="button" class="opt" data-val="virtual" data-lo="8000" data-hi="15000">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><span class="ot">Virtual</span><span class="os">Remote keynote or session</span></span>
+          <span><span class="ot">Virtual</span><span class="os">A remote keynote or interactive session, live or pre recorded.</span></span>
         </button>
         <button type="button" class="opt" data-val="unsure" data-lo="0" data-hi="0">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -176,16 +178,17 @@
     <section class="step" data-key="topic" data-auto="1">
       <p class="q-eyebrow">The talk</p>
       <h2 class="q-title">Any keynote in mind?</h2>
-      <p class="q-help">All six come from Drew's Roadmap to Impact. Not sure? He'll recommend the right one for your room.</p>
+      <p class="q-help">All six keynotes come from Drew's Roadmap to Impact, his framework that treats leadership as a series of moments of impact. Each one stands on its own or combines with the others. Skim the descriptions to find your fit, or let Drew recommend one.</p>
       <div class="opts" data-group="topic">
-        <button type="button" class="opt" data-val="The Leadership Test"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">The Leadership Test</span></span></button>
-        <button type="button" class="opt" data-val="This Is Day One"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">This Is Day One</span></span></button>
-        <button type="button" class="opt" data-val="Courage"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Courage</span></span></button>
-        <button type="button" class="opt" data-val="Self-Respect"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Self-Respect</span></span></button>
-        <button type="button" class="opt" data-val="The Game Has No Winners"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">The Game Has No Winners</span></span></button>
-        <button type="button" class="opt" data-val="Elevate Don't Escalate"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Elevate Don't Escalate</span></span></button>
-        <button type="button" class="opt" data-val="Help me choose"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Help me choose</span><span class="os">Recommend the best fit for my audience</span></span></button>
+        <button type="button" class="opt" data-val="The Leadership Test"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">The Leadership Test</span><span class="os">Six daily questions that turn leadership from a title into a habit, built on Drew's Lollipop Moment TED talk.</span><span class="obest"><b>Best for</b> almost any room, and a strong conference opener or first booking.</span></span></button>
+        <button type="button" class="opt" data-val="This Is Day One"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">This Is Day One</span><span class="os">Leadership as a daily choice. Turn personal and organizational values into everyday behavior and a culture of leadership.</span><span class="obest"><b>Best for</b> managers, senior leaders, and culture creators.</span></span></button>
+        <button type="button" class="opt" data-val="Courage"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Courage</span><span class="os">Acting in spite of fear. The difference between confidence and courage, and why failure is a strategy, not a verdict.</span><span class="obest"><b>Best for</b> teams facing change, uncertainty, or big decisions.</span></span></button>
+        <button type="button" class="opt" data-val="Self-Respect"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Self-Respect</span><span class="os">Drew's most personal talk on self-care, resilience, and psychological safety, woven with his own story.</span><span class="obest"><b>Best for</b> audiences feeling stretched, burnt out, or focused on wellbeing.</span></span></button>
+        <button type="button" class="opt" data-val="The Game Has No Winners"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">The Game Has No Winners</span><span class="os">Growth and empowerment over scarcity. Move from competition to collaboration and becoming an indispensable teammate.</span><span class="obest"><b>Best for</b> breaking down silos and building supportive teams.</span></span></button>
+        <button type="button" class="opt" data-val="Elevate Don't Escalate"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Elevate Don't Escalate</span><span class="os">Living with class, leading with impact. Practical tools to defuse conflict and build psychologically safe cultures.</span><span class="obest"><b>Best for</b> teams dealing with tension or communication breakdowns.</span></span></button>
+        <button type="button" class="opt" data-val="Help me choose"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Help me choose</span><span class="os">Tell Drew about your audience and goals, and he'll recommend the best fit.</span></span></button>
       </div>
+      <p class="opt-note">Every talk is tailored to your room, and any of them can be combined or reshaped into an interactive workshop, a half or full day session, or a multi part program. Pick the closest fit and tell Drew the rest.</p>
     </section>
 
     <!-- 3 DATE + FORMAT -->
