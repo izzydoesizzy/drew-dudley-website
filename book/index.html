@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Book Drew Dudley · Keynote Inquiry</title>
-<meta name="description" content="Tell Drew about your event and get an estimated range in two minutes. Keynotes, workshops, and virtual sessions on everyday leadership." />
+<meta name="description" content="Tell Drew about your event in about two minutes and get an estimated range. Keynotes, workshops, and virtual sessions on everyday leadership." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -17,36 +17,36 @@
   }
   html{-webkit-text-size-adjust:100%;}
   body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;overflow-x:hidden;}
-  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
-    background:radial-gradient(800px circle at 50% -10%, rgba(214,162,58,.10), transparent 55%);}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(800px circle at 50% -10%, rgba(214,162,58,.10), transparent 55%);}
   a{color:inherit;text-decoration:none;}
   .serif{font-family:var(--serif);}
 
   .shell{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:2.5rem 1.5rem 4rem;min-height:100vh;display:flex;flex-direction:column;}
-  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.5rem;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem;}
   .brand{font-family:var(--serif);font-weight:700;font-size:1.4rem;}
   .home-link{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
   .home-link:hover{color:var(--gold);}
 
   /* progress */
-  .progress{margin-bottom:2.4rem;}
+  .progress{margin-bottom:2.2rem;}
   .progress-meta{display:flex;justify-content:space-between;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:.7rem;}
   .progress-meta b{color:var(--gold);}
   .bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;}
   .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-br));border-radius:3px;transition:width .5s cubic-bezier(.2,.7,.2,1);}
 
   /* steps */
-  .step{display:none;animation:fade .45s ease both;}
+  .step{display:none;animation:fade .4s ease both;}
   .step.active{display:block;}
-  @keyframes fade{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
+  @keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
   .q-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
-  .q-title{font-family:var(--serif);font-weight:700;font-size:clamp(1.8rem,5vw,2.6rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:.6rem;}
-  .q-help{color:var(--muted);font-size:1rem;margin-bottom:2rem;}
+  .q-title{font-family:var(--serif);font-weight:700;font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:.6rem;}
+  .q-help{color:var(--muted);font-size:1rem;margin-bottom:1.8rem;}
+  .opt-note{font-size:.78rem;color:var(--muted2);margin-top:1rem;text-align:center;}
 
   /* option cards */
-  .opts{display:flex;flex-direction:column;gap:.8rem;}
-  .opt{display:flex;align-items:center;gap:1rem;padding:1.25rem 1.4rem;border:1px solid var(--line);border-radius:14px;
-    background:var(--card);cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:left;width:100%;}
+  .opts{display:flex;flex-direction:column;gap:.7rem;}
+  .opt{display:flex;align-items:center;gap:1rem;padding:1.15rem 1.3rem;border:1px solid var(--line);border-radius:14px;
+    background:var(--card);cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:left;width:100%;font-family:inherit;color:var(--text);}
   .opt:hover{border-color:var(--gold);background:var(--card2);}
   .opt.sel{border-color:var(--gold);background:linear-gradient(160deg,#1d1810,#13100c);box-shadow:0 0 0 1px var(--gold) inset;}
   .opt .tick{width:22px;height:22px;border-radius:50%;border:1px solid var(--muted2);flex-shrink:0;display:grid;place-items:center;transition:border-color .2s,background .2s;}
@@ -59,23 +59,30 @@
   .opt .oprice{margin-left:auto;font-family:var(--serif);font-size:1.05rem;color:var(--gold);white-space:nowrap;flex-shrink:0;}
 
   /* chips */
-  .chips{display:flex;flex-wrap:wrap;gap:.7rem;}
-  .chip{padding:.8rem 1.3rem;border:1px solid var(--line);border-radius:100px;background:var(--card);cursor:pointer;font-size:.92rem;transition:border-color .2s,background .2s,color .2s;}
+  .chips{display:flex;flex-wrap:wrap;gap:.6rem;}
+  .chip{padding:.7rem 1.15rem;border:1px solid var(--line);border-radius:100px;background:var(--card);cursor:pointer;font-size:.9rem;
+    color:var(--text);font-family:inherit;transition:border-color .2s,background .2s,color .2s;}
   .chip:hover{border-color:var(--gold);}
   .chip.sel{border-color:var(--gold);background:var(--gold);color:#1a1305;font-weight:600;}
 
   /* inputs */
   .field{margin-bottom:1.1rem;}
-  .field label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted2);margin-bottom:.5rem;}
+  .field > label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted2);margin-bottom:.5rem;}
+  .field .opt-label{color:var(--muted2);text-transform:none;letter-spacing:0;font-weight:400;}
   .field input,.field textarea{width:100%;padding:.95rem 1.1rem;background:var(--card);border:1px solid var(--line);color:var(--text);
-    font-family:inherit;font-size:.95rem;border-radius:12px;outline:none;transition:border-color .2s;}
-  .field input:focus,.field textarea:focus{border-color:var(--gold);}
+    font-family:inherit;font-size:.95rem;border-radius:12px;outline:none;transition:border-color .2s,box-shadow .2s;}
+  .field input:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,162,58,.12);}
+  .field input::placeholder,.field textarea::placeholder{color:var(--muted2);}
   .field textarea{resize:none;}
+  input[type=date]{color-scheme:dark;}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
   @media(max-width:480px){.row2{grid-template-columns:1fr;}}
+  .check{display:flex;align-items:center;gap:.6rem;cursor:pointer;font-size:.9rem;color:var(--muted);margin-top:.2rem;}
+  .check input{width:18px;height:18px;accent-color:var(--gold);flex-shrink:0;}
+  .sub-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted2);margin:1.4rem 0 .6rem;}
 
   /* nav buttons */
-  .navrow{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:2.2rem;}
+  .navrow{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:2rem;}
   .btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
     padding:1rem 1.9rem;border-radius:100px;transition:transform .2s,background .2s,opacity .2s,color .2s,border-color .2s;cursor:pointer;border:1px solid transparent;font-family:inherit;}
   .btn-gold{background:var(--gold);color:#1a1305;}
@@ -96,9 +103,9 @@
   .result .msg{color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:30rem;margin:0 auto 2rem;}
   .summary{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem;margin:0 auto 2rem;max-width:34rem;}
   .summary h4{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:1rem;}
-  .summary .row{display:flex;justify-content:space-between;gap:1rem;padding:.55rem 0;border-bottom:1px solid var(--line);font-size:.92rem;}
+  .summary .row{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem;}
   .summary .row:last-child{border-bottom:none;}
-  .summary .row span:first-child{color:var(--muted);}
+  .summary .row span:first-child{color:var(--muted);flex-shrink:0;}
   .summary .row span:last-child{text-align:right;font-weight:500;}
   .disclaimer{font-size:.75rem;color:var(--muted2);margin-top:1.4rem;line-height:1.6;}
   .result .alt{display:block;margin-top:1.2rem;font-size:.82rem;color:var(--muted);}
@@ -110,26 +117,26 @@
 <body>
 <div class="shell">
   <div class="topbar">
-    <a href="../index.html" class="brand">Drew Dudley</a>
-    <a href="../index.html" class="home-link">← Back to site</a>
+    <a href="../v2b/" class="brand">Drew Dudley</a>
+    <a href="../v2b/" class="home-link">← Back to site</a>
   </div>
 
   <div class="progress" id="progress">
-    <div class="progress-meta"><span>Booking Inquiry</span><span>Step <b id="stepNum">1</b> of 5</span></div>
+    <div class="progress-meta"><span>Booking inquiry · about 2 minutes</span><span>Step <b id="stepNum">1</b> of <b id="stepTotal">8</b></span></div>
     <div class="bar"><i id="barFill"></i></div>
   </div>
 
-  <form id="wiz" onsubmit="return false;">
+  <form id="wiz" onsubmit="return false;" autocomplete="on">
 
-    <!-- STEP 1: engagement -->
-    <section class="step active" data-step="1">
+    <!-- 1 ENGAGEMENT -->
+    <section class="step active" data-key="engagement" data-auto="1">
       <p class="q-eyebrow">Let's begin</p>
       <h2 class="q-title">What kind of engagement?</h2>
-      <p class="q-help">Planning a standout event or leadership initiative? Pick the format closest to what you have in mind. You can adjust details later.</p>
+      <p class="q-help">Pick the format closest to what you have in mind. You can change it later.</p>
       <div class="opts" data-group="engagement">
         <button type="button" class="opt" data-val="keynote" data-lo="15000" data-hi="22000">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-          <span><span class="ot">Keynote</span><span class="os">A signature talk, 45–75 minutes</span></span>
+          <span><span class="ot">Keynote</span><span class="os">A signature talk, 45 to 75 minutes</span></span>
           <span class="oprice">$15k–22k</span>
         </button>
         <button type="button" class="opt" data-val="workshop" data-lo="22000" data-hi="32000">
@@ -147,6 +154,10 @@
           <span><span class="ot">Virtual</span><span class="os">Remote keynote or session</span></span>
           <span class="oprice">$8k–15k</span>
         </button>
+        <button type="button" class="opt" data-val="unsure" data-lo="0" data-hi="0">
+          <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span><span class="ot">Not sure yet</span><span class="os">Help me figure out the right fit</span></span>
+        </button>
         <button type="button" class="opt" data-val="probono" data-lo="0" data-hi="0">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
           <span><span class="ot">Nonprofit / Pro-bono</span><span class="os">Drew reserves a few of these each year</span></span>
@@ -154,78 +165,151 @@
       </div>
     </section>
 
-    <!-- STEP 2: when & where -->
-    <section class="step" data-step="2">
-      <p class="q-eyebrow">Logistics</p>
-      <h2 class="q-title">When and where?</h2>
-      <p class="q-help">A rough date is fine. Season affects availability and the estimate.</p>
-      <div class="field"><label>Event date(s)</label><input type="text" id="f_date" placeholder="e.g. October 14, 2026" /></div>
-      <div class="field"><label>Location</label><input type="text" id="f_location" placeholder="City, or Virtual" /></div>
+    <!-- 2 TOPIC -->
+    <section class="step" data-key="topic" data-auto="1">
+      <p class="q-eyebrow">The talk</p>
+      <h2 class="q-title">Any keynote in mind?</h2>
+      <p class="q-help">All six come from Drew's Roadmap to Impact. Not sure? He'll recommend the right one for your room.</p>
+      <div class="opts" data-group="topic">
+        <button type="button" class="opt" data-val="The Leadership Test"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">The Leadership Test</span></span></button>
+        <button type="button" class="opt" data-val="This Is Day One"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">This Is Day One</span></span></button>
+        <button type="button" class="opt" data-val="Courage"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Courage</span></span></button>
+        <button type="button" class="opt" data-val="Self-Respect"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Self-Respect</span></span></button>
+        <button type="button" class="opt" data-val="The Game Has No Winners"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">The Game Has No Winners</span></span></button>
+        <button type="button" class="opt" data-val="Elevate Don't Escalate"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Elevate Don't Escalate</span></span></button>
+        <button type="button" class="opt" data-val="Help me choose"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Help me choose</span><span class="os">Recommend the best fit for my audience</span></span></button>
+      </div>
     </section>
 
-    <!-- STEP 3: audience -->
-    <section class="step" data-step="3">
+    <!-- 3 DATE + FORMAT -->
+    <section class="step" data-key="datefmt">
+      <p class="q-eyebrow">Logistics</p>
+      <h2 class="q-title">When and how?</h2>
+      <p class="q-help">A rough date is perfect. Season affects availability and the estimate.</p>
+      <p class="sub-label" style="margin-top:0;">Format</p>
+      <div class="chips" data-group="format">
+        <button type="button" class="chip" data-val="In person">In person</button>
+        <button type="button" class="chip" data-val="Virtual">Virtual</button>
+        <button type="button" class="chip" data-val="Hybrid">Hybrid</button>
+      </div>
+      <div class="row2" style="margin-top:1.4rem;">
+        <div class="field"><label>Event date</label><input type="date" id="f_date" /></div>
+        <div class="field"><label>End date <span class="opt-label">(if multi-day)</span></label><input type="date" id="f_dateEnd" /></div>
+      </div>
+      <label class="check"><input type="checkbox" id="f_flexible" /> Our dates are flexible / we're still exploring</label>
+    </section>
+
+    <!-- 4 LOCATION -->
+    <section class="step" data-key="location">
+      <p class="q-eyebrow">Where</p>
+      <h2 class="q-title">Where's the event?</h2>
+      <p class="q-help">Start typing your city and pick from the list.</p>
+      <div class="row2">
+        <div class="field"><label>City</label><input type="text" id="f_city" list="cities" placeholder="e.g. Toronto" /></div>
+        <div class="field"><label>State / Country</label><input type="text" id="f_country" placeholder="e.g. Canada" /></div>
+      </div>
+      <datalist id="cities">
+        <option value="Toronto, ON"></option><option value="Montreal, QC"></option><option value="Vancouver, BC"></option><option value="Calgary, AB"></option><option value="Ottawa, ON"></option><option value="Edmonton, AB"></option><option value="Winnipeg, MB"></option><option value="Halifax, NS"></option>
+        <option value="New York, NY"></option><option value="Los Angeles, CA"></option><option value="Chicago, IL"></option><option value="Houston, TX"></option><option value="Dallas, TX"></option><option value="Austin, TX"></option><option value="Phoenix, AZ"></option><option value="San Francisco, CA"></option><option value="Seattle, WA"></option><option value="Denver, CO"></option><option value="Boston, MA"></option><option value="Washington, DC"></option><option value="Atlanta, GA"></option><option value="Miami, FL"></option><option value="Orlando, FL"></option><option value="Nashville, TN"></option><option value="Las Vegas, NV"></option><option value="Minneapolis, MN"></option><option value="Detroit, MI"></option><option value="Philadelphia, PA"></option><option value="San Diego, CA"></option>
+        <option value="London, UK"></option><option value="Dublin, Ireland"></option><option value="Dubai, UAE"></option><option value="Singapore"></option><option value="Sydney, Australia"></option><option value="Mexico City, Mexico"></option>
+      </datalist>
+    </section>
+
+    <!-- 5 AUDIENCE -->
+    <section class="step" data-key="audience">
       <p class="q-eyebrow">Your room</p>
       <h2 class="q-title">Tell us about the audience.</h2>
       <p class="q-help">Drew tailors every talk to the people in the room.</p>
       <div class="field"><label>Organization</label><input type="text" id="f_org" placeholder="Company or organization" /></div>
-      <div class="field"><label>Audience size</label>
-        <div class="chips" data-group="size">
-          <button type="button" class="chip" data-val="Under 100">Under 100</button>
-          <button type="button" class="chip" data-val="100–500">100–500</button>
-          <button type="button" class="chip" data-val="500–1,500">500–1,500</button>
-          <button type="button" class="chip" data-val="1,500+">1,500+</button>
-        </div>
+      <div class="field"><label>Website <span class="opt-label">(optional)</span></label><input type="text" id="f_website" placeholder="yourorg.com" /></div>
+      <p class="sub-label">Audience size</p>
+      <div class="chips" data-group="size">
+        <button type="button" class="chip" data-val="Under 100">Under 100</button>
+        <button type="button" class="chip" data-val="100–500">100–500</button>
+        <button type="button" class="chip" data-val="500–1,500">500–1,500</button>
+        <button type="button" class="chip" data-val="1,500+">1,500+</button>
+      </div>
+      <p class="sub-label">Who's in the room? <span class="opt-label" style="text-transform:none;letter-spacing:0;">(optional)</span></p>
+      <div class="chips" data-group="audType">
+        <button type="button" class="chip" data-val="Executives / Leadership">Executives / Leadership</button>
+        <button type="button" class="chip" data-val="Managers">Managers</button>
+        <button type="button" class="chip" data-val="Frontline / Staff">Frontline / Staff</button>
+        <button type="button" class="chip" data-val="Association / Members">Association / Members</button>
+        <button type="button" class="chip" data-val="Educators">Educators</button>
+        <button type="button" class="chip" data-val="Students">Students</button>
+        <button type="button" class="chip" data-val="Mixed">Mixed</button>
       </div>
     </section>
 
-    <!-- STEP 4: budget (or cause for pro-bono) -->
-    <section class="step" data-step="4">
-      <div id="budgetBlock">
-        <p class="q-eyebrow">Investment</p>
-        <h2 class="q-title">What's the budget?</h2>
-        <p class="q-help">An honest range helps Drew get you a real answer, fast. No one is penalized for asking.</p>
-        <div class="opts" data-group="budget">
-          <button type="button" class="opt" data-val="Under $10K" data-tier="low">
-            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span><span class="ot">Under $10,000</span><span class="os">We'll explore what's possible</span></span>
-          </button>
-          <button type="button" class="opt" data-val="$10K–$20K" data-tier="mid">
-            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span><span class="ot">$10,000 – $20,000</span></span>
-          </button>
-          <button type="button" class="opt" data-val="$20K+" data-tier="high">
-            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span><span class="ot">$20,000+</span></span>
-          </button>
-          <button type="button" class="opt" data-val="Flexible / not sure" data-tier="flex">
-            <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-            <span><span class="ot">Flexible / not sure yet</span></span>
-          </button>
-        </div>
+    <!-- 6 MONEY (booked-before + budget) -->
+    <section class="step" data-key="money">
+      <p class="q-eyebrow">Investment</p>
+      <h2 class="q-title">Let's talk budget.</h2>
+      <p class="q-help">An honest range helps Drew get you a real answer, fast. No one is penalized for asking.</p>
+      <p class="sub-label" style="margin-top:0;">Have you booked a professional speaker before?</p>
+      <div class="chips" data-group="bookedBefore">
+        <button type="button" class="chip" data-val="We book speakers regularly">We book regularly</button>
+        <button type="button" class="chip" data-val="Once or twice">Once or twice</button>
+        <button type="button" class="chip" data-val="This is our first time">First time</button>
       </div>
-      <div id="causeBlock" class="hide">
-        <p class="q-eyebrow">Your cause</p>
-        <h2 class="q-title">Tell us about the work.</h2>
-        <p class="q-help">Drew reserves a handful of reduced-fee and pro-bono talks each year for causes that resonate.</p>
-        <div class="field"><label>Who you serve / your mission</label><textarea id="f_cause" rows="4" placeholder="A sentence or two about the organization and the cause."></textarea></div>
+      <p class="sub-label">Budget range</p>
+      <div class="opts" data-group="budget">
+        <button type="button" class="opt" data-val="Under $10K" data-tier="low"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Under $10,000</span><span class="os">We'll explore what's possible</span></span></button>
+        <button type="button" class="opt" data-val="$10K–$20K" data-tier="mid"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">$10,000 – $20,000</span></span></button>
+        <button type="button" class="opt" data-val="$20K+" data-tier="high"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">$20,000+</span></span></button>
+        <button type="button" class="opt" data-val="Flexible / not sure" data-tier="flex"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Flexible / not sure yet</span></span></button>
       </div>
     </section>
 
-    <!-- STEP 5: contact + details -->
-    <section class="step" data-step="5">
-      <p class="q-eyebrow">Almost there</p>
-      <h2 class="q-title">Where should Drew reply?</h2>
+    <!-- 6b CAUSE (pro-bono only) -->
+    <section class="step" data-key="cause">
+      <p class="q-eyebrow">Your cause</p>
+      <h2 class="q-title">Tell us about the work.</h2>
+      <p class="q-help">Drew reserves a handful of reduced-fee and pro-bono talks each year for causes that resonate.</p>
+      <div class="field"><label>Who you serve and why it matters</label><textarea id="f_cause" rows="4" placeholder="A sentence or two about the organization and the cause."></textarea></div>
+    </section>
+
+    <!-- 7 CONTACT -->
+    <section class="step" data-key="contact">
+      <p class="q-eyebrow">About you</p>
+      <h2 class="q-title">Who should Drew reply to?</h2>
       <p class="q-help">You'll hear back, usually the same day.</p>
       <div class="row2">
-        <div class="field"><label>Your name</label><input type="text" id="f_name" placeholder="Full name" /></div>
-        <div class="field"><label>Email</label><input type="email" id="f_email" placeholder="you@org.com" /></div>
+        <div class="field"><label>Your name</label><input type="text" id="f_name" autocomplete="name" placeholder="Full name" /></div>
+        <div class="field"><label>Your title</label><input type="text" id="f_title" placeholder="e.g. VP, People & Culture" /></div>
       </div>
-      <div class="field"><label>What would make this a win?</label><textarea id="f_notes" rows="3" placeholder="The theme, the outcome you want, anything Drew should know."></textarea></div>
+      <p class="sub-label" style="margin-top:.4rem;">Your role in this decision</p>
+      <div class="chips" data-group="decisionRole">
+        <button type="button" class="chip" data-val="I'm the decision-maker">I'm the decision-maker</button>
+        <button type="button" class="chip" data-val="I recommend / influence">I recommend / influence</button>
+        <button type="button" class="chip" data-val="I'm researching">I'm researching</button>
+      </div>
+      <div class="row2" style="margin-top:1.4rem;">
+        <div class="field"><label>Email</label><input type="email" id="f_email" autocomplete="email" placeholder="you@org.com" /></div>
+        <div class="field"><label>Phone <span class="opt-label">(optional)</span></label><input type="tel" id="f_phone" autocomplete="tel" placeholder="For faster scheduling" /></div>
+      </div>
+    </section>
+
+    <!-- 8 GOALS -->
+    <section class="step" data-key="goals">
+      <p class="q-eyebrow">Almost done</p>
+      <h2 class="q-title">What would make this a win?</h2>
+      <p class="q-help">The theme, the outcome you want, anything Drew should know. Optional, but it helps.</p>
+      <div class="field"><textarea id="f_goals" rows="3" placeholder="e.g. We want our leaders to leave feeling re-energized and equipped with one thing to do tomorrow."></textarea></div>
+      <p class="sub-label">How did you hear about Drew? <span class="opt-label" style="text-transform:none;letter-spacing:0;">(optional)</span></p>
+      <div class="chips" data-group="heard">
+        <button type="button" class="chip" data-val="Referral">Referral</button>
+        <button type="button" class="chip" data-val="Saw a talk">Saw a talk</button>
+        <button type="button" class="chip" data-val="TED talk">TED talk</button>
+        <button type="button" class="chip" data-val="Search">Search</button>
+        <button type="button" class="chip" data-val="Social media">Social media</button>
+        <button type="button" class="chip" data-val="Speaker bureau">Speaker bureau</button>
+        <button type="button" class="chip" data-val="Other">Other</button>
+      </div>
     </section>
 
     <!-- RESULT -->
-    <section class="step" data-step="6">
+    <section class="step" data-key="result">
       <div class="result">
         <div class="badge" id="resBadge">Estimated range</div>
         <div id="estWrap">
@@ -253,162 +337,234 @@
 
 <script>
 (function(){
-  var state={engagement:null,engLo:0,engHi:0,date:'',location:'',org:'',size:'',budget:'',tier:'',cause:'',name:'',email:'',notes:''};
-  var step=1, TOTAL=6;
+  var SAVE_KEY='dd_booking_v2';
+  // ── submission hook ──────────────────────────────────────────────
+  // For now we compose a mailto. To send to a real endpoint later, set
+  // POST_ENDPOINT and the submit handler below will POST the `state` JSON.
+  var POST_ENDPOINT=null; // e.g. 'https://api.web3forms.com/submit'
+
+  var ENG={keynote:{lo:15000,hi:22000,label:'Keynote'},workshop:{lo:22000,hi:32000,label:'Keynote + Workshop'},
+    retreat:{lo:30000,hi:45000,label:'Half-Day / Retreat'},virtual:{lo:8000,hi:15000,label:'Virtual'},
+    unsure:{lo:0,hi:0,label:'Not sure yet'},probono:{lo:0,hi:0,label:'Nonprofit / Pro-bono'}};
+
+  var state={engagement:'',topic:'',format:'',date:'',dateEnd:'',flexible:false,city:'',country:'',
+    org:'',website:'',size:'',audType:'',bookedBefore:'',budget:'',tier:'',cause:'',
+    name:'',title:'',decisionRole:'',email:'',phone:'',goals:'',heard:''};
+
   var steps=[].slice.call(document.querySelectorAll('.step'));
   var nextBtn=document.getElementById('nextBtn'), backBtn=document.getElementById('backBtn');
-  var barFill=document.getElementById('barFill'), stepNum=document.getElementById('stepNum');
+  var barFill=document.getElementById('barFill'), stepNum=document.getElementById('stepNum'), stepTotal=document.getElementById('stepTotal');
   var navrow=document.getElementById('navrow'), progress=document.getElementById('progress');
+  var current='engagement';
 
-  function show(n){
-    step=n;
-    steps.forEach(function(s){s.classList.toggle('active', +s.getAttribute('data-step')===n);});
-    // progress (over the 5 input steps)
-    var p=Math.min(n,5);
-    barFill.style.width=((p-1)/4*100)+'%';
-    stepNum.textContent=Math.min(n,5);
-    backBtn.style.visibility = n>1 && n<6 ? 'visible':'hidden';
-    if(n===6){ navrow.classList.add('hide'); progress.classList.add('hide'); buildResult(); }
-    else { navrow.classList.remove('hide'); progress.classList.remove('hide'); barFill.style.width=((n-1)/4*100)+'%'; }
-    nextBtn.textContent = n===5 ? 'See my estimate' : 'Continue';
-    if(n===5){ var s=document.createElementNS('http://www.w3.org/2000/svg','svg'); }
-    validate();
-    window.scrollTo({top:0,behavior:'smooth'});
+  function order(){
+    var o=['engagement','topic','datefmt'];
+    if(state.format!=='Virtual') o.push('location');
+    o.push('audience');
+    o.push(state.engagement==='probono' ? 'cause' : 'money');
+    o.push('contact','goals','result');
+    return o;
   }
 
-  // option groups (single-select)
-  document.querySelectorAll('.opts').forEach(function(grp){
-    grp.querySelectorAll('.opt').forEach(function(opt){
-      opt.addEventListener('click',function(){
-        grp.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel');});
-        opt.classList.add('sel');
-        var g=grp.getAttribute('data-group');
-        if(g==='engagement'){
-          state.engagement=opt.getAttribute('data-val');
-          state.engLo=+opt.getAttribute('data-lo'); state.engHi=+opt.getAttribute('data-hi');
-          toggleProBono(state.engagement==='probono');
-        }
-        if(g==='budget'){ state.budget=opt.getAttribute('data-val'); state.tier=opt.getAttribute('data-tier'); }
-        validate();
-      });
-    });
-  });
-  // chips
-  document.querySelectorAll('.chips').forEach(function(grp){
-    grp.querySelectorAll('.chip').forEach(function(c){
-      c.addEventListener('click',function(){
-        grp.querySelectorAll('.chip').forEach(function(x){x.classList.remove('sel');});
-        c.classList.add('sel'); state.size=c.getAttribute('data-val'); validate();
+  function show(key){
+    current=key;
+    applyState();
+    steps.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-key')===key); });
+    var o=order(), i=o.indexOf(key), inputs=o.slice(0,-1);
+    if(key==='result'){ progress.classList.add('hide'); navrow.classList.add('hide'); buildResult(); }
+    else {
+      progress.classList.remove('hide'); navrow.classList.remove('hide');
+      stepNum.textContent=i+1; stepTotal.textContent=inputs.length;
+      barFill.style.width=(inputs.length<2?100:(i/(inputs.length-1))*100)+'%';
+      backBtn.style.visibility = i>0 ? 'visible':'hidden';
+      nextBtn.textContent = o[i+1]==='result' ? 'See my estimate' : 'Continue';
+    }
+    validate();
+    save();
+    window.scrollTo({top:0,behavior:'smooth'});
+    var el=document.querySelector('.step.active input, .step.active textarea'); if(el && key!=='engagement' && key!=='topic') setTimeout(function(){el.focus();},120);
+  }
+  function go(dir){
+    var o=order(), i=o.indexOf(current);
+    var n=Math.max(0,Math.min(o.length-1,i+dir));
+    show(o[n]);
+  }
+
+  // single-select groups
+  document.querySelectorAll('[data-group]').forEach(function(grp){
+    var multi=false; // all single-select here
+    grp.querySelectorAll('.opt,.chip').forEach(function(el){
+      el.addEventListener('click',function(){
+        grp.querySelectorAll('.opt,.chip').forEach(function(x){x.classList.remove('sel');});
+        el.classList.add('sel');
+        var g=grp.getAttribute('data-group'), v=el.getAttribute('data-val');
+        state[g]=v;
+        if(g==='engagement'){ var e=ENG[v]||{lo:0,hi:0}; state.engLo=e.lo; state.engHi=e.hi; if(v==='virtual') state.format='Virtual'; }
+        if(g==='budget'){ state.tier=el.getAttribute('data-tier'); }
+        validate(); save();
+        // auto-advance on pure single-select steps
+        var sec=el.closest('.step');
+        if(sec && sec.getAttribute('data-auto')==='1'){ setTimeout(function(){ if(current===sec.getAttribute('data-key')) go(1); },240); }
       });
     });
   });
   // inputs
-  function bind(id,key){var el=document.getElementById(id);if(el)el.addEventListener('input',function(){state[key]=el.value;validate();});}
-  bind('f_date','date');bind('f_location','location');bind('f_org','org');bind('f_cause','cause');
-  bind('f_name','name');bind('f_email','email');bind('f_notes','notes');
-
-  function toggleProBono(on){
-    document.getElementById('budgetBlock').classList.toggle('hide',on);
-    document.getElementById('causeBlock').classList.toggle('hide',!on);
-  }
+  function bind(id,key,transform){var el=document.getElementById(id);if(!el)return;
+    var ev=el.type==='checkbox'?'change':'input';
+    el.addEventListener(ev,function(){ state[key]= el.type==='checkbox'?el.checked:(transform?transform(el.value):el.value); validate(); save(); });}
+  bind('f_date','date');bind('f_dateEnd','dateEnd');bind('f_flexible','flexible');bind('f_city','city');bind('f_country','country');
+  bind('f_org','org');bind('f_website','website');bind('f_cause','cause');bind('f_name','name');bind('f_title','title');
+  bind('f_email','email');bind('f_phone','phone');bind('f_goals','goals');
 
   function emailOk(v){return /.+@.+\..+/.test(v);}
-
   function validate(){
     var ok=true;
-    if(step===1) ok=!!state.engagement;
-    else if(step===2) ok=state.date.trim().length>1;
-    else if(step===3) ok=state.org.trim().length>1 && !!state.size;
-    else if(step===4) ok = state.engagement==='probono' ? state.cause.trim().length>3 : !!state.budget;
-    else if(step===5) ok=state.name.trim().length>1 && emailOk(state.email);
+    switch(current){
+      case 'engagement': ok=!!state.engagement; break;
+      case 'topic': ok=!!state.topic; break;
+      case 'datefmt': ok=!!state.format && (!!state.date || state.flexible); break;
+      case 'location': ok=state.city.trim().length>1; break;
+      case 'audience': ok=state.org.trim().length>1 && !!state.size; break;
+      case 'money': ok=!!state.bookedBefore && !!state.budget; break;
+      case 'cause': ok=state.cause.trim().length>3; break;
+      case 'contact': ok=state.name.trim().length>1 && !!state.decisionRole && emailOk(state.email); break;
+      case 'goals': ok=true; break;
+    }
     nextBtn.disabled=!ok;
   }
+  nextBtn.addEventListener('click',function(){ if(!nextBtn.disabled) go(1); });
+  backBtn.addEventListener('click',function(){ go(-1); });
+  document.getElementById('wiz').addEventListener('keydown',function(e){
+    if(e.key==='Enter' && current!=='goals' && e.target.tagName!=='TEXTAREA'){ e.preventDefault(); if(!nextBtn.disabled) go(1); }
+  });
 
-  nextBtn.addEventListener('click',function(){ if(nextBtn.disabled)return; show(Math.min(step+1,TOTAL)); });
-  backBtn.addEventListener('click',function(){ show(Math.max(step-1,1)); });
+  // ── persistence ──────────────────────────────────────────────────
+  function save(){ try{ localStorage.setItem(SAVE_KEY, JSON.stringify({state:state,key:current})); }catch(e){} }
+  function applyState(){
+    // reflect single-selects
+    document.querySelectorAll('[data-group]').forEach(function(grp){
+      var g=grp.getAttribute('data-group'), v=state[g];
+      grp.querySelectorAll('.opt,.chip').forEach(function(el){ el.classList.toggle('sel', !!v && el.getAttribute('data-val')===v); });
+    });
+    // reflect inputs
+    [['f_date','date'],['f_dateEnd','dateEnd'],['f_city','city'],['f_country','country'],['f_org','org'],['f_website','website'],
+     ['f_cause','cause'],['f_name','name'],['f_title','title'],['f_email','email'],['f_phone','phone'],['f_goals','goals']].forEach(function(p){
+      var el=document.getElementById(p[0]); if(el && state[p[1]]) el.value=state[p[1]];
+    });
+    var fx=document.getElementById('f_flexible'); if(fx) fx.checked=!!state.flexible;
+    if(state.engagement){ var e=ENG[state.engagement]||{lo:0,hi:0}; state.engLo=e.lo; state.engHi=e.hi; }
+  }
 
-  // ── pricing engine ────────────────────────────────
-  function seasonFactor(dateStr){
-    var s=(dateStr||'').toLowerCase(), m=-1;
-    var months=['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
-    for(var i=0;i<12;i++){ if(s.indexOf(months[i])>-1){m=i;break;} }
-    if(m<0){ var mm=s.match(/\b(0?[1-9]|1[0-2])[\/\-]/); if(mm)m=+mm[1]-1; }
-    // peak: Sep–Nov (8,9,10) and Feb–Apr (1,2,3); low: Jul,Aug,Dec (6,7,11)
+  // ── pricing ──────────────────────────────────────────────────────
+  function seasonFactor(iso){
+    var m=-1; var mm=(iso||'').match(/^\d{4}-(\d{2})-\d{2}/); if(mm) m=+mm[1]-1;
     if([8,9,10,1,2,3].indexOf(m)>-1) return {f:1.12,label:'peak season'};
     if([6,7,11].indexOf(m)>-1) return {f:0.92,label:'off-peak'};
     return {f:1,label:''};
   }
-  function fmt(n){ return '$'+Math.round(n/500)*500/1000+'k'; }
   function fmtRange(lo,hi){ return '$'+(Math.round(lo/500)*500).toLocaleString('en-US')+' – $'+(Math.round(hi/500)*500).toLocaleString('en-US'); }
+  function prettyDate(iso){ if(!iso) return ''; var p=iso.split('-'); if(p.length!==3) return iso;
+    var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]-1]; return mo+' '+(+p[2])+', '+p[0]; }
 
   function buildResult(){
     var badge=document.getElementById('resBadge'), estVal=document.getElementById('estVal'),
-        estCap=document.getElementById('estCap'), msg=document.getElementById('resMsg'),
-        estWrap=document.getElementById('estWrap');
+        estCap=document.getElementById('estCap'), msg=document.getElementById('resMsg'), estWrap=document.getElementById('estWrap');
+    var dateStr = state.flexible ? 'Flexible' : (prettyDate(state.date)+(state.dateEnd?(' to '+prettyDate(state.dateEnd)):''));
+    var loc = state.format==='Virtual' ? 'Virtual' : ([state.city,state.country].filter(Boolean).join(', ')||'·');
 
     var rows=[
-      ['Engagement', engLabel(state.engagement)],
-      ['Date', state.date||'·'],
-      ['Location', state.location||'·'],
+      ['Engagement', ENG[state.engagement] ? ENG[state.engagement].label : '·'],
+      ['Topic', state.topic||'·'],
+      ['Format', state.format||'·'],
+      ['Date', dateStr||'·'],
+      ['Location', loc],
       ['Organization', state.org||'·'],
-      ['Audience', state.size||'·']
+      ['Audience', (state.size||'·')+(state.audType?(' · '+state.audType):'')]
     ];
 
+    estWrap.classList.remove('hide');
     if(state.engagement==='probono'){
       estWrap.classList.add('hide');
-      badge.textContent='Pro-bono / reduced fee';
-      badge.className='badge';
-      msg.innerHTML='Thank you for thinking of Drew. He sets aside a handful of reduced-fee and pro-bono talks each year for causes that resonate. Send the details and he’ll personally take a look, usually within a few days.';
-      rows.push(['Cause', state.cause? (state.cause.slice(0,60)+(state.cause.length>60?'…':'')) : '·']);
+      badge.textContent='Pro-bono / reduced fee'; badge.className='badge';
+      msg.textContent='Thank you for thinking of Drew. He sets aside a handful of reduced-fee and pro-bono talks each year for causes that resonate. Send the details and he will personally take a look, usually within a few days.';
+      rows.push(['Cause', state.cause? (state.cause.slice(0,70)+(state.cause.length>70?'…':'')) : '·']);
+    } else if(state.engagement==='unsure' || state.engHi===0){
+      estWrap.classList.add('hide');
+      badge.textContent='Let us help'; badge.className='badge';
+      msg.textContent='Send the details and Drew will recommend the right format and come back with availability and a quote, usually the same day.';
+      if(state.budget) rows.push(['Budget indicated', state.budget]);
     } else {
-      var sf=seasonFactor(state.date);
-      var lo=state.engLo*sf.f, hi=state.engHi*sf.f;
+      var sf=seasonFactor(state.date), lo=state.engLo*sf.f, hi=state.engHi*sf.f;
       if(state.size==='1,500+'){ lo*=1.05; hi*=1.08; }
       estVal.textContent=fmtRange(lo,hi);
       estCap.textContent='Estimated investment'+(sf.label?(' · '+sf.label):'');
       rows.push(['Budget indicated', state.budget||'·']);
-
       if(state.tier==='low'){
-        badge.textContent='Let’s find a way';
-        badge.className='badge';
-        msg.innerHTML='You’re a little under Drew’s typical range for this format, and that’s okay. For the right room he’ll often find a path, a virtual session, a shorter format, or a reduced fee. Send the details and he’ll tell you honestly what’s possible.';
+        badge.textContent='Let us find a way'; badge.className='badge';
+        msg.textContent='You are a little under Drew’s typical range for this format, and that is okay. For the right room he will often find a path: a virtual session, a shorter format, or a reduced fee. Send the details and he will tell you honestly what is possible.';
       } else if(state.tier==='high' || state.tier==='mid'){
-        badge.textContent='Great fit';
-        badge.className='badge good';
-        msg.innerHTML='This looks like a strong fit. Send the details and Drew will confirm availability and a firm quote, usually the same day.';
+        badge.textContent='Great fit'; badge.className='badge good';
+        msg.textContent='This looks like a strong fit. Send the details and Drew will confirm availability and a firm quote, usually the same day.';
       } else {
-        badge.textContent='Estimated range';
-        badge.className='badge';
-        msg.innerHTML='Here’s a ballpark to plan around. Send the details and Drew will come back with a firm number and availability.';
+        badge.textContent='Estimated range'; badge.className='badge';
+        msg.textContent='Here is a ballpark to plan around. Send the details and Drew will come back with a firm number and availability.';
       }
     }
 
     var sumHtml='<h4>Your inquiry</h4>';
-    rows.forEach(function(r){ sumHtml+='<div class="row"><span>'+r[0]+'</span><span>'+escapeHtml(r[1])+'</span></div>'; });
+    rows.forEach(function(r){ sumHtml+='<div class="row"><span>'+r[0]+'</span><span>'+esc(r[1])+'</span></div>'; });
     document.getElementById('resSummary').innerHTML=sumHtml;
-
-    // build mailto
-    var body=
-      'New keynote inquiry from the website:\n\n'+
-      'Engagement: '+engLabel(state.engagement)+'\n'+
-      'Date(s): '+(state.date||'-')+'\n'+
-      'Location: '+(state.location||'-')+'\n'+
-      'Organization: '+(state.org||'-')+'\n'+
-      'Audience size: '+(state.size||'-')+'\n'+
-      (state.engagement==='probono' ? ('Cause: '+(state.cause||'-')+'\n') : ('Budget indicated: '+(state.budget||'-')+'\n'))+
-      (state.engagement!=='probono' ? ('Estimated range shown: '+estVal.textContent+'\n') : '')+
-      '\nName: '+(state.name||'-')+'\n'+
-      'Email: '+(state.email||'-')+'\n'+
-      '\nNotes: '+(state.notes||'-')+'\n';
-    var subject='Keynote Inquiry · '+(state.org||state.name||'New');
-    document.getElementById('sendBtn').setAttribute('href',
-      'mailto:drew@dayoneleadership.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body));
+    document.getElementById('sendBtn').setAttribute('href', mailtoHref(estVal.textContent));
+    save();
   }
 
-  function engLabel(v){return {keynote:'Keynote',workshop:'Keynote + Workshop',retreat:'Half-Day / Retreat',virtual:'Virtual',probono:'Nonprofit / Pro-bono'}[v]||'·';}
-  function escapeHtml(s){return (s+'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function mailtoHref(estShown){
+    var L=[
+      'New booking inquiry from the website:','',
+      'Engagement: '+(ENG[state.engagement]?ENG[state.engagement].label:'-'),
+      'Topic of interest: '+(state.topic||'-'),
+      'Format: '+(state.format||'-'),
+      'Date(s): '+(state.flexible?'Flexible':(prettyDate(state.date)||'-')+(state.dateEnd?(' to '+prettyDate(state.dateEnd)):'')),
+      'Location: '+(state.format==='Virtual'?'Virtual':([state.city,state.country].filter(Boolean).join(', ')||'-')),
+      'Organization: '+(state.org||'-'),
+      'Website: '+(state.website||'-'),
+      'Audience size: '+(state.size||'-'),
+      'Audience type: '+(state.audType||'-'),
+      (state.engagement==='probono' ? 'Cause: '+(state.cause||'-') : 'Booked speakers before: '+(state.bookedBefore||'-')+'\nBudget indicated: '+(state.budget||'-')),
+      (state.engagement!=='probono' && state.engHi>0 ? 'Estimate shown: '+estShown : ''),
+      '',
+      'Name: '+(state.name||'-'),
+      'Title: '+(state.title||'-'),
+      'Role in decision: '+(state.decisionRole||'-'),
+      'Email: '+(state.email||'-'),
+      'Phone: '+(state.phone||'-'),
+      'How they heard: '+(state.heard||'-'),
+      '',
+      'What would make this a win:','  '+(state.goals||'-')
+    ].filter(function(x){return x!=='';}).join('\n');
+    var subject='Keynote inquiry · '+(state.org||state.name||'New');
+    return 'mailto:drew@dayoneleadership.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(L);
+  }
+  function esc(s){return (s+'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
-  show(1);
+  // ── boot: query prefill > saved resume > fresh ──────────────────
+  var qEng=(location.search.match(/[?&]engagement=([^&]+)/)||[])[1];
+  if(qEng) qEng=decodeURIComponent(qEng);
+  var saved=null; try{ saved=JSON.parse(localStorage.getItem(SAVE_KEY)||'null'); }catch(e){}
+
+  if(qEng && ENG[qEng]){
+    if(saved && saved.state){ Object.assign(state,saved.state); }
+    state.engagement=qEng; var e=ENG[qEng]; state.engLo=e.lo; state.engHi=e.hi;
+    if(qEng==='virtual') state.format='Virtual';
+    applyState();
+    show('topic');
+  } else if(saved && saved.state){
+    Object.assign(state,saved.state);
+    applyState();
+    show(saved.key && saved.key!=='result' ? saved.key : 'engagement');
+  } else {
+    show('engagement');
+  }
 })();
 </script>
 </body>

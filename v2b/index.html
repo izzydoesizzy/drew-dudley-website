@@ -218,13 +218,29 @@
     gap:0;
     border:1px solid var(--line);
     border-radius:8px;
-    overflow:hidden;
+    overflow:visible;
   }
-  @media(max-width:1024px){.logo-grid{grid-template-columns:repeat(5,1fr);}}
-  @media(max-width:760px){.logo-grid{grid-template-columns:repeat(4,1fr);}}
+  /* Round the four corner cells so the grid looks clipped without overflow:hidden */
+  .logo-cell:first-child{border-radius:8px 0 0 0;}
+  .logo-cell:nth-child(6){border-radius:0 8px 0 0;}
+  .logo-cell:nth-last-child(6):nth-child(6n+1){border-radius:0 0 0 8px;}
+  .logo-cell:last-child{border-radius:0 0 8px 0;}
+  @media(max-width:1024px){
+    .logo-grid{grid-template-columns:repeat(5,1fr);}
+    .logo-cell:nth-child(6){border-radius:0;}
+    .logo-cell:nth-child(5){border-radius:0 8px 0 0;}
+    .logo-cell:nth-last-child(5):nth-child(5n+1){border-radius:0 0 0 8px;}
+  }
+  @media(max-width:760px){
+    .logo-grid{grid-template-columns:repeat(4,1fr);}
+    .logo-cell:nth-child(5){border-radius:0;}
+    .logo-cell:nth-child(4){border-radius:0 8px 0 0;}
+    .logo-cell:nth-last-child(4):nth-child(4n+1){border-radius:0 0 0 8px;}
+  }
   @media(max-width:540px){.logo-grid{grid-template-columns:repeat(3,1fr);}}
   @media(max-width:360px){.logo-grid{grid-template-columns:repeat(2,1fr);}}
   .logo-cell{
+    position:relative;
     display:flex;
     align-items:center;
     justify-content:center;
@@ -234,8 +250,10 @@
     background:rgba(255,255,255,.018);
     transition:background .25s;
     min-height:96px;
+    cursor:default;
+    overflow:visible;
   }
-  .logo-cell:hover{background:rgba(255,255,255,.05);}
+  .logo-cell:hover{background:rgba(255,255,255,.05);z-index:1;}
   .logo-cell img{
     display:block;
     max-width:100%;
@@ -243,10 +261,42 @@
     width:auto;
     height:auto;
     object-fit:contain;
-    filter:brightness(0) invert(1) opacity(.45);
-    transition:filter .25s, opacity .25s;
+    filter:brightness(0) invert(1) opacity(.4);
+    transition:filter .3s;
   }
   .logo-cell:hover img{filter:brightness(0) invert(1) opacity(.85);}
+  /* Tooltip */
+  .logo-cell .tip{
+    position:absolute;
+    bottom:calc(100% + 8px);
+    left:50%;
+    transform:translateX(-50%) translateY(4px);
+    background:rgba(12,10,8,.92);
+    backdrop-filter:blur(8px);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:.35rem .75rem;
+    font-size:.68rem;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text);
+    white-space:nowrap;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .2s,transform .2s;
+    z-index:100;
+  }
+  .logo-cell .tip::after{
+    content:"";
+    position:absolute;
+    top:100%;
+    left:50%;
+    transform:translateX(-50%);
+    border:5px solid transparent;
+    border-top-color:var(--line);
+  }
+  .logo-cell:hover .tip{opacity:1;transform:translateX(-50%) translateY(0);}
 
   .sp-media{text-align:center;}
   .sp-media .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.9rem 2.5rem;margin-top:1.3rem;}
@@ -376,6 +426,21 @@
   .foot-bottom a{color:var(--muted);transition:color .2s;}
   .foot-bottom a:hover{color:var(--gold);}
   @media(max-width:480px){.foot-cols{grid-template-columns:1fr;}}
+
+  /* Booking quick-start */
+  .qstart{background:linear-gradient(160deg,rgba(30,24,19,.92),rgba(21,17,13,.92));border:1px solid var(--line);border-radius:10px;padding:2rem;box-shadow:0 0 60px rgba(196,146,42,.08);}
+  .qstart h3{font-family:var(--serif);font-weight:600;font-size:1.6rem;margin-bottom:.25rem;color:var(--text);}
+  .qstart .qs-sub{font-size:.82rem;color:var(--muted2);margin-bottom:1.4rem;}
+  .qs-opt{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.15rem;border:1px solid var(--line);
+    border-radius:12px;background:var(--ink2);margin-bottom:.65rem;transition:border-color .2s,background .2s,transform .18s;}
+  .qs-opt:hover{border-color:var(--gold);background:var(--ink3);transform:translateX(3px);}
+  .qs-opt .qt{font-weight:600;font-size:1rem;color:var(--text);}
+  .qs-opt .qr{display:flex;align-items:center;gap:.85rem;flex-shrink:0;}
+  .qs-opt .qp{font-size:.92rem;color:var(--gold);font-family:var(--serif);}
+  .qs-opt .qa{color:var(--gold);transition:transform .18s;}
+  .qs-opt:hover .qa{transform:translateX(3px);}
+  .qs-browse{display:inline-block;margin-top:.9rem;font-size:.85rem;color:var(--muted);border-bottom:1px solid var(--line);padding-bottom:1px;transition:color .2s,border-color .2s;}
+  .qs-browse:hover{color:var(--gold);border-color:var(--gold);}
 </style>
 </head>
 <body>
@@ -451,30 +516,30 @@
     <div class="sp-logos reveal">
       <div class="grid-label"><p class="label">Trusted by leaders at</p></div>
       <div class="logo-grid">
-        <div class="logo-cell"><img src="../assets/logos/coca-cola.svg" alt="Coca-Cola" /></div>
-        <div class="logo-cell"><img src="../assets/logos/jpmorgan.png" alt="J.P. Morgan" /></div>
-        <div class="logo-cell"><img src="../assets/logos/united-nations.svg" alt="United Nations" /></div>
-        <div class="logo-cell"><img src="../assets/logos/harvard.png" alt="Harvard" /></div>
-        <div class="logo-cell"><img src="../assets/logos/mcdonalds.svg" alt="McDonald's" /></div>
-        <div class="logo-cell"><img src="../assets/logos/deloitte.svg" alt="Deloitte" /></div>
-        <div class="logo-cell"><img src="../assets/logos/american-express.svg" alt="American Express" /></div>
-        <div class="logo-cell"><img src="../assets/logos/hyatt.png" alt="Hyatt" /></div>
-        <div class="logo-cell"><img src="../assets/logos/pg.svg" alt="Procter &amp; Gamble" /></div>
-        <div class="logo-cell"><img src="../assets/logos/pwc.svg" alt="PricewaterhouseCoopers" /></div>
-        <div class="logo-cell"><img src="../assets/logos/exxonmobil.png" alt="ExxonMobil" /></div>
-        <div class="logo-cell"><img src="../assets/logos/aveda.png" alt="Aveda" /></div>
-        <div class="logo-cell"><img src="../assets/logos/basf.png" alt="BASF" /></div>
-        <div class="logo-cell"><img src="../assets/logos/bayer.png" alt="Bayer" /></div>
-        <div class="logo-cell"><img src="../assets/logos/comcast.svg" alt="Comcast Business" /></div>
-        <div class="logo-cell"><img src="../assets/logos/estee-lauder.png" alt="Estée Lauder" /></div>
-        <div class="logo-cell"><img src="../assets/logos/habitat.png" alt="Habitat for Humanity" /></div>
-        <div class="logo-cell"><img src="../assets/logos/kiwanis.png" alt="Kiwanis International" /></div>
-        <div class="logo-cell"><img src="../assets/logos/kohls.png" alt="Kohl's" /></div>
-        <div class="logo-cell"><img src="../assets/logos/monster.png" alt="Monster.com" /></div>
-        <div class="logo-cell"><img src="../assets/logos/td-bank.svg" alt="TD Bank" /></div>
-        <div class="logo-cell"><img src="../assets/logos/united-way.png" alt="United Way" /></div>
-        <div class="logo-cell"><img src="../assets/logos/wyndham.png" alt="Wyndham Hotels" /></div>
-        <div class="logo-cell"><img src="../assets/logos/ymca.png" alt="YMCA" /></div>
+        <div class="logo-cell"><img src="../assets/logos/coca-cola.svg" alt="Coca-Cola" /><span class="tip">Coca-Cola</span></div>
+        <div class="logo-cell"><img src="../assets/logos/jpmorgan.png" alt="J.P. Morgan" /><span class="tip">J.P. Morgan</span></div>
+        <div class="logo-cell"><img src="../assets/logos/united-nations.svg" alt="United Nations" /><span class="tip">United Nations</span></div>
+        <div class="logo-cell"><img src="../assets/logos/harvard.svg" alt="Harvard University" /><span class="tip">Harvard University</span></div>
+        <div class="logo-cell"><img src="../assets/logos/mcdonalds.svg" alt="McDonald's" /><span class="tip">McDonald's</span></div>
+        <div class="logo-cell"><img src="../assets/logos/deloitte.svg" alt="Deloitte" /><span class="tip">Deloitte</span></div>
+        <div class="logo-cell"><img src="../assets/logos/american-express.svg" alt="American Express" /><span class="tip">American Express</span></div>
+        <div class="logo-cell"><img src="../assets/logos/hyatt.svg" alt="Hyatt" /><span class="tip">Hyatt</span></div>
+        <div class="logo-cell"><img src="../assets/logos/pg.svg" alt="Procter &amp; Gamble" /><span class="tip">Procter &amp; Gamble</span></div>
+        <div class="logo-cell"><img src="../assets/logos/pwc.svg" alt="PwC" /><span class="tip">PwC</span></div>
+        <div class="logo-cell"><img src="../assets/logos/exxonmobil.png" alt="ExxonMobil" /><span class="tip">ExxonMobil</span></div>
+        <div class="logo-cell"><img src="../assets/logos/aveda.png" alt="Aveda" /><span class="tip">Aveda</span></div>
+        <div class="logo-cell"><img src="../assets/logos/basf.svg" alt="BASF" /><span class="tip">BASF</span></div>
+        <div class="logo-cell"><img src="../assets/logos/bayer.png" alt="Bayer" /><span class="tip">Bayer</span></div>
+        <div class="logo-cell"><img src="../assets/logos/comcast.svg" alt="Comcast Business" /><span class="tip">Comcast Business</span></div>
+        <div class="logo-cell"><img src="../assets/logos/estee-lauder.png" alt="Estée Lauder" /><span class="tip">Estée Lauder</span></div>
+        <div class="logo-cell"><img src="../assets/logos/habitat.png" alt="Habitat for Humanity" /><span class="tip">Habitat for Humanity</span></div>
+        <div class="logo-cell"><img src="../assets/logos/kiwanis.png" alt="Kiwanis International" /><span class="tip">Kiwanis International</span></div>
+        <div class="logo-cell"><img src="../assets/logos/kohls.png" alt="Kohl's" /><span class="tip">Kohl's</span></div>
+        <div class="logo-cell"><img src="../assets/logos/monster.png" alt="Monster.com" /><span class="tip">Monster.com</span></div>
+        <div class="logo-cell"><img src="../assets/logos/td-bank.svg" alt="TD Bank" /><span class="tip">TD Bank</span></div>
+        <div class="logo-cell"><img src="../assets/logos/united-way.svg" alt="United Way" /><span class="tip">United Way</span></div>
+        <div class="logo-cell"><img src="../assets/logos/wyndham.svg" alt="Wyndham Hotels &amp; Resorts" /><span class="tip">Wyndham Hotels &amp; Resorts</span></div>
+        <div class="logo-cell"><img src="../assets/logos/ymca.png" alt="YMCA" /><span class="tip">YMCA</span></div>
       </div>
     </div>
 
@@ -681,21 +746,16 @@
           <li><span class="dot"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p><b>Built around your room.</b> Every talk is tailored to the audience in it.</p></li>
         </ul>
       </div>
-      <div class="book-form reveal">
-        <div class="field"><label>Your Name</label><input type="text" placeholder="Full name" /></div>
-        <div class="field"><label>Organization</label><input type="text" placeholder="Company or organization" /></div>
-        <div class="row2">
-          <div class="field"><label>Event Date(s)</label><input type="text" placeholder="e.g. Oct 14, 2026" /></div>
-          <div class="field"><label>Location</label><input type="text" placeholder="City, or Virtual" /></div>
-        </div>
-        <div class="row2">
-          <div class="field"><label>Engagement</label><select><option selected disabled>Select</option><option>Keynote</option><option>Keynote + Workshop</option><option>Executive Retreat</option><option>Virtual</option><option>Pro-bono</option></select></div>
-          <div class="field"><label>Budget</label><select><option selected disabled>Select</option><option>Under $10K</option><option>$10K–$20K</option><option>$20K+</option><option>Flexible</option><option>Not sure</option></select></div>
-        </div>
-        <div class="field"><label>Anything Else</label><textarea rows="3" placeholder="Theme, audience, what a win looks like."></textarea></div>
-        <a href="mailto:drew@dayoneleadership.com?subject=Keynote%20Inquiry" class="btn btn-gold" style="width:100%;justify-content:center;">Send Inquiry</a>
-        <div class="book-trust"><span class="dot"></span> Usually responds the same day</div>
-        <p style="font-size:.72rem;color:var(--muted2);text-align:center;margin-top:.5rem;">Opens an email to drew@dayoneleadership.com</p>
+      <div class="qstart reveal">
+        <h3>Start your booking</h3>
+        <p class="qs-sub">Takes about 2 minutes. Pick a format to begin.</p>
+        <a class="qs-opt" href="../book/?engagement=keynote"><span class="qt">Keynote</span><span class="qr"><span class="qp">$15k–22k</span><svg class="qa" width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="qs-opt" href="../book/?engagement=workshop"><span class="qt">Keynote + Workshop</span><span class="qr"><span class="qp">$22k–32k</span><svg class="qa" width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="qs-opt" href="../book/?engagement=retreat"><span class="qt">Half-Day / Retreat</span><span class="qr"><span class="qp">$30k–45k</span><svg class="qa" width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="qs-opt" href="../book/?engagement=virtual"><span class="qt">Virtual</span><span class="qr"><span class="qp">$8k–15k</span><svg class="qa" width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="qs-opt" href="../book/?engagement=probono"><span class="qt">Nonprofit / Pro-bono</span><span class="qr"><svg class="qa" width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a class="qs-browse" href="../book/">Not sure yet? Browse all options →</a>
+        <div class="book-trust" style="margin-top:1.2rem;"><span class="dot"></span> Usually responds the same day</div>
       </div>
     </div>
   </div>
