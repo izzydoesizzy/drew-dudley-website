@@ -233,7 +233,11 @@
       <p class="q-eyebrow">Your room</p>
       <h2 class="q-title">Tell us about the audience.</h2>
       <p class="q-help">Drew tailors every talk to the people in the room.</p>
-      <div class="field"><label>Organization</label><input type="text" id="f_org" placeholder="Company or organization" /></div>
+      <div class="field ac-field">
+        <label>Organization</label>
+        <input type="text" id="f_org" autocomplete="off" placeholder="Company or organization" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="orgAC" />
+        <div class="ac-menu" id="orgAC" role="listbox"></div>
+      </div>
       <div class="field"><label>Website <span class="opt-label">(optional)</span></label><input type="text" id="f_website" placeholder="yourorg.com" /></div>
       <p class="sub-label">Audience size</p>
       <div class="chips" data-group="size">
@@ -575,6 +579,83 @@
     ['England','','United Kingdom'],['Scotland','','United Kingdom'],['Wales','','United Kingdom'],
     ['Northern Ireland','','United Kingdom']
   ];
+  // ── company / organization suggestions ─ Each entry: [Name, Website]
+  var COMPANIES=[
+    // ─ Canada ─
+    ['Royal Bank of Canada','rbc.com'],['TD Bank Group','td.com'],['Scotiabank','scotiabank.com'],
+    ['Bank of Montreal','bmo.com'],['CIBC','cibc.com'],['National Bank of Canada','nbc.ca'],
+    ['Manulife','manulife.com'],['Sun Life','sunlife.com'],['Great-West Lifeco','greatwestlifeco.com'],
+    ['Brookfield Asset Management','brookfield.com'],['Power Corporation of Canada','powercorporation.com'],
+    ['Fairfax Financial','fairfax.ca'],['Intact Financial','intactfc.com'],['Desjardins','desjardins.com'],
+    ['Shopify','shopify.com'],['Constellation Software','csisoftware.com'],['OpenText','opentext.com'],
+    ['CGI','cgi.com'],['Lightspeed Commerce','lightspeedhq.com'],['BlackBerry','blackberry.com'],
+    ['Telus','telus.com'],['Rogers Communications','rogers.com'],['BCE (Bell Canada)','bce.ca'],
+    ['Enbridge','enbridge.com'],['TC Energy','tcenergy.com'],['Suncor Energy','suncor.com'],
+    ['Canadian Natural Resources','cnrl.com'],['Imperial Oil','imperialoil.ca'],['Cenovus Energy','cenovus.com'],
+    ['Pembina Pipeline','pembina.com'],['Fortis','fortisinc.com'],['Hydro One','hydroone.com'],
+    ['Canadian National Railway','cn.ca'],['Canadian Pacific Kansas City','cpkcr.com'],['Air Canada','aircanada.com'],
+    ['WestJet','westjet.com'],['Bombardier','bombardier.com'],['Magna International','magna.com'],
+    ['Linamar','linamar.com'],['Nutrien','nutrien.com'],['Agrium','nutrien.com'],['Teck Resources','teck.com'],
+    ['Barrick Gold','barrick.com'],['Agnico Eagle Mines','agnicoeagle.com'],['Franco-Nevada','franco-nevada.com'],
+    ['Nexen','cnoocinternational.com'],['Cameco','cameco.com'],['First Quantum Minerals','first-quantum.com'],
+    ['Loblaw Companies','loblaw.ca'],['George Weston','weston.ca'],['Metro','metro.ca'],
+    ['Empire Company (Sobeys)','empireco.ca'],['Alimentation Couche-Tard','couche-tard.com'],
+    ['Canadian Tire','canadiantire.ca'],['Dollarama','dollarama.com'],['Lululemon','lululemon.com'],
+    ['Aritzia','aritzia.com'],['Roots','roots.com'],['Hudson’s Bay','thebay.com'],['Indigo','indigo.ca'],
+    ['Restaurant Brands International','rbi.com'],['Tim Hortons','timhortons.com'],['Saputo','saputo.com'],
+    ['Maple Leaf Foods','mapleleaffoods.com'],['McCain Foods','mccain.com'],['Cineplex','cineplex.com'],
+    ['Thomson Reuters','thomsonreuters.com'],['Spin Master','spinmaster.com'],['Gildan Activewear','gildancorp.com'],
+    ['SNC-Lavalin (AtkinsRéalis)','atkinsrealis.com'],['WSP Global','wsp.com'],['Stantec','stantec.com'],
+    ['Onex','onex.com'],['CPP Investments','cppinvestments.com'],['Ontario Teachers’ Pension Plan','otpp.com'],
+    ['Wealthsimple','wealthsimple.com'],['Hootsuite','hootsuite.com'],['Clio','clio.com'],
+    ['Wattpad','wattpad.com'],['Coveo','coveo.com'],['Descartes Systems','descartes.com'],
+    ['Kinaxis','kinaxis.com'],['Dye & Durham','dyedurham.com'],['Nuvei','nuvei.com'],
+    // ─ United States ─
+    ['Apple','apple.com'],['Microsoft','microsoft.com'],['Alphabet (Google)','google.com'],
+    ['Amazon','amazon.com'],['Meta Platforms','meta.com'],['Nvidia','nvidia.com'],['Tesla','tesla.com'],
+    ['Netflix','netflix.com'],['Adobe','adobe.com'],['Salesforce','salesforce.com'],['Oracle','oracle.com'],
+    ['IBM','ibm.com'],['Intel','intel.com'],['Cisco Systems','cisco.com'],['Qualcomm','qualcomm.com'],
+    ['Broadcom','broadcom.com'],['Texas Instruments','ti.com'],['AMD','amd.com'],['Dell Technologies','dell.com'],
+    ['HP','hp.com'],['Hewlett Packard Enterprise','hpe.com'],['ServiceNow','servicenow.com'],
+    ['Intuit','intuit.com'],['Workday','workday.com'],['Snowflake','snowflake.com'],['Palantir','palantir.com'],
+    ['Uber','uber.com'],['Airbnb','airbnb.com'],['PayPal','paypal.com'],['Block (Square)','block.xyz'],
+    ['Stripe','stripe.com'],['Zoom','zoom.us'],['Spotify','spotify.com'],['Snap','snap.com'],
+    ['Pinterest','pinterest.com'],['Reddit','reddit.com'],['DoorDash','doordash.com'],['Coinbase','coinbase.com'],
+    ['JPMorgan Chase','jpmorganchase.com'],['Bank of America','bankofamerica.com'],['Wells Fargo','wellsfargo.com'],
+    ['Citigroup','citigroup.com'],['Goldman Sachs','goldmansachs.com'],['Morgan Stanley','morganstanley.com'],
+    ['American Express','americanexpress.com'],['Visa','visa.com'],['Mastercard','mastercard.com'],
+    ['Capital One','capitalone.com'],['Charles Schwab','schwab.com'],['BlackRock','blackrock.com'],
+    ['Berkshire Hathaway','berkshirehathaway.com'],['Fidelity Investments','fidelity.com'],
+    ['UBS Americas','ubs.com'],['U.S. Bancorp','usbank.com'],['PNC Financial','pnc.com'],
+    ['Walmart','walmart.com'],['Costco','costco.com'],['Target','target.com'],['The Home Depot','homedepot.com'],
+    ['Lowe’s','lowes.com'],['Best Buy','bestbuy.com'],['CVS Health','cvshealth.com'],['Walgreens','walgreens.com'],
+    ['Kroger','kroger.com'],['Albertsons','albertsons.com'],['The Coca-Cola Company','coca-colacompany.com'],
+    ['PepsiCo','pepsico.com'],['Procter & Gamble','pg.com'],['Mondelez International','mondelezinternational.com'],
+    ['Kraft Heinz','kraftheinzcompany.com'],['General Mills','generalmills.com'],['Nike','nike.com'],
+    ['McDonald’s','mcdonalds.com'],['Starbucks','starbucks.com'],['Chipotle','chipotle.com'],
+    ['Yum! Brands','yum.com'],['Estée Lauder','elcompanies.com'],['Colgate-Palmolive','colgatepalmolive.com'],
+    ['Johnson & Johnson','jnj.com'],['Pfizer','pfizer.com'],['Merck','merck.com'],['AbbVie','abbvie.com'],
+    ['Eli Lilly','lilly.com'],['Bristol Myers Squibb','bms.com'],['Amgen','amgen.com'],['Gilead Sciences','gilead.com'],
+    ['Moderna','modernatx.com'],['Thermo Fisher Scientific','thermofisher.com'],['Abbott','abbott.com'],
+    ['Medtronic','medtronic.com'],['UnitedHealth Group','unitedhealthgroup.com'],['CVS Aetna','aetna.com'],
+    ['Cigna','cigna.com'],['Humana','humana.com'],['Elevance Health','elevancehealth.com'],
+    ['ExxonMobil','exxonmobil.com'],['Chevron','chevron.com'],['ConocoPhillips','conocophillips.com'],
+    ['Schlumberger (SLB)','slb.com'],['Phillips 66','phillips66.com'],['Marathon Petroleum','marathonpetroleum.com'],
+    ['NextEra Energy','nexteraenergy.com'],['Duke Energy','duke-energy.com'],['Boeing','boeing.com'],
+    ['Lockheed Martin','lockheedmartin.com'],['RTX (Raytheon)','rtx.com'],['General Dynamics','gd.com'],
+    ['Northrop Grumman','northropgrumman.com'],['Honeywell','honeywell.com'],['General Electric','ge.com'],
+    ['Caterpillar','caterpillar.com'],['Deere & Company','deere.com'],['3M','3m.com'],['Emerson Electric','emerson.com'],
+    ['Ford Motor','ford.com'],['General Motors','gm.com'],['Stellantis North America','stellantis.com'],
+    ['Paccar','paccar.com'],['FedEx','fedex.com'],['UPS','ups.com'],['Delta Air Lines','delta.com'],
+    ['American Airlines','aa.com'],['United Airlines','united.com'],['Southwest Airlines','southwest.com'],
+    ['Union Pacific','up.com'],['Marriott International','marriott.com'],['Hilton','hilton.com'],
+    ['The Walt Disney Company','thewaltdisneycompany.com'],['Comcast','comcast.com'],['Warner Bros. Discovery','wbd.com'],
+    ['Paramount Global','paramount.com'],['AT&T','att.com'],['Verizon','verizon.com'],['T-Mobile US','t-mobile.com'],
+    ['Accenture','accenture.com'],['Deloitte','deloitte.com'],['PwC','pwc.com'],['EY','ey.com'],['KPMG','kpmg.com'],
+    ['McKinsey & Company','mckinsey.com'],['Boston Consulting Group','bcg.com'],['Bain & Company','bain.com'],
+    ['American Tower','americantower.com'],['Prologis','prologis.com'],['CBRE Group','cbre.com'],
+    ['S&P Global','spglobal.com'],['Moody’s','moodys.com'],['Booking Holdings','bookingholdings.com']
+  ];
   var cityInput=document.getElementById('f_city'),
       countryInput=document.getElementById('f_country'),
       acMenu=document.getElementById('cityAC'),
@@ -684,6 +765,62 @@
       else if(e.key==='Escape'){ e.stopPropagation(); regClose(); }
     });
     countryInput.addEventListener('blur',function(){ setTimeout(regClose,120); });
+  }
+
+  // ── company / organization autocomplete on the org field ────
+  var orgInput=document.getElementById('f_org'),
+      websiteInput=document.getElementById('f_website'),
+      orgMenu=document.getElementById('orgAC'), orgMatches=[], orgActive=-1;
+  function orgClose(){ if(!orgMenu) return; orgMenu.classList.remove('open'); orgMenu.innerHTML=''; orgMatches=[]; orgActive=-1;
+    if(orgInput) orgInput.setAttribute('aria-expanded','false'); }
+  function orgRender(){
+    orgMenu.innerHTML='';
+    orgMatches.forEach(function(e,i){
+      var row=document.createElement('div');
+      row.className='ac-item'+(i===orgActive?' active':'');
+      row.setAttribute('role','option');
+      var c=document.createElement('span'); c.className='ac-city'; c.textContent=e[0];
+      var r=document.createElement('span'); r.className='ac-rest'; r.textContent=e[1];
+      row.appendChild(c); row.appendChild(r);
+      row.addEventListener('mousedown',function(ev){ ev.preventDefault(); orgPick(i); });
+      orgMenu.appendChild(row);
+    });
+    orgMenu.classList.add('open');
+    if(orgInput) orgInput.setAttribute('aria-expanded','true');
+  }
+  function orgPick(i){
+    var e=orgMatches[i]; if(!e) return;
+    orgInput.value=e[0]; state.org=e[0];
+    if(websiteInput && !websiteInput.value.trim()){ websiteInput.value=e[1]; state.website=e[1]; }
+    orgClose(); validate(); save();
+  }
+  function orgSearch(q){
+    q=q.trim().toLowerCase(); if(q.length<1) return [];
+    var starts=[], contains=[];
+    for(var i=0;i<COMPANIES.length;i++){
+      var name=COMPANIES[i][0].toLowerCase();
+      if(name.indexOf(q)===0) starts.push(COMPANIES[i]);
+      else if(name.indexOf(q)>-1) contains.push(COMPANIES[i]);
+      if(starts.length>=7) break;
+    }
+    return starts.concat(contains).slice(0,7);
+  }
+  if(orgInput){
+    orgInput.addEventListener('input',function(){
+      orgMatches=orgSearch(orgInput.value); orgActive=-1;
+      if(orgMatches.length) orgRender(); else orgClose();
+    });
+    orgInput.addEventListener('keydown',function(e){
+      if(!orgMenu.classList.contains('open')) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); orgActive=Math.min(orgActive+1,orgMatches.length-1); orgRender(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); orgActive=Math.max(orgActive-1,0); orgRender(); }
+      else if(e.key==='Enter'){
+        if(orgActive>-1){ e.preventDefault(); e.stopPropagation(); orgPick(orgActive); }
+        else { orgClose(); }
+      }
+      else if(e.key==='Escape'){ e.stopPropagation(); orgClose(); }
+    });
+    orgInput.addEventListener('blur',function(){ setTimeout(orgClose,120); });
   }
 
   function emailOk(v){return /.+@.+\..+/.test(v);}
