@@ -8,7 +8,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Caveat:wght@600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
 <style>
   *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -236,6 +236,86 @@
   .ttile.video .vcap{display:flex;align-items:center;gap:.6rem;padding:.85rem .7rem .35rem;}
   .ttile.video .vcap .stars{margin:0;font-size:.78rem;}
   .ttile.video .vcap .vlabel{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+
+  /* ════ VISUAL POLISH PASS ════ */
+  /* film grain overlay (subtle, non-interactive) */
+  .grain::after{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;opacity:.05;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+
+  /* Hero aura + chip */
+  .hero{position:relative;}
+  .hero-aura{position:absolute;left:8%;top:20%;width:46rem;max-width:70%;height:34rem;z-index:0;pointer-events:none;
+    background:radial-gradient(closest-side, rgba(196,146,42,.16), rgba(196,146,42,.05) 55%, transparent 75%);}
+  .hero .wrap{position:relative;z-index:2;}
+  .hero-chip{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;padding:.45rem .9rem;border:1px solid var(--line);
+    border-radius:100px;background:rgba(196,146,42,.06);font-size:.72rem;letter-spacing:.08em;color:var(--muted);}
+  .hero-chip b{color:var(--gold);font-weight:700;}
+  .hero-chip .st{color:var(--gold);}
+
+  /* Marquee edge fade */
+  .marquee{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);}
+
+  /* Social proof: dividers + stronger glow */
+  .sp-stats{position:relative;}
+  .sp-stat{position:relative;}
+  .sp-stat + .sp-stat::before{content:"";position:absolute;left:-.75rem;top:14%;bottom:14%;width:1px;
+    background:linear-gradient(var(--line),rgba(196,146,42,.35),var(--line));}
+  @media(max-width:860px){.sp-stat + .sp-stat::before{display:none;}}
+  .sp-logos .row{gap:.7rem 1rem;}
+  .sp-logos .row span{padding:.5rem 1.1rem;border:1px solid var(--line);border-radius:100px;font-size:1.15rem;
+    background:rgba(255,255,255,.015);transition:border-color .2s,color .2s;}
+  .sp-logos .row span.feat{color:var(--text);border-color:rgba(196,146,42,.32);}
+
+  /* The Speaker: pull-quote + signature */
+  .speaker-quote{font-family:var(--serif);font-style:italic;font-weight:500;line-height:1.3;letter-spacing:-.01em;
+    font-size:clamp(1.35rem,2.4vw,1.85rem);color:var(--gold2,#c4a882);border-left:2px solid var(--gold);padding-left:1.4rem;margin:2rem 0 0;}
+  .speaker-sign{font-family:'Caveat',cursive;font-size:2.4rem;line-height:1;color:var(--gold);margin-top:1.6rem;}
+
+  /* Watch: cinematic frame */
+  .video-feature{border:1px solid rgba(196,146,42,.35);border-radius:10px;box-shadow:0 0 0 1px rgba(0,0,0,.4),0 30px 80px rgba(0,0,0,.45),0 0 70px rgba(196,146,42,.10);}
+  .reel-chip{position:absolute;top:1rem;left:1rem;z-index:3;display:inline-flex;align-items:baseline;gap:.4rem;
+    padding:.5rem .9rem;border-radius:100px;background:rgba(12,10,8,.7);backdrop-filter:blur(6px);border:1px solid rgba(196,146,42,.3);}
+  .reel-chip b{font-family:var(--serif);font-size:1.05rem;color:var(--gold);line-height:1;}
+  .reel-chip span{font-size:.66rem;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);}
+
+  /* Keynote Collection */
+  .kc-group{margin-top:3.5rem;}
+  .kc-glabel{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.26em;color:var(--muted2);
+    display:flex;align-items:center;gap:1rem;margin-bottom:1.6rem;}
+  .kc-glabel::after{content:"";flex:1;height:1px;background:var(--line);}
+  .kc{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  @media(max-width:760px){.kc{grid-template-columns:1fr;}}
+  .kc-card{position:relative;padding:2rem 2rem 2rem 2.4rem;border:1px solid var(--line);border-left:2px solid var(--gold);
+    border-radius:8px;background:linear-gradient(160deg,var(--ink3),var(--ink2));transition:transform .3s,border-color .3s;}
+  .kc-card:hover{transform:translateY(-4px);border-color:var(--gold);}
+  .kc-num{position:absolute;top:1.4rem;right:1.6rem;font-family:var(--serif);font-size:1.4rem;color:var(--muted2);}
+  .kc-card h3{font-family:var(--serif);font-weight:700;font-size:1.5rem;line-height:1.12;color:var(--text);margin-bottom:.2rem;padding-right:2rem;}
+  .kc-card .sub{font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;color:var(--gold);margin-bottom:1rem;}
+  .kc-card p{font-size:.95rem;line-height:1.6;color:var(--muted);}
+  .kc-card .epi{margin-top:1.1rem;padding-top:1.1rem;border-top:1px solid var(--line);font-family:var(--serif);font-style:italic;
+    font-size:1rem;color:var(--gold2,#c4a882);}
+
+  /* Full-bleed photo band */
+  .band{position:relative;min-height:60vh;display:flex;align-items:center;overflow:hidden;}
+  .band img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 22%;}
+  .band::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,7,5,.92),rgba(8,7,5,.55) 55%,rgba(8,7,5,.4));}
+  .band::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(8,7,5,.85),transparent 40%,rgba(8,7,5,.5));}
+  .band .wrap{position:relative;z-index:2;}
+  .band blockquote{font-family:var(--serif);font-style:italic;font-weight:500;line-height:1.22;letter-spacing:-.01em;
+    font-size:clamp(1.9rem,4.4vw,3.4rem);color:var(--text);max-width:20ch;}
+  .band .src{margin-top:1.6rem;font-size:.78rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);}
+
+  /* Book: glassy form + glow + trust line */
+  .book-form{position:relative;background:linear-gradient(160deg,rgba(30,24,19,.9),rgba(21,17,13,.9));box-shadow:0 0 60px rgba(196,146,42,.08);}
+  .book-form input,.book-form select,.book-form textarea{background:rgba(0,0,0,.25);border-radius:6px;transition:border-color .2s,box-shadow .2s;}
+  .book-form input:focus,.book-form select:focus,.book-form textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(196,146,42,.12);}
+  .book-trust{display:flex;align-items:center;gap:.5rem;justify-content:center;margin-top:1rem;font-size:.74rem;color:var(--muted2);}
+  .book-trust .dot{width:6px;height:6px;border-radius:50%;background:#7fbf8f;box-shadow:0 0 8px #7fbf8f;}
+
+  /* Footer social */
+  .foot-social{display:flex;gap:1.4rem;margin-top:1.5rem;}
+  .foot-social a{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+  .foot-social a:hover{color:var(--gold);}
 </style>
 </head>
 <body>
@@ -254,20 +334,22 @@
 </nav>
 
 <!-- HERO -->
-<header id="top" class="hero">
+<header id="top" class="hero grain">
+  <div class="hero-aura"></div>
   <div class="wrap hero-grid">
     <div>
-      <p class="label hero-eyebrow reveal">Keynote Speaker · Leadership Expert</p>
-      <h1 class="hero-title reveal">Drew<br>Dudley</h1>
-      <p class="hero-sub reveal">Across 1,052 keynotes and five continents, one idea: leadership isn't about titles. It's about <em style="color:var(--gold);font-style:normal;">choosing impact, every single day.</em></p>
-      <div class="hero-actions reveal">
+      <p class="label hero-eyebrow">Keynote Speaker · Leadership Expert</p>
+      <h1 class="hero-title">Drew<br>Dudley</h1>
+      <p class="hero-sub">Across 1,052 keynotes and five continents, one idea: leadership isn't about titles. It's about <em style="color:var(--gold);font-style:normal;">choosing impact, every single day.</em></p>
+      <div class="hero-actions">
         <a href="#book" class="btn btn-gold">Book Drew
           <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </a>
         <a href="#watch" class="btn btn-ghost">Watch the Reel</a>
       </div>
+      <div class="hero-chip"><span class="st">★</span> <b>5M+</b> TED views · Top 15 most inspiring talks of all time</div>
     </div>
-    <div class="hero-portrait reveal">
+    <div class="hero-portrait">
       <span class="accent"></span>
       <span class="accent2"></span>
       <div class="frame">
@@ -329,7 +411,7 @@
 </section>
 
 <!-- THE SPEAKER -->
-<section class="section" id="speaker" style="background:var(--ink);">
+<section class="section grain" id="speaker" style="background:var(--ink);position:relative;">
   <div class="wrap">
     <div class="speaker-grid">
       <figure class="speaker-photo reveal">
@@ -340,6 +422,8 @@
         <p class="label">The Speaker</p>
         <h2>On a mission to<br>redefine leadership.</h2>
         <p>With more than five million views, his TED talk "Everyday Leadership" proved that leadership is not a characteristic of an elite few, but one that <em>lives within us all.</em> Drew is the founder and Chief Catalyst of Day One Leadership, where he has helped 400+ organizations, from Coca-Cola and JP Morgan to the United Nations and 100+ universities, build cultures of leadership. His book, <em style="font-style:italic;">This Is Day One</em>, debuted at #6 on the Wall Street Journal bestseller list.</p>
+        <blockquote class="speaker-quote">We've made leadership about changing the world. It's actually about changing someone's world.</blockquote>
+        <p class="speaker-sign">Drew Dudley</p>
       </div>
     </div>
   </div>
@@ -353,6 +437,7 @@
       <h2>The room tells you<br>everything.</h2>
     </div>
     <div class="video-feature reveal">
+      <div class="reel-chip"><b>1,052</b> <span>keynotes</span></div>
       <!-- Drew Dudley · official Speaker Demo Reel (Vimeo) -->
       <iframe src="https://player.vimeo.com/video/910976563?title=0&byline=0&portrait=0" title="Drew Dudley · Speaker Demo Reel" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="lazy"></iframe>
     </div>
@@ -368,35 +453,73 @@
 <section class="section" id="topics">
   <div class="wrap">
     <div class="section-head reveal">
-      <p class="label">Signature Keynotes</p>
-      <h2>Talks that change<br>how a room leads.</h2>
+      <p class="label">The Keynotes</p>
+      <h2>The Roadmap<br>to Impact.</h2>
+      <p style="color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:38rem;margin-top:1.4rem;">Six keynotes built on one idea: leadership is a series of moments of impact. Book one, or combine them into a program built for your room.</p>
     </div>
-    <div class="topics">
-      <article class="topic reveal">
-        <p class="topic-num serif">01</p>
-        <h3>The Leadership Test</h3>
-        <p>Fewer than 1% of people will call themselves a leader. Drew's six-question Leadership Test, built on impact, courage, growth, empowerment, class, and self-respect, changes that, and the behavior that follows.</p>
-        <div class="arrow"><svg width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M2 7h18M15 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </article>
-      <article class="topic reveal">
-        <p class="topic-num serif">02</p>
-        <h3>This Is Day One</h3>
-        <p>Leadership is a daily choice, not a title. Treating every day as Day One, audiences learn to define their core values and turn them into the behaviors that build cultures of leadership.</p>
-        <div class="arrow"><svg width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M2 7h18M15 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </article>
-      <article class="topic reveal">
-        <p class="topic-num serif">03</p>
-        <h3>Courage: Leadership in Action</h3>
-        <p>Why we delay the changes that matter, and how to act anyway. The difference between confidence and courage, and how to treat failure as a strategy rather than a verdict.</p>
-        <div class="arrow"><svg width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M2 7h18M15 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </article>
-      <article class="topic reveal">
-        <p class="topic-num serif">04</p>
-        <h3>Elevate Don't Escalate</h3>
-        <p>"More and more, we've come to expect less and less from one another." Drew gives teams the tools to build psychologically safe, high-class cultures, and to elevate instead of escalate.</p>
-        <div class="arrow"><svg width="22" height="14" viewBox="0 0 22 14" fill="none"><path d="M2 7h18M15 2l5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-      </article>
+
+    <div class="kc-group reveal">
+      <p class="kc-glabel">Foundational</p>
+      <div class="kc">
+        <article class="kc-card">
+          <span class="kc-num serif">01</span>
+          <h3>The Leadership Test</h3>
+          <p class="sub">Six Questions That Transform People &amp; Organizations</p>
+          <p>Drew has asked thousands of audiences one question, and fewer than 1% will call themselves a leader. This keynote hands them six daily questions, across impact, courage, growth, empowerment, class, and self-respect, that turn leadership from a title into a habit.</p>
+          <p class="epi">"How many of you are completely comfortable calling yourself a leader?"</p>
+        </article>
+        <article class="kc-card">
+          <span class="kc-num serif">02</span>
+          <h3>This Is Day One</h3>
+          <p class="sub">Creating Cultures of Leadership</p>
+          <p>Leadership reframed as a daily choice, not a set of titles earned over time. People who get clear on their values rate up to 140% higher with the teams they lead, and Drew shows audiences how to turn those values into everyday behavior.</p>
+          <p class="epi">"Treat every day like it's Day One."</p>
+        </article>
+      </div>
     </div>
+
+    <div class="kc-group reveal">
+      <p class="kc-glabel">Values-Based</p>
+      <div class="kc">
+        <article class="kc-card">
+          <span class="kc-num serif">03</span>
+          <h3>Courage</h3>
+          <p class="sub">Leadership Impact in Action</p>
+          <p>Most positive change gets delayed by the fear of loss. Drew shares practical strategies for acting anyway: the difference between confidence and courage, and why failure is a strategy rather than a verdict.</p>
+          <p class="epi">"No one's interested in something you didn't do." <span style="opacity:.7">· Gord Downie</span></p>
+        </article>
+        <article class="kc-card">
+          <span class="kc-num serif">04</span>
+          <h3>Self-Respect</h3>
+          <p class="sub">The Foundation of Leadership</p>
+          <p>His most personal talk. Drew weaves self-care insights with his own story, sobriety, mental health, a 100-pound transformation, to show that we cannot lead others until we can lead ourselves.</p>
+          <p class="epi">"There is no hole in your life that cannot be filled with self-respect."</p>
+        </article>
+        <article class="kc-card">
+          <span class="kc-num serif">05</span>
+          <h3>"The Game" Has No Winners</h3>
+          <p class="sub">Growth, Empowerment &amp; Leading Beyond Scarcity</p>
+          <p>We are taught to compete for scarce resources, and it quietly breaks our teams. Drew offers a roadmap to an economy of abundance built on growth and empowerment, including the two most important words in leadership.</p>
+          <p class="epi">"Don't start chasing applause and acclaim. That way lies madness." <span style="opacity:.7">· Ron Swanson</span></p>
+        </article>
+        <article class="kc-card">
+          <span class="kc-num serif">06</span>
+          <h3>Elevate Don't Escalate</h3>
+          <p class="sub">Leading with Impact &amp; Living with Class</p>
+          <p>More and more, we expect less and less from one another. Drew gives teams the tools to build psychologically safe cultures and to elevate, instead of escalate, in the moments that test us.</p>
+          <p class="epi">"More and more we've come to expect less and less from one another, and I think that should change." <span style="opacity:.7">· Aaron Sorkin</span></p>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FULL-BLEED PHOTO BAND (placeholder image; swap assets/band-placeholder.jpg for a wide stage/audience photo) -->
+<section class="band grain" aria-label="Drew Dudley on stage">
+  <img src="../assets/band-placeholder.jpg" alt="Drew Dudley speaking on stage" loading="lazy" />
+  <div class="wrap">
+    <blockquote>The most important leadership moments are the ones we never notice we're having.</blockquote>
+    <p class="src">Drew Dudley</p>
   </div>
 </section>
 
@@ -455,7 +578,8 @@
         </div>
         <div class="field"><label>Anything Else</label><textarea rows="3" placeholder="Theme, audience, what a win looks like."></textarea></div>
         <a href="mailto:drew@dayoneleadership.com?subject=Keynote%20Inquiry" class="btn btn-gold" style="width:100%;justify-content:center;">Send Inquiry</a>
-        <p style="font-size:.72rem;color:var(--muted2);text-align:center;margin-top:1rem;">Opens an email to drew@dayoneleadership.com</p>
+        <div class="book-trust"><span class="dot"></span> Usually responds the same day</div>
+        <p style="font-size:.72rem;color:var(--muted2);text-align:center;margin-top:.5rem;">Opens an email to drew@dayoneleadership.com</p>
       </div>
     </div>
   </div>
@@ -465,11 +589,20 @@
 <footer>
   <div class="wrap">
     <div class="foot-grid">
-      <div class="foot-brand">Drew Dudley</div>
+      <div>
+        <div class="foot-brand">Drew Dudley</div>
+        <p style="color:var(--muted2);font-size:.9rem;margin-top:.6rem;max-width:24rem;">Available for keynotes worldwide, in person and virtual.</p>
+        <!-- Confirm exact social handles before launch -->
+        <div class="foot-social">
+          <a href="https://www.linkedin.com/in/drewdudley" target="_blank" rel="noopener">LinkedIn</a>
+          <a href="https://www.instagram.com/dayonedrew" target="_blank" rel="noopener">Instagram</a>
+          <a href="https://www.youtube.com/@drewdudley" target="_blank" rel="noopener">YouTube</a>
+        </div>
+      </div>
       <div class="foot-links">
         <a href="https://www.ted.com/talks/drew_dudley_everyday_leadership" target="_blank" rel="noopener">TED Talk</a>
         <a href="https://www.amazon.com/This-Day-One-Practical-Leadership/dp/0316523070" target="_blank" rel="noopener">The Book</a>
-        <a href="#book">Book Drew</a>
+        <a href="../book/">Book Drew</a>
       </div>
     </div>
     <p class="foot-fine">Day One Leadership · Everyday leadership, one lollipop moment at a time.</p>
