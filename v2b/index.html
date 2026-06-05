@@ -215,6 +215,20 @@
   .sp-media{text-align:center;}
   .sp-media .row{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:.9rem 2.5rem;margin-top:1.3rem;}
   .sp-media .row span{font-size:1.15rem;font-weight:600;color:var(--text2);}
+
+  /* ── Praise (multi-quote) ────────────────────────── */
+  .quotes-head{text-align:center;margin-bottom:3rem;}
+  .quotes-head h2{font-family:var(--serif);font-weight:600;line-height:1.06;letter-spacing:-.01em;font-size:clamp(2rem,4.4vw,3.2rem);margin-top:.9rem;color:var(--text);}
+  .quotes-feature{max-width:46rem;margin:0 auto 3.5rem;text-align:center;}
+  .quotes-feature blockquote{font-family:var(--serif);font-style:italic;font-weight:500;line-height:1.3;letter-spacing:-.005em;font-size:clamp(1.6rem,3.4vw,2.4rem);color:var(--text);}
+  .quotes-feature .mk{color:var(--gold);}
+  .quotes-feature .by{margin-top:1.4rem;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+  .quotes{columns:3;column-gap:1.25rem;max-width:72rem;margin:0 auto;}
+  @media(max-width:900px){.quotes{columns:2;}}
+  @media(max-width:600px){.quotes{columns:1;}}
+  .qcard{break-inside:avoid;margin-bottom:1.25rem;padding:1.7rem;border:1px solid var(--line);border-top:2px solid var(--gold);border-radius:6px;background:var(--ink3);}
+  .qcard p{font-family:var(--serif);font-style:italic;font-size:1.12rem;line-height:1.45;color:var(--text);}
+  .qcard .by{margin-top:1rem;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted2);font-style:normal;}
 </style>
 </head>
 <body>
@@ -264,11 +278,46 @@
   </div>
 </div>
 
-<!-- STATEMENT -->
-<section class="section">
+<!-- SOCIAL PROOF (DARK) -->
+<section class="section sp" id="proof">
   <div class="wrap">
-    <p class="label reveal" style="margin-bottom:2rem;">The Idea</p>
-    <p class="statement reveal">He has spent two decades proving that the most important leadership moments are the ones we <em>never notice we're having.</em></p>
+    <div class="sp-head reveal">
+      <p class="label">The Impact</p>
+      <h2>Two decades. Every stage.<br>One unforgettable idea.</h2>
+    </div>
+
+    <div class="sp-stats">
+      <div class="sp-stat reveal"><p class="num" data-count="1052" data-suffix=""><em>0</em></p><span class="sp-cap">Keynotes Delivered</span></div>
+      <div class="sp-stat reveal"><p class="num" data-count="5" data-suffix="M+"><em>0</em></p><span class="sp-cap">TED Talk Views</span></div>
+      <div class="sp-stat reveal"><p class="num" data-count="500" data-suffix="K+"><em>0</em></p><span class="sp-cap">People Reached</span></div>
+      <div class="sp-stat reveal"><p class="num" data-count="400" data-suffix="+"><em>0</em></p><span class="sp-cap">Organizations</span></div>
+      <div class="sp-stat reveal"><p class="num" data-count="100" data-suffix="+"><em>0</em></p><span class="sp-cap">Universities</span></div>
+    </div>
+
+    <div class="sp-divide reveal"></div>
+
+    <div class="sp-logos reveal">
+      <p class="label">Trusted by leaders at</p>
+      <div class="row">
+        <span class="feat">Coca-Cola</span>
+        <span class="feat">JP Morgan Chase</span>
+        <span class="feat">United Nations</span>
+        <span class="feat">Harvard</span>
+        <span>McDonald's</span>
+        <span>Deloitte</span>
+        <span>American Express</span>
+        <span>Hyatt</span>
+        <span>Procter &amp; Gamble</span>
+        <span>PwC</span>
+      </div>
+    </div>
+
+    <div class="sp-media reveal">
+      <p class="label">As featured in</p>
+      <div class="row">
+        <span>TIME</span><span>Forbes</span><span>Inc.</span><span>Business Insider</span><span>TED</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -344,54 +393,28 @@
   </div>
 </section>
 
-<!-- SOCIAL PROOF (DARK) -->
-<section class="section sp" id="proof">
+<!-- PRAISE (multi-quote) -->
+<section class="section" id="praise" style="background:var(--ink2);">
   <div class="wrap">
-    <div class="sp-head reveal">
-      <p class="label">The Impact</p>
-      <h2>Two decades. Every stage.<br>One unforgettable idea.</h2>
+    <div class="quotes-head reveal">
+      <p class="label">The Praise</p>
+      <h2>What rooms say after.</h2>
     </div>
 
-    <div class="sp-stats">
-      <div class="sp-stat reveal"><p class="num" data-count="1052" data-suffix=""><em>0</em></p><span class="sp-cap">Keynotes Delivered</span></div>
-      <div class="sp-stat reveal"><p class="num" data-count="5" data-suffix="M+"><em>0</em></p><span class="sp-cap">TED Talk Views</span></div>
-      <div class="sp-stat reveal"><p class="num" data-count="500" data-suffix="K+"><em>0</em></p><span class="sp-cap">People Reached</span></div>
-      <div class="sp-stat reveal"><p class="num" data-count="400" data-suffix="+"><em>0</em></p><span class="sp-cap">Organizations</span></div>
-      <div class="sp-stat reveal"><p class="num" data-count="100" data-suffix="+"><em>0</em></p><span class="sp-cap">Universities</span></div>
+    <div class="quotes-feature reveal">
+      <blockquote><span class="mk">"</span>Most great speakers have a schtick, but Drew has soul. His talk brought many folks here to tears and uplifted us all. A year later, his message had become an enduring part of our culture.<span class="mk">"</span></blockquote>
+      <p class="by">Redfin</p>
     </div>
 
-    <div class="sp-divide reveal"></div>
-
-    <div class="sp-logos reveal">
-      <p class="label">Trusted by leaders at</p>
-      <div class="row">
-        <span class="feat">Coca-Cola</span>
-        <span class="feat">JP Morgan Chase</span>
-        <span class="feat">United Nations</span>
-        <span class="feat">Harvard</span>
-        <span>McDonald's</span>
-        <span>Deloitte</span>
-        <span>American Express</span>
-        <span>Hyatt</span>
-        <span>Procter &amp; Gamble</span>
-        <span>PwC</span>
-      </div>
+    <div class="quotes">
+      <div class="qcard reveal"><p>"I never expected to receive life-changing words, but I did. We all did. Drew is engaging, thought-provoking, and will change your life too."</p><p class="by">United States Air Force</p></div>
+      <div class="qcard reveal"><p>"I've been in the events business for 15 years and Drew is one of my all-time favourite guest speakers. No speaker cares more about the audience."</p><p class="by">Monster</p></div>
+      <div class="qcard reveal"><p>"Drew blew us away. There was not a dry eye in the place. When he sat down, the audience stood up."</p><p class="by">Blissdom Canada</p></div>
+      <div class="qcard reveal"><p>"We have never had a keynote speaker that everyone ranked so high. He ranked 5.30 out of 5.00 on our evaluations."</p><p class="by">Halton Industry Education Council</p></div>
+      <div class="qcard reveal"><p>"Every once in a while a speaker challenges your mind and touches your heart. Someone you are better off having seen. Drew is that speaker."</p><p class="by">California Grocers Association</p></div>
+      <div class="qcard reveal"><p>"He was just so real. He spoke like a friend sharing his experiences, on everyone's level."</p><p class="by">Association of Corporate Counsel, NJ</p></div>
+      <div class="qcard reveal"><p>"Drew was one of our best speakers to date. His speaking style and engagement level was outstanding. We will definitely book him again."</p><p class="by">Responsible Distribution Canada</p></div>
     </div>
-
-    <div class="sp-media reveal">
-      <p class="label">As featured in</p>
-      <div class="row">
-        <span>TIME</span><span>Forbes</span><span>Inc.</span><span>Business Insider</span><span>TED</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BIG QUOTE -->
-<section class="section quote-section">
-  <div class="wrap">
-    <blockquote class="bigquote reveal"><span class="mark">"</span>Most great speakers have a schtick, but Drew has soul. His talk brought many folks here to tears and uplifted us all. A year later, his message had become an enduring part of our culture.<span class="mark">"</span></blockquote>
-    <p class="quote-by reveal">Redfin</p>
   </div>
 </section>
 
