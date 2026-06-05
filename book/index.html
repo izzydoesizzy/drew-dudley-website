@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Book Drew Dudley — Keynote Inquiry</title>
+<title>Book Drew Dudley · Keynote Inquiry</title>
 <meta name="description" content="Tell Drew about your event and get an estimated range in two minutes. Keynotes, workshops, and virtual sessions on everyday leadership." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -125,7 +125,7 @@
     <section class="step active" data-step="1">
       <p class="q-eyebrow">Let's begin</p>
       <h2 class="q-title">What kind of engagement?</h2>
-      <p class="q-help">Pick the format closest to what you have in mind. You can adjust details later.</p>
+      <p class="q-help">Planning a standout event or leadership initiative? Pick the format closest to what you have in mind. You can adjust details later.</p>
       <div class="opts" data-group="engagement">
         <button type="button" class="opt" data-val="keynote" data-lo="15000" data-hi="22000">
           <span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
@@ -229,7 +229,7 @@
       <div class="result">
         <div class="badge" id="resBadge">Estimated range</div>
         <div id="estWrap">
-          <div class="estimate" id="estVal">—</div>
+          <div class="estimate" id="estVal">·</div>
           <div class="est-cap" id="estCap">Estimated investment</div>
         </div>
         <p class="msg" id="resMsg"></p>
@@ -348,10 +348,10 @@
 
     var rows=[
       ['Engagement', engLabel(state.engagement)],
-      ['Date', state.date||'—'],
-      ['Location', state.location||'—'],
-      ['Organization', state.org||'—'],
-      ['Audience', state.size||'—']
+      ['Date', state.date||'·'],
+      ['Location', state.location||'·'],
+      ['Organization', state.org||'·'],
+      ['Audience', state.size||'·']
     ];
 
     if(state.engagement==='probono'){
@@ -359,14 +359,14 @@
       badge.textContent='Pro-bono / reduced fee';
       badge.className='badge';
       msg.innerHTML='Thank you for thinking of Drew. He sets aside a handful of reduced-fee and pro-bono talks each year for causes that resonate. Send the details and he’ll personally take a look, usually within a few days.';
-      rows.push(['Cause', state.cause? (state.cause.slice(0,60)+(state.cause.length>60?'…':'')) : '—']);
+      rows.push(['Cause', state.cause? (state.cause.slice(0,60)+(state.cause.length>60?'…':'')) : '·']);
     } else {
       var sf=seasonFactor(state.date);
       var lo=state.engLo*sf.f, hi=state.engHi*sf.f;
       if(state.size==='1,500+'){ lo*=1.05; hi*=1.08; }
       estVal.textContent=fmtRange(lo,hi);
       estCap.textContent='Estimated investment'+(sf.label?(' · '+sf.label):'');
-      rows.push(['Budget indicated', state.budget||'—']);
+      rows.push(['Budget indicated', state.budget||'·']);
 
       if(state.tier==='low'){
         badge.textContent='Let’s find a way';
@@ -400,12 +400,12 @@
       '\nName: '+(state.name||'-')+'\n'+
       'Email: '+(state.email||'-')+'\n'+
       '\nNotes: '+(state.notes||'-')+'\n';
-    var subject='Keynote Inquiry — '+(state.org||state.name||'New');
+    var subject='Keynote Inquiry · '+(state.org||state.name||'New');
     document.getElementById('sendBtn').setAttribute('href',
       'mailto:drew@dayoneleadership.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(body));
   }
 
-  function engLabel(v){return {keynote:'Keynote',workshop:'Keynote + Workshop',retreat:'Half-Day / Retreat',virtual:'Virtual',probono:'Nonprofit / Pro-bono'}[v]||'—';}
+  function engLabel(v){return {keynote:'Keynote',workshop:'Keynote + Workshop',retreat:'Half-Day / Retreat',virtual:'Virtual',probono:'Nonprofit / Pro-bono'}[v]||'·';}
   function escapeHtml(s){return (s+'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
   show(1);
