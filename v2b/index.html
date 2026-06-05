@@ -319,8 +319,9 @@
 
   /* Footer columns */
   footer{padding:4.5rem 0 2.4rem;}
-  .foot-cols{display:grid;grid-template-columns:1.7fr 1fr 1.2fr 1fr;gap:3rem;}
-  @media(max-width:860px){.foot-cols{grid-template-columns:1fr 1fr;gap:2.5rem;}}
+  .foot-cols{display:grid;grid-template-columns:1.5fr 1fr 1.15fr 1fr 1fr;gap:2.4rem;}
+  @media(max-width:980px){.foot-cols{grid-template-columns:1fr 1fr 1fr;gap:2.5rem;}}
+  @media(max-width:680px){.foot-cols{grid-template-columns:1fr 1fr;}}
   @media(max-width:480px){.foot-cols{grid-template-columns:1fr;gap:2.2rem;}}
   .foot-col h4{font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);margin-bottom:1.2rem;}
   .foot-col > a{display:block;font-size:.92rem;color:var(--muted);margin-bottom:.75rem;transition:color .2s;}
@@ -331,6 +332,9 @@
   .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
     margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--line);}
   .foot-bottom p{font-size:.74rem;color:var(--muted2);}
+  .foot-bottom a{color:var(--muted);transition:color .2s;}
+  .foot-bottom a:hover{color:var(--gold);}
+  @media(max-width:480px){.foot-cols{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
@@ -633,6 +637,14 @@
       </div>
 
       <div class="foot-col">
+        <h4>Resources</h4>
+        <a href="../assets/Drew%20Dudley%20Biography%20and%20Introduction%202025.pdf" target="_blank" rel="noopener">Speaker Bio</a>
+        <a href="../assets/The%20Roadmap%20to%20Impact%20Universe_Drew%20Dudley%20Speaking%20Topics.pdf" target="_blank" rel="noopener">Keynote Topics</a>
+        <a href="../assets/Frequently%20Asked%20Questions_Drew%20Dudley.pdf" target="_blank" rel="noopener">FAQ</a>
+        <a href="../assets/Read%20This%20First_The%20Drew%20Dudley%20Speaking%20Package.pdf" target="_blank" rel="noopener">Speaker Kit</a>
+      </div>
+
+      <div class="foot-col">
         <h4>More</h4>
         <a href="https://www.ted.com/talks/drew_dudley_everyday_leadership" target="_blank" rel="noopener">TED Talk</a>
         <a href="https://www.amazon.com/This-Day-One-Practical-Leadership/dp/0316523070" target="_blank" rel="noopener">This Is Day One</a>
@@ -642,7 +654,7 @@
     </div>
 
     <div class="foot-bottom">
-      <p>© 2026 Day One Leadership. All rights reserved.</p>
+      <p>© 2026 Day One Leadership · <a href="../privacy/">Privacy Policy</a></p>
       <p>Everyday leadership, one lollipop moment at a time.</p>
     </div>
   </div>
