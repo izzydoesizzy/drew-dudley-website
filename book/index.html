@@ -77,6 +77,17 @@
   input[type=date]{color-scheme:dark;}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
   @media(max-width:480px){.row2{grid-template-columns:1fr;}}
+  .ac-field{position:relative;}
+  .ac-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;display:none;
+    max-height:15.5rem;overflow-y:auto;background:var(--card2);border:1px solid var(--line);
+    border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.55);padding:.35rem;}
+  .ac-menu.open{display:block;}
+  .ac-item{display:flex;align-items:baseline;gap:.5rem;padding:.6rem .75rem;border-radius:8px;cursor:pointer;
+    font-size:.92rem;color:var(--muted);line-height:1.3;}
+  .ac-item .ac-city{color:var(--text);font-weight:600;}
+  .ac-item .ac-rest{color:var(--muted2);font-size:.84rem;}
+  .ac-item.active,.ac-item:hover{background:rgba(214,162,58,.14);color:var(--text);}
+  .ac-item.active .ac-rest,.ac-item:hover .ac-rest{color:var(--muted);}
   .check{display:flex;align-items:center;gap:.6rem;cursor:pointer;font-size:.9rem;color:var(--muted);margin-top:.2rem;}
   .check input{width:18px;height:18px;accent-color:var(--gold);flex-shrink:0;}
   .sub-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted2);margin:1.4rem 0 .6rem;}
@@ -117,8 +128,8 @@
 <body>
 <div class="shell">
   <div class="topbar">
-    <a href="../v2b/" class="brand">Drew Dudley</a>
-    <a href="../v2b/" class="home-link">← Back to site</a>
+    <a href="../v2b/index.html" class="brand">Drew Dudley</a>
+    <a href="../v2b/index.html" class="home-link">← Back to site</a>
   </div>
 
   <div class="progress" id="progress">
@@ -203,16 +214,15 @@
     <section class="step" data-key="location">
       <p class="q-eyebrow">Where</p>
       <h2 class="q-title">Where's the event?</h2>
-      <p class="q-help">Start typing your city and pick from the list.</p>
+      <p class="q-help">Start typing your city and pick a suggestion. The province or state and country fill in for you.</p>
       <div class="row2">
-        <div class="field"><label>City</label><input type="text" id="f_city" list="cities" placeholder="e.g. Toronto" /></div>
-        <div class="field"><label>State / Country</label><input type="text" id="f_country" placeholder="e.g. Canada" /></div>
+        <div class="field ac-field">
+          <label>City</label>
+          <input type="text" id="f_city" autocomplete="off" placeholder="e.g. Toronto" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cityAC" />
+          <div class="ac-menu" id="cityAC" role="listbox"></div>
+        </div>
+        <div class="field"><label>State / Province &amp; Country</label><input type="text" id="f_country" placeholder="e.g. ON, Canada" /></div>
       </div>
-      <datalist id="cities">
-        <option value="Toronto, ON"></option><option value="Montreal, QC"></option><option value="Vancouver, BC"></option><option value="Calgary, AB"></option><option value="Ottawa, ON"></option><option value="Edmonton, AB"></option><option value="Winnipeg, MB"></option><option value="Halifax, NS"></option>
-        <option value="New York, NY"></option><option value="Los Angeles, CA"></option><option value="Chicago, IL"></option><option value="Houston, TX"></option><option value="Dallas, TX"></option><option value="Austin, TX"></option><option value="Phoenix, AZ"></option><option value="San Francisco, CA"></option><option value="Seattle, WA"></option><option value="Denver, CO"></option><option value="Boston, MA"></option><option value="Washington, DC"></option><option value="Atlanta, GA"></option><option value="Miami, FL"></option><option value="Orlando, FL"></option><option value="Nashville, TN"></option><option value="Las Vegas, NV"></option><option value="Minneapolis, MN"></option><option value="Detroit, MI"></option><option value="Philadelphia, PA"></option><option value="San Diego, CA"></option>
-        <option value="London, UK"></option><option value="Dublin, Ireland"></option><option value="Dubai, UAE"></option><option value="Singapore"></option><option value="Sydney, Australia"></option><option value="Mexico City, Mexico"></option>
-      </datalist>
     </section>
 
     <!-- 5 AUDIENCE -->
@@ -415,6 +425,111 @@
   bind('f_date','date');bind('f_dateEnd','dateEnd');bind('f_flexible','flexible');bind('f_city','city');bind('f_country','country');
   bind('f_org','org');bind('f_website','website');bind('f_cause','cause');bind('f_name','name');bind('f_title','title');
   bind('f_email','email');bind('f_phone','phone');bind('f_goals','goals');
+
+  // ── city autocomplete (dependency-free) ──────────────────────────
+  // Each entry: [City, Region/Province/State, Country]
+  var CITIES=[
+    ['Toronto','ON','Canada'],['Montreal','QC','Canada'],['Vancouver','BC','Canada'],['Calgary','AB','Canada'],
+    ['Ottawa','ON','Canada'],['Edmonton','AB','Canada'],['Winnipeg','MB','Canada'],['Halifax','NS','Canada'],
+    ['Mississauga','ON','Canada'],['Hamilton','ON','Canada'],['Quebec City','QC','Canada'],['Victoria','BC','Canada'],
+    ['Kitchener','ON','Canada'],['London','ON','Canada'],['Saskatoon','SK','Canada'],['Regina','SK','Canada'],
+    ['St. John’s','NL','Canada'],['Banff','AB','Canada'],['Whistler','BC','Canada'],['Niagara Falls','ON','Canada'],
+    ['New York','NY','United States'],['Los Angeles','CA','United States'],['Chicago','IL','United States'],
+    ['Houston','TX','United States'],['Dallas','TX','United States'],['Austin','TX','United States'],
+    ['San Antonio','TX','United States'],['Phoenix','AZ','United States'],['San Francisco','CA','United States'],
+    ['San Jose','CA','United States'],['San Diego','CA','United States'],['Seattle','WA','United States'],
+    ['Denver','CO','United States'],['Boston','MA','United States'],['Washington','DC','United States'],
+    ['Atlanta','GA','United States'],['Miami','FL','United States'],['Orlando','FL','United States'],
+    ['Tampa','FL','United States'],['Nashville','TN','United States'],['Memphis','TN','United States'],
+    ['Las Vegas','NV','United States'],['Minneapolis','MN','United States'],['Detroit','MI','United States'],
+    ['Philadelphia','PA','United States'],['Pittsburgh','PA','United States'],['Charlotte','NC','United States'],
+    ['Raleigh','NC','United States'],['Columbus','OH','United States'],['Cleveland','OH','United States'],
+    ['Cincinnati','OH','United States'],['Indianapolis','IN','United States'],['Kansas City','MO','United States'],
+    ['St. Louis','MO','United States'],['New Orleans','LA','United States'],['Salt Lake City','UT','United States'],
+    ['Portland','OR','United States'],['Sacramento','CA','United States'],['Baltimore','MD','United States'],
+    ['Milwaukee','WI','United States'],['Louisville','KY','United States'],['Oklahoma City','OK','United States'],
+    ['Honolulu','HI','United States'],['Anchorage','AK','United States'],['Buffalo','NY','United States'],
+    ['Scottsdale','AZ','United States'],['Palm Springs','CA','United States'],['Naples','FL','United States'],
+    ['Aspen','CO','United States'],['Park City','UT','United States'],['Savannah','GA','United States'],
+    ['London','','United Kingdom'],['Manchester','','United Kingdom'],['Birmingham','','United Kingdom'],
+    ['Edinburgh','','United Kingdom'],['Glasgow','','United Kingdom'],['Leeds','','United Kingdom'],
+    ['Dublin','','Ireland'],['Cork','','Ireland'],['Belfast','','United Kingdom'],
+    ['Paris','','France'],['Amsterdam','','Netherlands'],['Berlin','','Germany'],['Munich','','Germany'],
+    ['Frankfurt','','Germany'],['Zurich','','Switzerland'],['Geneva','','Switzerland'],['Madrid','','Spain'],
+    ['Barcelona','','Spain'],['Lisbon','','Portugal'],['Rome','','Italy'],['Milan','','Italy'],
+    ['Vienna','','Austria'],['Brussels','','Belgium'],['Copenhagen','','Denmark'],['Stockholm','','Sweden'],
+    ['Oslo','','Norway'],['Helsinki','','Finland'],['Reykjavik','','Iceland'],['Prague','','Czechia'],
+    ['Warsaw','','Poland'],['Athens','','Greece'],
+    ['Dubai','','United Arab Emirates'],['Abu Dhabi','','United Arab Emirates'],['Doha','','Qatar'],
+    ['Riyadh','','Saudi Arabia'],['Tel Aviv','','Israel'],['Istanbul','','Turkey'],['Cairo','','Egypt'],
+    ['Singapore','','Singapore'],['Hong Kong','','Hong Kong'],['Tokyo','','Japan'],['Osaka','','Japan'],
+    ['Seoul','','South Korea'],['Shanghai','','China'],['Beijing','','China'],['Bengaluru','','India'],
+    ['Mumbai','','India'],['New Delhi','','India'],['Bangkok','','Thailand'],['Kuala Lumpur','','Malaysia'],
+    ['Jakarta','','Indonesia'],['Manila','','Philippines'],
+    ['Sydney','NSW','Australia'],['Melbourne','VIC','Australia'],['Brisbane','QLD','Australia'],
+    ['Perth','WA','Australia'],['Adelaide','SA','Australia'],['Auckland','','New Zealand'],
+    ['Wellington','','New Zealand'],
+    ['Mexico City','','Mexico'],['Cancun','','Mexico'],['Monterrey','','Mexico'],['Guadalajara','','Mexico'],
+    ['Sao Paulo','','Brazil'],['Rio de Janeiro','','Brazil'],['Buenos Aires','','Argentina'],
+    ['Santiago','','Chile'],['Bogota','','Colombia'],['Lima','','Peru'],
+    ['Cape Town','','South Africa'],['Johannesburg','','South Africa'],['Nairobi','','Kenya']
+  ];
+  var cityInput=document.getElementById('f_city'),
+      countryInput=document.getElementById('f_country'),
+      acMenu=document.getElementById('cityAC'),
+      acMatches=[], acActive=-1;
+  function regionCountry(e){ return e[1] ? (e[1]+', '+e[2]) : e[2]; }
+  function acClose(){ acMenu.classList.remove('open'); acMenu.innerHTML=''; acMatches=[]; acActive=-1;
+    if(cityInput) cityInput.setAttribute('aria-expanded','false'); }
+  function acRender(){
+    acMenu.innerHTML='';
+    acMatches.forEach(function(e,i){
+      var row=document.createElement('div');
+      row.className='ac-item'+(i===acActive?' active':'');
+      row.setAttribute('role','option');
+      var c=document.createElement('span'); c.className='ac-city'; c.textContent=e[0];
+      var r=document.createElement('span'); r.className='ac-rest'; r.textContent=regionCountry(e);
+      row.appendChild(c); row.appendChild(r);
+      row.addEventListener('mousedown',function(ev){ ev.preventDefault(); acPick(i); });
+      acMenu.appendChild(row);
+    });
+    acMenu.classList.add('open');
+    if(cityInput) cityInput.setAttribute('aria-expanded','true');
+  }
+  function acPick(i){
+    var e=acMatches[i]; if(!e) return;
+    cityInput.value=e[0]; state.city=e[0];
+    countryInput.value=regionCountry(e); state.country=regionCountry(e);
+    acClose(); validate(); save();
+  }
+  function acSearch(q){
+    q=q.trim().toLowerCase(); if(q.length<1) return [];
+    var starts=[], contains=[];
+    for(var i=0;i<CITIES.length;i++){
+      var name=CITIES[i][0].toLowerCase();
+      if(name.indexOf(q)===0) starts.push(CITIES[i]);
+      else if(name.indexOf(q)>-1) contains.push(CITIES[i]);
+      if(starts.length>=7) break;
+    }
+    return starts.concat(contains).slice(0,7);
+  }
+  if(cityInput){
+    cityInput.addEventListener('input',function(){
+      acMatches=acSearch(cityInput.value); acActive=-1;
+      if(acMatches.length) acRender(); else acClose();
+    });
+    cityInput.addEventListener('keydown',function(e){
+      if(!acMenu.classList.contains('open')) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); acActive=Math.min(acActive+1,acMatches.length-1); acRender(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); acActive=Math.max(acActive-1,0); acRender(); }
+      else if(e.key==='Enter'){
+        if(acActive>-1){ e.preventDefault(); e.stopPropagation(); acPick(acActive); }
+        else { acClose(); }
+      }
+      else if(e.key==='Escape'){ e.stopPropagation(); acClose(); }
+    });
+    cityInput.addEventListener('blur',function(){ setTimeout(acClose,120); });
+  }
 
   function emailOk(v){return /.+@.+\..+/.test(v);}
   function validate(){
