@@ -316,6 +316,21 @@
   .foot-social{display:flex;gap:1.4rem;margin-top:1.5rem;}
   .foot-social a{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
   .foot-social a:hover{color:var(--gold);}
+
+  /* Footer columns */
+  footer{padding:4.5rem 0 2.4rem;}
+  .foot-cols{display:grid;grid-template-columns:1.7fr 1fr 1.2fr 1fr;gap:3rem;}
+  @media(max-width:860px){.foot-cols{grid-template-columns:1fr 1fr;gap:2.5rem;}}
+  @media(max-width:480px){.foot-cols{grid-template-columns:1fr;gap:2.2rem;}}
+  .foot-col h4{font-size:.68rem;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--muted2);margin-bottom:1.2rem;}
+  .foot-col > a{display:block;font-size:.92rem;color:var(--muted);margin-bottom:.75rem;transition:color .2s;}
+  .foot-col > a:hover{color:var(--gold);}
+  .foot-col .desc{font-size:.74rem;color:var(--muted2);margin:-.5rem 0 .75rem;}
+  .foot-tag{display:inline-block;margin-left:.45rem;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);
+    border:1px solid var(--line);border-radius:100px;padding:.12rem .5rem;vertical-align:middle;}
+  .foot-bottom{display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap;
+    margin-top:3.5rem;padding-top:1.8rem;border-top:1px solid var(--line);}
+  .foot-bottom p{font-size:.74rem;color:var(--muted2);}
 </style>
 </head>
 <body>
@@ -325,9 +340,9 @@
   <a href="#top" class="nav-brand">Drew Dudley</a>
   <div class="nav-right">
     <div class="nav-links-text">
+      <a href="#proof" class="nav-link">Impact</a>
       <a href="#watch" class="nav-link">Watch</a>
       <a href="#topics" class="nav-link">Keynotes</a>
-      <a href="#proof" class="nav-link">Impact</a>
     </div>
     <a href="../book/" class="nav-cta">Book Drew</a>
   </div>
@@ -588,10 +603,11 @@
 <!-- FOOTER -->
 <footer>
   <div class="wrap">
-    <div class="foot-grid">
-      <div>
+    <div class="foot-cols">
+
+      <div class="foot-col">
         <div class="foot-brand">Drew Dudley</div>
-        <p style="color:var(--muted2);font-size:.9rem;margin-top:.6rem;max-width:24rem;">Available for keynotes worldwide, in person and virtual.</p>
+        <p style="color:var(--muted2);font-size:.92rem;margin-top:.7rem;max-width:24rem;line-height:1.55;">Wall Street Journal bestselling author and global keynote speaker on everyday leadership. Available worldwide, in person and virtual.</p>
         <!-- Confirm exact social handles before launch -->
         <div class="foot-social">
           <a href="https://www.linkedin.com/in/drewdudley" target="_blank" rel="noopener">LinkedIn</a>
@@ -599,13 +615,37 @@
           <a href="https://www.youtube.com/@drewdudley" target="_blank" rel="noopener">YouTube</a>
         </div>
       </div>
-      <div class="foot-links">
-        <a href="https://www.ted.com/talks/drew_dudley_everyday_leadership" target="_blank" rel="noopener">TED Talk</a>
-        <a href="https://www.amazon.com/This-Day-One-Practical-Leadership/dp/0316523070" target="_blank" rel="noopener">The Book</a>
-        <a href="../book/">Book Drew</a>
+
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="#proof">Impact</a>
+        <a href="#watch">Watch the Reel</a>
+        <a href="#topics">Keynotes</a>
+        <a href="#praise">Praise</a>
       </div>
+
+      <div class="foot-col">
+        <h4>Work With Drew</h4>
+        <a href="../book/">Book a Keynote</a>
+        <!-- The Gathering Place: link to live page when available -->
+        <a href="#">The Gathering Place <span class="foot-tag">Coming 2026</span></a>
+        <p class="desc">Bespoke executive leadership retreats.</p>
+        <a href="mailto:drew@dayoneleadership.com?subject=Keynote%20Inquiry">Contact Drew</a>
+      </div>
+
+      <div class="foot-col">
+        <h4>More</h4>
+        <a href="https://www.ted.com/talks/drew_dudley_everyday_leadership" target="_blank" rel="noopener">TED Talk</a>
+        <a href="https://www.amazon.com/This-Day-One-Practical-Leadership/dp/0316523070" target="_blank" rel="noopener">This Is Day One</a>
+        <a href="tel:18556853253">1.855.685.3253</a>
+      </div>
+
     </div>
-    <p class="foot-fine">Day One Leadership · Everyday leadership, one lollipop moment at a time.</p>
+
+    <div class="foot-bottom">
+      <p>© 2026 Day One Leadership. All rights reserved.</p>
+      <p>Everyday leadership, one lollipop moment at a time.</p>
+    </div>
   </div>
 </footer>
 
