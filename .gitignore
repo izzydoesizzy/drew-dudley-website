@@ -4,3 +4,7 @@ Thumbs.db
 *.swp
 .vscode/
 .idea/
+
+# Local-only symlink to Fathom transcripts (do not publish)
+transcripts-link
+TRANSCRIPT_SUMMARY.md
