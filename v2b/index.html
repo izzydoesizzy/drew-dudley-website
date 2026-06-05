@@ -249,7 +249,8 @@
   .hero-aura{position:absolute;left:8%;top:20%;width:46rem;max-width:70%;height:34rem;z-index:0;pointer-events:none;
     background:radial-gradient(closest-side, rgba(196,146,42,.16), rgba(196,146,42,.05) 55%, transparent 75%);}
   .hero .wrap{position:relative;z-index:2;}
-  .hero-chip{display:inline-flex;align-items:center;gap:.5rem;margin-top:1.6rem;padding:.45rem .9rem;border:1px solid var(--line);
+  .hero-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem;}
+  .hero-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.45rem .9rem;border:1px solid var(--line);
     border-radius:100px;background:rgba(196,146,42,.06);font-size:.72rem;letter-spacing:.08em;color:var(--muted);}
   .hero-chip b{color:var(--gold);font-weight:700;}
   .hero-chip .st{color:var(--gold);}
@@ -368,7 +369,10 @@
         </a>
         <a href="#watch" class="btn btn-ghost">Watch the Reel</a>
       </div>
-      <div class="hero-chip"><span class="st">★</span> <b>5M+</b> TED views · Top 15 most inspiring talks of all time</div>
+      <div class="hero-chips">
+        <div class="hero-chip"><span class="st">★</span> <b>5M+</b> TED views · Top 15 most inspiring talks of all time</div>
+        <div class="hero-chip"><span class="st">★</span> As seen in <b>Forbes</b>, <b>TIME</b> &amp; <b>Inc.</b></div>
+      </div>
     </div>
     <div class="hero-portrait">
       <span class="accent"></span>
