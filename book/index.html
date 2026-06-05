@@ -855,7 +855,7 @@
   function orgPick(i){
     var e=orgMatches[i]; if(!e) return;
     orgInput.value=e[0]; state.org=e[0];
-    if(websiteInput && !websiteInput.value.trim()){ websiteInput.value=e[1]; state.website=e[1]; }
+    if(websiteInput){ websiteInput.value=e[1]; state.website=e[1]; }
     orgClose(); validate(); save();
   }
   function orgSearch(q){
@@ -871,6 +871,7 @@
   }
   if(orgInput){
     orgInput.addEventListener('input',function(){
+      if(!orgInput.value.trim() && websiteInput){ websiteInput.value=''; state.website=''; }
       orgMatches=orgSearch(orgInput.value); orgActive=-1;
       if(orgMatches.length) orgRender(); else orgClose();
     });
