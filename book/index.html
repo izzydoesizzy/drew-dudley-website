@@ -220,7 +220,11 @@
           <input type="text" id="f_city" autocomplete="off" placeholder="e.g. Toronto" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cityAC" />
           <div class="ac-menu" id="cityAC" role="listbox"></div>
         </div>
-        <div class="field"><label>State / Province &amp; Country</label><input type="text" id="f_country" placeholder="e.g. ON, Canada" /></div>
+        <div class="field ac-field">
+          <label>State / Province &amp; Country</label>
+          <input type="text" id="f_country" autocomplete="off" placeholder="e.g. Ontario, Canada" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="countryAC" />
+          <div class="ac-menu" id="countryAC" role="listbox"></div>
+        </div>
       </div>
     </section>
 
@@ -239,7 +243,7 @@
         <button type="button" class="chip" data-val="1,500+">1,500+</button>
       </div>
       <p class="sub-label">Who's in the room? <span class="opt-label" style="text-transform:none;letter-spacing:0;">(optional)</span></p>
-      <div class="chips" data-group="audType">
+      <div class="chips" data-group="audType" data-multi>
         <button type="button" class="chip" data-val="Executives / Leadership">Executives / Leadership</button>
         <button type="button" class="chip" data-val="Managers">Managers</button>
         <button type="button" class="chip" data-val="Frontline / Staff">Frontline / Staff</button>
@@ -261,11 +265,12 @@
         <button type="button" class="chip" data-val="Once or twice">Once or twice</button>
         <button type="button" class="chip" data-val="This is our first time">First time</button>
       </div>
-      <p class="sub-label">Budget range</p>
+      <p class="sub-label">Budget range <span class="opt-label">(USD)</span></p>
       <div class="opts" data-group="budget">
         <button type="button" class="opt" data-val="Under $15K" data-tier="low"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Under $15,000</span><span class="os">We'll explore what's possible</span></span></button>
         <button type="button" class="opt" data-val="$15K–$25K" data-tier="mid"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">$15,000 – $25,000</span></span></button>
-        <button type="button" class="opt" data-val="$25K+" data-tier="high"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">$25,000+</span></span></button>
+        <button type="button" class="opt" data-val="$25K–$50K" data-tier="high"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">$25,000 – $50,000</span></span></button>
+        <button type="button" class="opt" data-val="$50K+" data-tier="premium"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">$50,000+</span></span></button>
         <button type="button" class="opt" data-val="Flexible / not sure" data-tier="flex"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Flexible / not sure yet</span></span></button>
       </div>
     </section>
@@ -357,7 +362,7 @@
     unsure:{lo:0,hi:0,label:'Not sure yet'},probono:{lo:0,hi:0,label:'Nonprofit / Pro-bono'}};
 
   var state={engagement:'',topic:'',format:'',date:'',dateEnd:'',flexible:false,city:'',country:'',
-    org:'',website:'',size:'',audType:'',bookedBefore:'',budget:'',tier:'',cause:'',
+    org:'',website:'',size:'',audType:[],bookedBefore:'',budget:'',tier:'',cause:'',
     name:'',title:'',decisionRole:'',email:'',phone:'',goals:'',heard:''};
 
   var steps=[].slice.call(document.querySelectorAll('.step'));
@@ -401,12 +406,18 @@
 
   // single-select groups
   document.querySelectorAll('[data-group]').forEach(function(grp){
-    var multi=false; // all single-select here
+    var multi=grp.hasAttribute('data-multi');
     grp.querySelectorAll('.opt,.chip').forEach(function(el){
       el.addEventListener('click',function(){
+        var g=grp.getAttribute('data-group'), v=el.getAttribute('data-val');
+        if(multi){
+          el.classList.toggle('sel');
+          state[g]=[].slice.call(grp.querySelectorAll('.opt.sel,.chip.sel')).map(function(x){return x.getAttribute('data-val');});
+          validate(); save();
+          return;
+        }
         grp.querySelectorAll('.opt,.chip').forEach(function(x){x.classList.remove('sel');});
         el.classList.add('sel');
-        var g=grp.getAttribute('data-group'), v=el.getAttribute('data-val');
         state[g]=v;
         if(g==='engagement'){ var e=ENG[v]||{lo:0,hi:0}; state.engLo=e.lo; state.engHi=e.hi; if(v==='virtual') state.format='Virtual'; }
         if(g==='budget'){ state.tier=el.getAttribute('data-tier'); }
@@ -473,6 +484,37 @@
     ['Santiago','','Chile'],['Bogota','','Colombia'],['Lima','','Peru'],
     ['Cape Town','','South Africa'],['Johannesburg','','South Africa'],['Nairobi','','Kenya']
   ];
+  // ── province / state suggestions ─ Each entry: [Region, Abbrev, Country]
+  var REGIONS=[
+    ['Alberta','AB','Canada'],['British Columbia','BC','Canada'],['Manitoba','MB','Canada'],
+    ['New Brunswick','NB','Canada'],['Newfoundland and Labrador','NL','Canada'],['Nova Scotia','NS','Canada'],
+    ['Ontario','ON','Canada'],['Prince Edward Island','PE','Canada'],['Quebec','QC','Canada'],
+    ['Saskatchewan','SK','Canada'],['Northwest Territories','NT','Canada'],['Nunavut','NU','Canada'],
+    ['Yukon','YT','Canada'],
+    ['Alabama','AL','United States'],['Alaska','AK','United States'],['Arizona','AZ','United States'],
+    ['Arkansas','AR','United States'],['California','CA','United States'],['Colorado','CO','United States'],
+    ['Connecticut','CT','United States'],['Delaware','DE','United States'],['Florida','FL','United States'],
+    ['Georgia','GA','United States'],['Hawaii','HI','United States'],['Idaho','ID','United States'],
+    ['Illinois','IL','United States'],['Indiana','IN','United States'],['Iowa','IA','United States'],
+    ['Kansas','KS','United States'],['Kentucky','KY','United States'],['Louisiana','LA','United States'],
+    ['Maine','ME','United States'],['Maryland','MD','United States'],['Massachusetts','MA','United States'],
+    ['Michigan','MI','United States'],['Minnesota','MN','United States'],['Mississippi','MS','United States'],
+    ['Missouri','MO','United States'],['Montana','MT','United States'],['Nebraska','NE','United States'],
+    ['Nevada','NV','United States'],['New Hampshire','NH','United States'],['New Jersey','NJ','United States'],
+    ['New Mexico','NM','United States'],['New York','NY','United States'],['North Carolina','NC','United States'],
+    ['North Dakota','ND','United States'],['Ohio','OH','United States'],['Oklahoma','OK','United States'],
+    ['Oregon','OR','United States'],['Pennsylvania','PA','United States'],['Rhode Island','RI','United States'],
+    ['South Carolina','SC','United States'],['South Dakota','SD','United States'],['Tennessee','TN','United States'],
+    ['Texas','TX','United States'],['Utah','UT','United States'],['Vermont','VT','United States'],
+    ['Virginia','VA','United States'],['Washington','WA','United States'],['West Virginia','WV','United States'],
+    ['Wisconsin','WI','United States'],['Wyoming','WY','United States'],
+    ['District of Columbia','DC','United States'],['Puerto Rico','PR','United States'],
+    ['New South Wales','NSW','Australia'],['Victoria','VIC','Australia'],['Queensland','QLD','Australia'],
+    ['Western Australia','WA','Australia'],['South Australia','SA','Australia'],['Tasmania','TAS','Australia'],
+    ['Australian Capital Territory','ACT','Australia'],['Northern Territory','NT','Australia'],
+    ['England','','United Kingdom'],['Scotland','','United Kingdom'],['Wales','','United Kingdom'],
+    ['Northern Ireland','','United Kingdom']
+  ];
   var cityInput=document.getElementById('f_city'),
       countryInput=document.getElementById('f_country'),
       acMenu=document.getElementById('cityAC'),
@@ -530,6 +572,60 @@
     cityInput.addEventListener('blur',function(){ setTimeout(acClose,120); });
   }
 
+  // ── region (province/state) autocomplete on the country field ────
+  var regMenu=document.getElementById('countryAC'), regMatches=[], regActive=-1;
+  function regClose(){ if(!regMenu) return; regMenu.classList.remove('open'); regMenu.innerHTML=''; regMatches=[]; regActive=-1;
+    if(countryInput) countryInput.setAttribute('aria-expanded','false'); }
+  function regLabel(e){ return e[0]+', '+e[2]; }
+  function regRender(){
+    regMenu.innerHTML='';
+    regMatches.forEach(function(e,i){
+      var row=document.createElement('div');
+      row.className='ac-item'+(i===regActive?' active':'');
+      row.setAttribute('role','option');
+      var c=document.createElement('span'); c.className='ac-city'; c.textContent=e[0];
+      var r=document.createElement('span'); r.className='ac-rest'; r.textContent=e[2];
+      row.appendChild(c); row.appendChild(r);
+      row.addEventListener('mousedown',function(ev){ ev.preventDefault(); regPick(i); });
+      regMenu.appendChild(row);
+    });
+    regMenu.classList.add('open');
+    if(countryInput) countryInput.setAttribute('aria-expanded','true');
+  }
+  function regPick(i){
+    var e=regMatches[i]; if(!e) return;
+    countryInput.value=regLabel(e); state.country=regLabel(e);
+    regClose(); validate(); save();
+  }
+  function regSearch(q){
+    q=q.trim().toLowerCase(); if(q.length<1) return [];
+    var starts=[], contains=[];
+    for(var i=0;i<REGIONS.length;i++){
+      var name=REGIONS[i][0].toLowerCase(), abbr=REGIONS[i][1].toLowerCase();
+      if(name.indexOf(q)===0 || (abbr && abbr===q)) starts.push(REGIONS[i]);
+      else if(name.indexOf(q)>-1) contains.push(REGIONS[i]);
+      if(starts.length>=7) break;
+    }
+    return starts.concat(contains).slice(0,7);
+  }
+  if(countryInput){
+    countryInput.addEventListener('input',function(){
+      regMatches=regSearch(countryInput.value); regActive=-1;
+      if(regMatches.length) regRender(); else regClose();
+    });
+    countryInput.addEventListener('keydown',function(e){
+      if(!regMenu.classList.contains('open')) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); regActive=Math.min(regActive+1,regMatches.length-1); regRender(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); regActive=Math.max(regActive-1,0); regRender(); }
+      else if(e.key==='Enter'){
+        if(regActive>-1){ e.preventDefault(); e.stopPropagation(); regPick(regActive); }
+        else { regClose(); }
+      }
+      else if(e.key==='Escape'){ e.stopPropagation(); regClose(); }
+    });
+    countryInput.addEventListener('blur',function(){ setTimeout(regClose,120); });
+  }
+
   function emailOk(v){return /.+@.+\..+/.test(v);}
   function validate(){
     var ok=true;
@@ -558,7 +654,12 @@
     // reflect single-selects
     document.querySelectorAll('[data-group]').forEach(function(grp){
       var g=grp.getAttribute('data-group'), v=state[g];
-      grp.querySelectorAll('.opt,.chip').forEach(function(el){ el.classList.toggle('sel', !!v && el.getAttribute('data-val')===v); });
+      if(grp.hasAttribute('data-multi')){
+        var arr=Array.isArray(v)?v:(v?[v]:[]);
+        grp.querySelectorAll('.opt,.chip').forEach(function(el){ el.classList.toggle('sel', arr.indexOf(el.getAttribute('data-val'))>-1); });
+      } else {
+        grp.querySelectorAll('.opt,.chip').forEach(function(el){ el.classList.toggle('sel', !!v && el.getAttribute('data-val')===v); });
+      }
     });
     // reflect inputs
     [['f_date','date'],['f_dateEnd','dateEnd'],['f_city','city'],['f_country','country'],['f_org','org'],['f_website','website'],
@@ -593,7 +694,7 @@
       ['Date', dateStr||'·'],
       ['Location', loc],
       ['Organization', state.org||'·'],
-      ['Audience', (state.size||'·')+(state.audType?(' · '+state.audType):'')]
+      ['Audience', (state.size||'·')+((state.audType&&state.audType.length)?(' · '+state.audType.join(', ')):'')]
     ];
 
     estWrap.classList.remove('hide');
@@ -616,7 +717,7 @@
       if(state.tier==='low'){
         badge.textContent='Let us find a way'; badge.className='badge';
         msg.textContent='You are a little under Drew’s typical range for this format, and that is okay. For the right room he will often find a path: a virtual session, a shorter format, or a reduced fee. Send the details and he will tell you honestly what is possible.';
-      } else if(state.tier==='high' || state.tier==='mid'){
+      } else if(state.tier==='high' || state.tier==='mid' || state.tier==='premium'){
         badge.textContent='Great fit'; badge.className='badge good';
         msg.textContent='This looks like a strong fit. Send the details and Drew will confirm availability and a firm quote, usually the same day.';
       } else {
@@ -643,7 +744,7 @@
       'Organization: '+(state.org||'-'),
       'Website: '+(state.website||'-'),
       'Audience size: '+(state.size||'-'),
-      'Audience type: '+(state.audType||'-'),
+      'Audience type: '+((state.audType&&state.audType.length)?state.audType.join(', '):'-'),
       (state.engagement==='probono' ? 'Cause: '+(state.cause||'-') : 'Booked speakers before: '+(state.bookedBefore||'-')+'\nBudget indicated: '+(state.budget||'-')),
       (state.engagement!=='probono' && state.engHi>0 ? 'Estimate shown: '+estShown : ''),
       '',
@@ -666,14 +767,17 @@
   if(qEng) qEng=decodeURIComponent(qEng);
   var saved=null; try{ saved=JSON.parse(localStorage.getItem(SAVE_KEY)||'null'); }catch(e){}
 
+  function normalizeState(){ if(!Array.isArray(state.audType)) state.audType = state.audType ? [state.audType] : []; }
+
   if(qEng && ENG[qEng]){
-    if(saved && saved.state){ Object.assign(state,saved.state); }
+    if(saved && saved.state){ Object.assign(state,saved.state); normalizeState(); }
     state.engagement=qEng; var e=ENG[qEng]; state.engLo=e.lo; state.engHi=e.hi;
     if(qEng==='virtual') state.format='Virtual';
     applyState();
     show('topic');
   } else if(saved && saved.state){
     Object.assign(state,saved.state);
+    normalizeState();
     applyState();
     show(saved.key && saved.key!=='result' ? saved.key : 'engagement');
   } else {
