@@ -996,31 +996,80 @@
   }
 
   function mailtoHref(estShown){
-    var L=[
-      'New booking inquiry from the website:','',
-      'Engagement: '+(ENG[state.engagement]?ENG[state.engagement].label:'-'),
-      'Topic of interest: '+(state.topic||'-'),
-      'Format: '+(state.format||'-'),
-      'Date(s): '+(state.flexible?'Flexible':(prettyDate(state.date)||'-')+(state.dateEnd?(' to '+prettyDate(state.dateEnd)):'')),
-      'Location: '+(state.format==='Virtual'?'Virtual':([state.city,state.country].filter(Boolean).join(', ')||'-')),
-      'Organization: '+(state.org||'-'),
-      'Website: '+(state.website||'-'),
-      'Audience size: '+(state.size||'-'),
-      'Audience type: '+((state.audType&&state.audType.length)?state.audType.join(', '):'-'),
-      (state.engagement==='probono' ? 'Cause: '+(state.cause||'-') : 'Booked speakers before: '+(state.bookedBefore||'-')+'\nBudget indicated: '+(state.budget||'-')),
-      (state.engagement!=='probono' && state.engHi>0 ? 'Estimate shown: '+estShown : ''),
-      '',
-      'Name: '+(state.name||'-'),
-      'Title: '+(state.title||'-'),
-      'Role in decision: '+(state.decisionRole||'-'),
-      'Email: '+(state.email||'-'),
-      'Phone: '+(state.phone||'-'),
-      'How they heard: '+(state.heard||'-'),
-      '',
-      'What would make this a win:','  '+(state.goals||'-')
-    ].filter(function(x){return x!=='';}).join('\n');
-    var subject='Keynote inquiry · '+(state.org||state.name||'New');
-    return 'mailto:drew@dayoneleadership.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(L);
+    var probono = state.engagement==='probono';
+    var dash = '—';
+
+    // Gmail composes in a proportional font, so column padding never lines up.
+    // A simple "Label: value" per line reads cleanest there; blank lines and
+    // section headers carry the structure instead of whitespace alignment.
+    function field(label, value){
+      value = (value===undefined || value===null || value==='') ? dash : value;
+      return label + ': ' + value;
+    }
+    function section(title){
+      return ['', title.toUpperCase(), '──────────────────────────────'];
+    }
+
+    var dateStr = state.flexible
+      ? 'Flexible'
+      : (prettyDate(state.date) || dash) + (state.dateEnd ? (' to ' + prettyDate(state.dateEnd)) : '');
+    var location = state.format==='Virtual'
+      ? 'Virtual'
+      : ([state.city, state.country].filter(Boolean).join(', ') || dash);
+
+    var L = [];
+
+    L.push('Hi Drew,');
+    L.push('');
+    L.push('Here are the details of my inquiry from your website.');
+
+    L = L.concat(section('The engagement'));
+    L.push(field('Engagement', ENG[state.engagement] ? ENG[state.engagement].label : dash));
+    L.push(field('Topic', state.topic));
+    L.push(field('Format', state.format));
+    L.push(field('Date(s)', dateStr));
+    L.push(field('Location', location));
+    if(!probono && state.engHi>0) L.push(field('Estimate shown', estShown));
+
+    L = L.concat(section('The organization'));
+    L.push(field('Organization', state.org));
+    L.push(field('Website', state.website));
+    L.push(field('Audience size', state.size));
+    L.push(field('Audience type', (state.audType && state.audType.length) ? state.audType.join(', ') : dash));
+    if(probono){
+      L.push(field('Cause', state.cause));
+    } else {
+      L.push(field('Booked before', state.bookedBefore));
+      L.push(field('Budget', state.budget));
+    }
+
+    L = L.concat(section('Contact'));
+    L.push(field('Name', state.name));
+    L.push(field('Title', state.title));
+    L.push(field('Role', state.decisionRole));
+    L.push(field('Email', state.email));
+    L.push(field('Phone', state.phone));
+    L.push(field('Heard via', state.heard));
+
+    L = L.concat(section('What would make this a win'));
+    L.push(state.goals || dash);
+
+    L.push('');
+    L.push('Thanks,');
+    L.push(state.name || '');
+
+    var body = L.join('\n');
+
+    var subjParts = ['Speaking Inquiry'];
+    if(state.org || state.name) subjParts.push(state.org || state.name);
+    if(state.format) subjParts.push(state.format);
+    if(!state.flexible && prettyDate(state.date)) subjParts.push(prettyDate(state.date));
+    var subject = subjParts.join(' · ');
+
+    // Gmail expects CRLF line breaks in mailto bodies; \r\n keeps spacing intact.
+    return 'mailto:drew@dayoneleadership.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body.replace(/\n/g, '\r\n'));
   }
   function esc(s){return (s+'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
