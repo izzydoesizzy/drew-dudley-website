@@ -999,15 +999,12 @@
     var probono = state.engagement==='probono';
     var dash = '—';
 
-    // Aligns "Label" + value into a tidy two-column row. Gmail renders the
-    // mailto body in a proportional font, but padding the labels still keeps
-    // values from butting against the colons and reads clean on every client.
+    // Gmail composes in a proportional font, so column padding never lines up.
+    // A simple "Label: value" per line reads cleanest there; blank lines and
+    // section headers carry the structure instead of whitespace alignment.
     function field(label, value){
       value = (value===undefined || value===null || value==='') ? dash : value;
-      var pad = '              '; // 14 spaces
-      var key = (label + ':');
-      key = (key + pad).slice(0, Math.max(key.length, pad.length));
-      return key + ' ' + value;
+      return label + ': ' + value;
     }
     function section(title){
       return ['', title.toUpperCase(), '──────────────────────────────'];
