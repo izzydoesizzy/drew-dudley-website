@@ -1002,12 +1002,14 @@
     // Gmail composes in a proportional font, so column padding never lines up.
     // A simple "Label: value" per line reads cleanest there; blank lines and
     // section headers carry the structure instead of whitespace alignment.
+    // Dividers are short, plain ASCII hyphens so they never force horizontal
+    // scroll in a phone compose window or render as tofu on older Android.
     function field(label, value){
       value = (value===undefined || value===null || value==='') ? dash : value;
       return label + ': ' + value;
     }
     function section(title){
-      return ['', title.toUpperCase(), '──────────────────────────────'];
+      return ['', title.toUpperCase(), '----------------'];
     }
 
     var dateStr = state.flexible
