@@ -158,7 +158,7 @@ html.js #loader{display:flex;}
 
 .hero-portrait{position:absolute;z-index:1;right:clamp(0px,6vw,8rem);top:50%;
   transform:translateY(-54%);width:clamp(260px,34vw,520px);aspect-ratio:4/5;}
-.hero-portrait .ph{width:100%;height:100%;overflow:hidden;border-radius:300px 300px 8px 8px;}
+.hero-portrait .ph{width:100%;height:100%;overflow:hidden;border-radius:300px 300px 8px 8px;background:rgba(8,6,6,1);}
 .hero-portrait img{width:100%;height:115%;object-fit:cover;object-position:center top;
   filter:grayscale(.25) contrast(1.05) brightness(.92);}
 .hero-portrait::after{content:"";position:absolute;inset:0;border-radius:300px 300px 8px 8px;
@@ -534,7 +534,7 @@ footer{border-top:1px solid var(--line);padding-top:clamp(4rem,9vh,7rem);overflo
 
   <figure class="hero-portrait" data-parallax="-8">
     <span class="halo"></span>
-    <div class="ph"><img src="https://www.drewdudley.com/wp-content/uploads/2021/10/Drew_Home_Page_2.jpg" alt="Drew Dudley, keynote speaker" /></div>
+    <div class="ph"><img src="../assets/drew-hero.jpg" alt="Drew Dudley, keynote speaker" fetchpriority="high" decoding="async" /></div>
   </figure>
 
   <div class="hero-body">
