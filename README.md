@@ -14,6 +14,7 @@ A best-in-class speaker site for **Drew Dudley** — WSJ bestselling author and 
 | **V3** | `/v3/` | The Spotlight · theatrical | Deep black, cursor-follow spotlight, scene-based, indigo counterpoint |
 | **V4** | `/v4/` | The Editorial · premium light | Ivory/cream magazine, drop-cap, keynote index, dark "watch" interlude |
 | **V5** | `/v5/` | The Bento · modern modular | Glassy rounded bento tiles, gradients, kinetic hover + count-ups |
+| **V10** | `/v10/` | The Moment · cinematic motion | GSAP + Three.js ember field, preloader, pinned scenes, horizontal keynotes, sticky testimonial deck |
 | **Book** | `/book/` | Booking wizard (Phase 2) | Multi-step, branching, live price estimate |
 
 ```bash
