@@ -11,6 +11,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,300;1,9..144,400;1,9..144,500&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;1,400&family=Caveat:wght@600&display=swap" rel="stylesheet" />
 
 <style>
@@ -920,7 +921,9 @@ footer{border-top:1px solid var(--line);padding-top:clamp(4rem,9vh,7rem);overflo
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<!-- Three.js powers only the decorative ember background — load it off the critical
+     path so the hero can paint without waiting on the heaviest library. -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js" async onload="window.__initEmbers&&window.__initEmbers()"></script>
 <script>
 (function(){
 'use strict';
@@ -1053,9 +1056,13 @@ function scrollToHash(hash){
 });
 
 /* ═══ Embers · Three.js particle field ═══ */
-var emberState = { gather: 0 };
-(function(){
-  if (typeof THREE === 'undefined') return;
+/* Three.js loads async (off the critical path), so this may run now — if the
+   library is already here — or later, from the script's onload hook. */
+var emberState = { gather: 0, dim: 0 };
+var embersStarted = false;
+function initEmbers(){
+  if (embersStarted || typeof THREE === 'undefined') return;
+  embersStarted = true;
   var canvas = document.getElementById('embers');
   var renderer;
   try {
@@ -1168,7 +1175,10 @@ var emberState = { gather: 0 };
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
   });
-})();
+}
+/* Expose for the async Three.js onload hook, then try once in case it's ready. */
+window.__initEmbers = initEmbers;
+initEmbers();
 
 /* ═══ Custom cursor ═══ */
 if (finePointer) {
@@ -1246,24 +1256,42 @@ function heroIntro(){
   var bar = document.getElementById('loadBar');
   var words = ['Impact', 'Courage', 'Growth', 'Empowerment', 'Class', 'Self-Respect'];
   var wi = 0;
-  var n = { v: 0 };
+
+  // Get the hero readable fast. On data-saver / slow connections skip the
+  // branded count-up entirely; otherwise keep it brief instead of the old 1.9s.
+  var conn = navigator.connection || {};
+  var slow = conn.saveData || /(^|-)2g$/.test(conn.effectiveType || '');
+  var dur = slow ? 0 : 0.7;
+
+  var revealed = false;
+  function reveal(){
+    if (revealed) return;
+    revealed = true;
+    clearInterval(swap);
+    gsap.timeline()
+      .to(loader, { yPercent: -100, duration: .7, ease: 'expo.inOut' })
+      .add(heroIntro(), '-=.3')
+      .set(loader, { display: 'none' });
+  }
+
   var swap = setInterval(function(){
     wi = (wi + 1) % words.length;
     word.textContent = words[wi];
-  }, 300);
+  }, 220);
+
+  // Failsafe: never leave the hero trapped behind the loader if a tween stalls.
+  setTimeout(reveal, 2400);
+
+  if (dur === 0) { reveal(); return; }
+
+  var n = { v: 0 };
   gsap.to(n, {
-    v: 100, duration: 1.9, ease: 'power2.inOut',
+    v: 100, duration: dur, ease: 'power2.inOut',
     onUpdate: function(){
       pct.textContent = Math.round(n.v);
       bar.style.transform = 'scaleX(' + n.v / 100 + ')';
     },
-    onComplete: function(){
-      clearInterval(swap);
-      gsap.timeline()
-        .to(loader, { yPercent: -100, duration: .9, ease: 'expo.inOut' })
-        .add(heroIntro(), '-=.35')
-        .set(loader, { display: 'none' });
-    }
+    onComplete: reveal
   });
 })();
 
