@@ -8,3 +8,6 @@ Thumbs.db
 # Local-only symlink to Fathom transcripts (do not publish)
 transcripts-link
 TRANSCRIPT_SUMMARY.md
+
+# Drew's raw instruction files (voice memos, docs) - not site content
+instructions/

@@ -17,6 +17,13 @@ A best-in-class speaker site for **Drew Dudley** — WSJ bestselling author and 
 | **V10** | `/v10/` | The Moment · cinematic motion | GSAP + Three.js ember field, preloader, pinned scenes, horizontal keynotes, sticky testimonial deck |
 | **Book** | `/book/` | Booking wizard (Phase 2) | Multi-step, branching, live price estimate |
 
+### New builds (July 2026)
+
+| | Slug | What it is |
+|--|------|-----------|
+| **Book V2** | `/book-v2/` | **The booking flow V2B now links to.** Built to Drew's written spec: pleasantries → event details → needs → budget-reaction branch ("$10K–$20K, how do you feel?") → situation → estimate with Date / Availability / Cost Flexibility. "Yikes", pro-bono, and podcast/other paths exit to a set-up-a-call page (Green Room link). City/region/company autocomplete borrowed from `/book/`. Price bands and the Availability row are placeholders pending Drew's real fees and a calendar source. |
+| **TGP Teaser** | `/gathering-place-teaser/` | Unlinked, direct URL only. Minimal single-viewport Gathering Place placeholder per Drew's spec: fire background, hearthstone logo, "Invitation-only until Fall 2026", email capture. The "password poem" effect he mentioned is NOT built; waiting on an example of what he means. |
+
 ```bash
 open index.html      # V1
 open v2/index.html   # V2 … etc.
