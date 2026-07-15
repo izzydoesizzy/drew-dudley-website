@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Gathering Place</title>
+<meta name="description" content="The Gathering Place is invitation-only until Fall 2026." />
+<!-- TEASER BUILD (July 2026) — Drew's "mysterious placeholder" vision, built alongside
+     (not replacing) the full page at /gathering-place/. Not linked from any live page.
+
+     OPEN QUESTION FOR DREW: he asked for "one of those awesome password poem things
+     (can we open it to drewdudley.com just so I can see the effect?)" — unclear what
+     effect he means. Not built. Waiting on an example from Drew before attempting it. -->
+<meta name="robots" content="noindex,nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:     #0c0a08;
+    --text:   #f0ebe2;
+    --text2:  #d4cbbe;
+    --muted:  #9a8f82;
+    --muted3: #4a3e32;
+    --gold:   #c4922a;
+    --gold-h: #d4a85a;
+    --border: #2e2822;
+  }
+
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+  img { display: block; }
+
+  .label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+  }
+  .h-xl { font-size: clamp(3rem, 10vw, 6rem); }
+
+  input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    background: rgba(12, 10, 8, 0.72);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.9rem;
+    font-family: inherit;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 200ms;
+  }
+  input:focus { border-color: var(--gold); }
+  input::placeholder { color: var(--muted3); }
+
+  .btn-gold {
+    display: inline-block;
+    padding: 0.9rem 1.6rem;
+    background: var(--gold);
+    color: var(--bg);
+    font-size: 0.8rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    text-decoration: none;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: background 200ms;
+    white-space: nowrap;
+  }
+  .btn-gold:hover { background: var(--gold-h); }
+
+  .notify { display: flex; gap: 0.6rem; max-width: 26rem; margin: 0 auto; }
+  @media (max-width: 480px) { .notify { flex-direction: column; } }
+  .notify-note { font-size: 0.78rem; color: var(--muted); margin-top: 0.8rem; min-height: 1.2em; }
+</style>
+</head>
+<body>
+
+<section style="position: relative; min-height: 100vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1.5rem; overflow: hidden;">
+
+  <!-- Fire background — same video + canvas-fallback approach as /gathering-place/ (assets referenced, not duplicated) -->
+  <div style="position: absolute; inset: 0; background: #0c0a08;">
+    <video id="hero-video" autoplay muted loop playsinline aria-hidden="true"
+      style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.65; display: none;"
+      oncanplay="document.getElementById('fire-canvas').style.display='none'; this.style.display='block';"
+      onerror="this.style.display='none'; document.getElementById('fire-canvas').style.display='block';">
+      <source src="../gathering-place/content/brand/hero-fire.mp4" type="video/mp4">
+    </video>
+    <canvas id="fire-canvas" aria-hidden="true" style="position: absolute; inset: 0; width: 100%; height: 100%;"></canvas>
+    <div style="position: absolute; inset: 0; pointer-events: none; background: linear-gradient(to bottom, rgba(12,10,8,0.75) 0%, rgba(12,10,8,0.1) 40%, rgba(12,10,8,0.5) 80%, rgba(12,10,8,0.88) 100%);"></div>
+    <div style="position: absolute; inset: 0; pointer-events: none; background: radial-gradient(ellipse 70% 100% at 50% 100%, transparent 0%, rgba(12,10,8,0.6) 100%);"></div>
+  </div>
+
+  <!-- Content -->
+  <div style="position: relative; z-index: 10; max-width: 44rem; margin: 0 auto;">
+    <img src="../gathering-place/logos/processed/hearthstonelogotransparentnew.png" alt="The Gathering Place — Hearthstone emblem"
+      style="width: 80px; height: 80px; object-fit: contain; margin: 0 auto 2rem; opacity: 0.9;" />
+
+    <h1 class="h-xl" style="font-weight: 700; line-height: 1; letter-spacing: -0.02em; margin-bottom: 2rem;">
+      The Gathering<br>Place
+    </h1>
+
+    <p class="label" style="margin-bottom: 3rem;">Invitation-only until Fall 2026</p>
+
+    <!-- Email capture — composes a mailto to Drew with the typed address (no backend exists in this repo).
+         Swap for a real list provider (Brevo/Mailchimp/etc.) before launch if Drew wants true capture. -->
+    <form class="notify" id="notifyForm">
+      <input type="email" id="notifyEmail" placeholder="Your email" autocomplete="email" aria-label="Email address" required />
+      <button type="submit" class="btn-gold">Notify Me</button>
+    </form>
+    <p class="notify-note" id="notifyNote">Be the first to hear when the doors open.</p>
+  </div>
+
+</section>
+
+<!-- Canvas fire simulation — copied from /gathering-place/index.html so this page stays self-contained -->
+<script>
+(function () {
+  var canvas = document.getElementById('fire-canvas');
+  if (!canvas) return;
+
+  var running = true;
+  var animId;
+
+  function init() {
+    var W = Math.floor(canvas.offsetWidth / 3);
+    var H = Math.floor(canvas.offsetHeight / 3);
+    if (W < 1 || H < 1) return;
+
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+
+    var ctx = canvas.getContext('2d');
+    ctx.imageSmoothingEnabled = true;
+
+    var buf = new Uint8Array(W * H);
+
+    var pal = new Uint8ClampedArray(256 * 4);
+    for (var i = 0; i < 256; i++) {
+      var r, g, b, a;
+      if (i < 20) {
+        r = 0; g = 0; b = 0; a = 0;
+      } else if (i < 80) {
+        var t = (i - 20) / 60;
+        r = Math.floor(60 + t * 80);
+        g = Math.floor(10 + t * 20);
+        b = 0;
+        a = Math.floor(t * 200);
+      } else if (i < 160) {
+        var t = (i - 80) / 80;
+        r = Math.floor(140 + t * 115);
+        g = Math.floor(30 + t * 90);
+        b = 0;
+        a = 220;
+      } else if (i < 220) {
+        var t = (i - 160) / 60;
+        r = 255;
+        g = Math.floor(120 + t * 100);
+        b = Math.floor(t * 40);
+        a = 240;
+      } else {
+        var t = (i - 220) / 35;
+        r = 255;
+        g = Math.floor(220 + t * 35);
+        b = Math.floor(40 + t * 120);
+        a = 255;
+      }
+      pal[i * 4]     = r;
+      pal[i * 4 + 1] = g;
+      pal[i * 4 + 2] = b;
+      pal[i * 4 + 3] = a;
+    }
+
+    var offscreen = document.createElement('canvas');
+    offscreen.width  = W;
+    offscreen.height = H;
+    var octx = offscreen.getContext('2d');
+    var imageData = octx.createImageData(W, H);
+
+    function tick() {
+      if (!running) return;
+
+      for (var x = 0; x < W; x++) {
+        var heat = Math.random() > 0.15
+          ? Math.floor(180 + Math.random() * 75)
+          : Math.floor(Math.random() * 100);
+        buf[(H - 1) * W + x] = heat;
+        if (Math.random() > 0.3) {
+          buf[(H - 2) * W + x] = Math.floor(heat * 0.9);
+        }
+      }
+
+      for (var y = 1; y < H - 1; y++) {
+        for (var x = 0; x < W; x++) {
+          var below   = buf[(y + 1) * W + x];
+          var belowL  = buf[(y + 1) * W + Math.max(0, x - 1)];
+          var belowR  = buf[(y + 1) * W + Math.min(W - 1, x + 1)];
+          var current = buf[y * W + x];
+          var avg = (below + belowL + belowR + current) >> 2;
+          buf[y * W + x] = Math.max(0, avg - Math.floor(Math.random() * 3));
+        }
+      }
+
+      for (var i = 0; i < W * H; i++) {
+        var v  = buf[i];
+        var pi = i * 4;
+        imageData.data[pi]     = pal[v * 4];
+        imageData.data[pi + 1] = pal[v * 4 + 1];
+        imageData.data[pi + 2] = pal[v * 4 + 2];
+        imageData.data[pi + 3] = pal[v * 4 + 3];
+      }
+      octx.putImageData(imageData, 0, 0);
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(offscreen, 0, 0, canvas.width, canvas.height);
+
+      animId = requestAnimationFrame(tick);
+    }
+
+    tick();
+  }
+
+  setTimeout(init, 50);
+})();
+</script>
+
+<!-- Email capture: builds the mailto from the typed address (the full /gathering-place/ page's
+     form uses a static mailto that ignores input — this page's only job is the email, so it reads it) -->
+<script>
+(function () {
+  var form = document.getElementById('notifyForm');
+  var input = document.getElementById('notifyEmail');
+  var note = document.getElementById('notifyNote');
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (input.value || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      note.textContent = 'That email doesn’t look right. Mind checking it?';
+      return;
+    }
+    var subject = 'The Gathering Place: notify me';
+    var body = 'Please add me to The Gathering Place updates list.\n\nEmail: ' + email;
+    window.location.href = 'mailto:drew@dayoneleadership.com?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body);
+    note.textContent = 'Opening your email app… send the message and you’re on the list.';
+  });
+})();
+</script>
+
+</body>
+</html>

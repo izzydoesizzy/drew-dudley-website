@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Book Drew Dudley · Keynote Inquiry (Preview)</title>
+<meta name="description" content="Tell Drew about your event and get an instant estimate. Preview build of the new booking flow." />
+<!-- Booking wizard V2 (July 2026) — built to Drew's written spec; linked from V2B as the
+     live booking flow. Price bands and the Availability row are placeholders pending
+     Drew's real fee ranges and a calendar data source. The prior wizard remains at /book/.
+     Assets (logos, photos, video) to pull manually from Drew's Dropbox:
+     https://www.dropbox.com/scl/fo/2w7hsitfmccw2dvtz6b4x/AJiNuj_xyFOiDuzh2a3nOnE -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  :root{
+    --bg:#0a0907;--card:#13100c;--card2:#181410;--text:#f3eee4;--muted:#a89b89;--muted2:#6f6453;
+    --line:#241f18;--gold:#d6a23a;--gold-br:#f0c862;--green:#7fbf8f;
+    --serif:'Cormorant Garamond',Georgia,serif;--sans:'Inter',system-ui,sans-serif;
+  }
+  html{-webkit-text-size-adjust:100%;}
+  body{background:var(--bg);color:var(--text);font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.5;min-height:100vh;overflow-x:hidden;}
+  body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(800px circle at 50% -10%, rgba(214,162,58,.10), transparent 55%);}
+  a{color:inherit;text-decoration:none;}
+  .serif{font-family:var(--serif);}
+
+  .shell{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:2.5rem 1.5rem 4rem;min-height:100vh;display:flex;flex-direction:column;}
+  .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem;}
+  .brand{font-family:var(--serif);font-weight:700;font-size:1.4rem;}
+  .home-link{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
+  .home-link:hover{color:var(--gold);}
+
+  /* progress */
+  .progress{margin-bottom:2.2rem;}
+  .progress-meta{display:flex;justify-content:space-between;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:.7rem;}
+  .progress-meta b{color:var(--gold);}
+  .bar{height:3px;background:var(--line);border-radius:3px;overflow:hidden;}
+  .bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--gold-br));border-radius:3px;transition:width .5s cubic-bezier(.2,.7,.2,1);}
+
+  /* steps */
+  .step{display:none;animation:fade .4s ease both;}
+  .step.active{display:block;}
+  @keyframes fade{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:none;}}
+  .q-eyebrow{font-size:.7rem;font-weight:600;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;}
+  .q-title{font-family:var(--serif);font-weight:700;font-size:clamp(1.7rem,5vw,2.5rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:.6rem;}
+  .q-help{color:var(--muted);font-size:1rem;margin-bottom:1.8rem;}
+
+  /* option cards */
+  .opts{display:flex;flex-direction:column;gap:.7rem;}
+  .opt{display:flex;align-items:center;gap:1rem;padding:1.15rem 1.3rem;border:1px solid var(--line);border-radius:14px;
+    background:var(--card);cursor:pointer;transition:border-color .2s,background .2s,transform .15s;text-align:left;width:100%;font-family:inherit;color:var(--text);}
+  .opt:hover{border-color:var(--gold);background:var(--card2);}
+  .opt.sel{border-color:var(--gold);background:linear-gradient(160deg,#1d1810,#13100c);box-shadow:0 0 0 1px var(--gold) inset;}
+  .opt .tick{width:22px;height:22px;border-radius:50%;border:1px solid var(--muted2);flex-shrink:0;display:grid;place-items:center;transition:border-color .2s,background .2s;}
+  .opt.sel .tick{border-color:var(--gold);background:var(--gold);}
+  .opt.sel .tick svg{opacity:1;}
+  .opt .tick svg{width:12px;height:12px;color:#1a1305;opacity:0;}
+  .opt>span:not(.tick){flex:1;min-width:0;}
+  .opt .ot{display:block;font-weight:600;font-size:1.02rem;}
+  .opt .os{display:block;font-size:.85rem;color:var(--muted);margin-top:.15rem;}
+
+  /* chips */
+  .chips{display:flex;flex-wrap:wrap;gap:.6rem;}
+  .chip{padding:.7rem 1.15rem;border:1px solid var(--line);border-radius:100px;background:var(--card);cursor:pointer;font-size:.9rem;
+    color:var(--text);font-family:inherit;transition:border-color .2s,background .2s,color .2s;}
+  .chip:hover{border-color:var(--gold);}
+  .chip.sel{border-color:var(--gold);background:var(--gold);color:#1a1305;font-weight:600;}
+
+  /* inputs */
+  .field{margin-bottom:1.1rem;}
+  .field > label{display:block;font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted2);margin-bottom:.5rem;}
+  .field > label .optional{text-transform:none;letter-spacing:0;font-weight:400;}
+  .field input,.field textarea{width:100%;padding:.95rem 1.1rem;background:var(--card);border:1px solid var(--line);color:var(--text);
+    font-family:inherit;font-size:.95rem;border-radius:12px;outline:none;transition:border-color .2s,box-shadow .2s;}
+  .field input:focus,.field textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(214,162,58,.12);}
+  .field input::placeholder,.field textarea::placeholder{color:var(--muted2);}
+  .field textarea{resize:none;}
+  input[type=date]{color-scheme:dark;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
+  @media(max-width:480px){.row2{grid-template-columns:1fr;}}
+  .wordcount{font-size:.74rem;color:var(--muted2);text-align:right;margin-top:.35rem;}
+  .wordcount.over{color:#c96a5a;}
+
+  /* autocomplete (same pattern as /book/) */
+  .ac-field{position:relative;}
+  .ac-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:30;display:none;
+    max-height:15.5rem;overflow-y:auto;background:var(--card2);border:1px solid var(--line);
+    border-radius:12px;box-shadow:0 18px 44px rgba(0,0,0,.55);padding:.35rem;}
+  .ac-menu.open{display:block;}
+  .ac-item{display:flex;align-items:baseline;gap:.5rem;padding:.6rem .75rem;border-radius:8px;cursor:pointer;
+    font-size:.92rem;color:var(--muted);line-height:1.3;}
+  .ac-item .ac-city{color:var(--text);font-weight:600;}
+  .ac-item .ac-rest{color:var(--muted2);font-size:.84rem;}
+  .ac-item.active,.ac-item:hover{background:rgba(214,162,58,.14);color:var(--text);}
+  .ac-item.active .ac-rest,.ac-item:hover .ac-rest{color:var(--muted);}
+
+  /* nav buttons */
+  .navrow{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-top:2rem;}
+  .btn{display:inline-flex;align-items:center;gap:.5rem;font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    padding:1rem 1.9rem;border-radius:100px;transition:transform .2s,background .2s,opacity .2s,color .2s,border-color .2s;cursor:pointer;border:1px solid transparent;font-family:inherit;}
+  .btn-gold{background:var(--gold);color:#1a1305;}
+  .btn-gold:hover{background:var(--gold-br);transform:translateY(-2px);}
+  .btn-gold[disabled]{opacity:.35;pointer-events:none;}
+  .btn-back{background:transparent;color:var(--muted);border-color:var(--line);}
+  .btn-back:hover{color:var(--text);border-color:var(--muted2);}
+  .btn svg{width:14px;height:14px;}
+
+  /* result + exit */
+  .result{text-align:center;}
+  .result .badge{display:inline-flex;align-items:center;gap:.5rem;font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;
+    padding:.5rem 1rem;border-radius:100px;border:1px solid var(--line);color:var(--muted);margin-bottom:1.6rem;}
+  .result .badge.good{color:var(--green);border-color:rgba(127,191,143,.4);}
+  .estimate{font-family:var(--serif);font-weight:700;font-size:clamp(2.6rem,9vw,4.4rem);line-height:1;letter-spacing:-.01em;
+    background:linear-gradient(180deg,#fff,var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin:.4rem 0;}
+  .est-cap{font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted2);margin-bottom:1.6rem;}
+  .result .msg{color:var(--muted);font-size:1.05rem;line-height:1.65;max-width:30rem;margin:0 auto 2rem;}
+  .matrix{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.4rem 1.6rem;margin:0 auto 1.4rem;max-width:34rem;}
+  .matrix .row{display:flex;justify-content:space-between;gap:1rem;padding:.65rem 0;border-bottom:1px solid var(--line);font-size:.95rem;}
+  .matrix .row:last-child{border-bottom:none;}
+  .matrix .row span:first-child{color:var(--muted);flex-shrink:0;}
+  .matrix .row span:last-child{text-align:right;font-weight:600;}
+  .matrix .row .flex-high{color:var(--green);}
+  .matrix .row .flex-med{color:var(--gold);}
+  .summary{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:1.6rem;margin:0 auto 2rem;max-width:34rem;}
+  .summary h4{font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted2);margin-bottom:1rem;}
+  .summary .row{display:flex;justify-content:space-between;gap:1rem;padding:.5rem 0;border-bottom:1px solid var(--line);font-size:.9rem;}
+  .summary .row:last-child{border-bottom:none;}
+  .summary .row span:first-child{color:var(--muted);flex-shrink:0;}
+  .summary .row span:last-child{text-align:right;font-weight:500;}
+  .disclaimer{font-size:.75rem;color:var(--muted2);margin-top:1.4rem;line-height:1.6;}
+  .result .alt{display:block;margin-top:1.2rem;font-size:.82rem;color:var(--muted);}
+  .result .alt a{color:var(--gold);}
+
+  .hide{display:none!important;}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="topbar">
+    <a href="../v2b/index.html" class="brand">Drew Dudley</a>
+    <a href="../v2b/index.html" class="home-link">← Back to site</a>
+  </div>
+
+  <div class="progress" id="progress">
+    <div class="progress-meta"><span>Booking inquiry · about 2 minutes</span><span>Step <b id="stepNum">1</b> of <b id="stepTotal">5</b></span></div>
+    <div class="bar"><i id="barFill"></i></div>
+  </div>
+
+  <form id="wiz" onsubmit="return false;" autocomplete="on">
+
+    <!-- 1 PLEASANTRIES -->
+    <section class="step active" data-key="pleasantries">
+      <p class="q-eyebrow">First, the pleasantries</p>
+      <h2 class="q-title">Who are we talking to?</h2>
+      <p class="q-help">A few basics so Drew knows who to get back to.</p>
+      <div class="row2">
+        <div class="field"><label for="f_name">Name</label><input id="f_name" type="text" autocomplete="name" placeholder="Your full name" /></div>
+        <div class="field"><label for="f_org">Organization</label>
+          <div class="ac-field">
+            <input id="f_org" type="text" autocomplete="off" placeholder="Start typing…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="orgAC" />
+            <div class="ac-menu" id="orgAC" role="listbox"></div>
+          </div>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="f_email">Email</label><input id="f_email" type="email" autocomplete="email" placeholder="you@company.com" /></div>
+        <div class="field"><label for="f_phone">Phone <span class="optional">(optional)</span></label><input id="f_phone" type="tel" autocomplete="tel" placeholder="For faster scheduling" /></div>
+      </div>
+    </section>
+
+    <!-- 2 EVENT -->
+    <section class="step" data-key="event">
+      <p class="q-eyebrow">Your event</p>
+      <h2 class="q-title">Now tell us about your event.</h2>
+      <p class="q-help">Whatever you know so far. Rough answers are fine.</p>
+      <div class="row2">
+        <div class="field"><label for="f_date">Event date</label><input id="f_date" type="date" /></div>
+        <div class="field"><label for="f_event">Event name <span class="optional">(optional)</span></label><input id="f_event" type="text" placeholder="e.g. 2027 Leadership Summit" /></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="f_city">City</label>
+          <div class="ac-field">
+            <input id="f_city" type="text" autocomplete="off" placeholder="e.g. Toronto" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="cityAC" />
+            <div class="ac-menu" id="cityAC" role="listbox"></div>
+          </div>
+        </div>
+        <div class="field"><label for="f_region">Province / State / Country <span class="optional">(optional)</span></label>
+          <div class="ac-field">
+            <input id="f_region" type="text" autocomplete="off" placeholder="e.g. Ontario, Canada" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="regionAC" />
+            <div class="ac-menu" id="regionAC" role="listbox"></div>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>Is the event virtual?</label>
+        <div class="chips" data-group="virtual">
+          <button type="button" class="chip" data-val="No, in person">No, in person</button>
+          <button type="button" class="chip" data-val="Yes, virtual">Yes, virtual</button>
+          <button type="button" class="chip" data-val="Hybrid">Hybrid</button>
+        </div>
+      </div>
+      <div class="field"><label>Attendees <span class="optional">(optional)</span></label>
+        <div class="chips" data-group="attendees">
+          <button type="button" class="chip" data-val="Under 100">Under 100</button>
+          <button type="button" class="chip" data-val="100–500">100–500</button>
+          <button type="button" class="chip" data-val="500–1,500">500–1,500</button>
+          <button type="button" class="chip" data-val="1,500+">1,500+</button>
+        </div>
+      </div>
+      <div class="field"><label>The audience will be made up of… <span class="optional">(optional, pick any)</span></label>
+        <!-- Audience categories borrowed from the live /book/ wizard — Drew's spec didn't list them. Confirm with Drew. -->
+        <div class="chips" data-group="audMakeup" data-multi="1">
+          <button type="button" class="chip" data-val="Executives / senior leaders">Executives / senior leaders</button>
+          <button type="button" class="chip" data-val="Managers">Managers</button>
+          <button type="button" class="chip" data-val="Full company / all-hands">Full company</button>
+          <button type="button" class="chip" data-val="Association members">Association members</button>
+          <button type="button" class="chip" data-val="Students / educators">Students / educators</button>
+          <button type="button" class="chip" data-val="Mixed / public">Mixed / public</button>
+        </div>
+      </div>
+      <div class="field"><label>Potential start time for Drew <span class="optional">(optional)</span></label>
+        <div class="chips" data-group="startTime">
+          <button type="button" class="chip" data-val="Morning">Morning</button>
+          <button type="button" class="chip" data-val="Midday">Midday</button>
+          <button type="button" class="chip" data-val="Afternoon">Afternoon</button>
+          <button type="button" class="chip" data-val="Evening">Evening</button>
+          <button type="button" class="chip" data-val="Not sure yet">Not sure yet</button>
+        </div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="f_theme">Event theme <span class="optional">(optional)</span></label><input id="f_theme" type="text" placeholder="e.g. Leading Through Change" /></div>
+        <div class="field"><label for="f_goals">What should Drew accomplish? <span class="optional">(optional)</span></label><input id="f_goals" type="text" placeholder="Outcomes you're hoping for" /></div>
+      </div>
+    </section>
+
+    <!-- 3 NEEDS -->
+    <section class="step" data-key="needs">
+      <p class="q-eyebrow">What are your needs?</p>
+      <h2 class="q-title">What would you like Drew to do?</h2>
+      <p class="q-help">Pick the closest fit. You can refine it later.</p>
+      <div class="opts" data-group="needs">
+        <button type="button" class="opt" data-val="keynote"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Keynote</span><span class="os">Drew's signature: 45–75 minutes on stage.</span></span></button>
+        <button type="button" class="opt" data-val="keynote-large"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Keynote + large interactive session(s)</span><span class="os">Over 100 attendees in the interactive portion.</span></span></button>
+        <button type="button" class="opt" data-val="keynote-small"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Keynote + interactive session(s)</span><span class="os">Under 100 attendees in the interactive portion.</span></span></button>
+        <button type="button" class="opt" data-val="other"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Podcast / Q&amp;A / something else cool</span><span class="os">Drew's always up for it if he can make it work.</span></span></button>
+      </div>
+    </section>
+
+    <!-- 4 BUDGET REACTION -->
+    <section class="step" data-key="budget">
+      <p class="q-eyebrow">How much will it cost?</p>
+      <h2 class="q-title">Most quotes fall between $10,000 and $20,000.</h2>
+      <p class="q-help">Which of the following best describes your reaction to that?</p>
+      <div class="opts" data-group="budget">
+        <button type="button" class="opt" data-val="yikes"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"Yikes! Nope."</span><span class="os">Fair enough. There may still be a way to work together.</span></span></button>
+        <button type="button" class="opt" data-val="flex"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"We're close if he's willing to flex a little…"</span></span></button>
+        <button type="button" class="opt" data-val="works"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"This could work financially if he's a good fit."</span></span></button>
+        <button type="button" class="opt" data-val="probono"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"I don't have a budget but have a great pitch for why it's karmically lucrative and he should do it pro bono."</span></span></button>
+      </div>
+      <div class="field hide" id="pitchWrap" style="margin-top:1.2rem;">
+        <label for="f_pitch">Please provide that pitch, in as many words as fit in this box</label>
+        <textarea id="f_pitch" rows="6" placeholder="Who you serve, why it matters, and why Drew…"></textarea>
+        <div class="wordcount" id="pitchCount">0 / 200 words</div>
+      </div>
+    </section>
+
+    <!-- 5 SITUATION -->
+    <section class="step" data-key="situation">
+      <p class="q-eyebrow">Almost there</p>
+      <h2 class="q-title">Which best describes your situation?</h2>
+      <div class="opts" data-group="situation">
+        <button type="button" class="opt" data-val="booking"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">We'd like to book Drew</span><span class="os">We're inquiring about availability and pricing.</span></span></button>
+        <button type="button" class="opt" data-val="shortlist"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">Drew is on a shortlist</span><span class="os">We're gathering more in-depth information.</span></span></button>
+        <button type="button" class="opt" data-val="early"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">We're in the earlier stages of our search</span></span></button>
+      </div>
+    </section>
+
+    <!-- RESULT (estimate) -->
+    <section class="step" data-key="result">
+      <div class="result">
+        <div class="badge" id="resBadge">Your estimate</div>
+        <div class="estimate" id="estVal">·</div>
+        <div class="est-cap" id="estCap">Estimated cost</div>
+        <!-- TODO: "Date: Available/Unavailable" needs a real calendar/availability data source
+             (Drew is deciding between a response matrix and a calendar feed). Until then this
+             shows a neutral "pending" state rather than fabricating a yes/no. -->
+        <div class="matrix" id="resMatrix"></div>
+        <p class="msg" id="resMsg"></p>
+        <div class="summary" id="resSummary"></div>
+        <a href="#" id="sendBtn" class="btn btn-gold" style="justify-content:center;">Send to Drew</a>
+        <span class="alt">or email directly: <a href="mailto:drew@dayoneleadership.com">drew@dayoneleadership.com</a></span>
+        <p class="disclaimer">This estimate is a guide, not a quote. Final pricing is confirmed with Drew and flexes with date, format, and scope. Nothing is booked until you both agree.</p>
+      </div>
+    </section>
+
+    <!-- EXIT (the "booking page": no online quote, book a call instead; copy varies by exit path) -->
+    <section class="step" data-key="exit">
+      <div class="result">
+        <div class="badge" id="exitBadge">Let's talk</div>
+        <h2 class="q-title" id="exitTitle" style="margin-bottom:1rem;">Let's find a time.</h2>
+        <p class="msg" id="exitMsg"></p>
+        <a href="https://thegreenroomspeakers.com/book/drew-dudley/dayoneleadership" target="_blank" rel="noopener" class="btn btn-gold" style="justify-content:center;">Set up a call</a>
+        <span class="alt">or email directly: <a href="mailto:drew@dayoneleadership.com" id="exitMail">drew@dayoneleadership.com</a></span>
+      </div>
+    </section>
+
+    <!-- NAV -->
+    <div class="navrow" id="navrow">
+      <button type="button" class="btn btn-back" id="backBtn" style="visibility:hidden;">← Back</button>
+      <button type="button" class="btn btn-gold" id="nextBtn" disabled>Continue
+        <svg viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+
+  </form>
+</div>
+
+<script>
+(function(){
+  var SAVE_KEY='dd_book_preview_v1'; // distinct from the live wizard's key
+
+  // Placeholder price bands per needs category, anchored to Drew's stated
+  // "$10,000–$20,000 most quotes" range. Confirm real bands with Drew.
+  var NEEDS={
+    'keynote':{lo:10000,hi:20000,label:'Keynote'},
+    'keynote-large':{lo:14000,hi:25000,label:'Keynote + large interactive session(s)'},
+    'keynote-small':{lo:12000,hi:22000,label:'Keynote + interactive session(s)'},
+    'other':{lo:0,hi:0,label:'Podcast / Q&A / something else'}
+  };
+  var BUDGET_LABELS={yikes:'"Yikes! Nope."',flex:'"We’re close if he’s willing to flex a little…"',
+    works:'"This could work financially if he’s a good fit."',probono:'Pro-bono pitch'};
+  var SITUATION_LABELS={booking:'Ready to book, checking availability and pricing',
+    shortlist:'Drew is on a shortlist',early:'Earlier stages of the search'};
+
+  // Copy adapted from Drew's first-person notes into site voice — for his review.
+  var EXITS={
+    other:{
+      badge:'No problem',
+      title:'Drew’s always up for that.',
+      msg:'Podcasts, Q&As, fireside chats, something nobody’s tried yet: if he can make it work, he’s interested. The fastest way to explore it is a quick call.'
+    },
+    declined:{
+      badge:'Don’t write it off yet',
+      title:'Set up a call anyway.',
+      msg:'Budgets are budgets, and that’s okay. Drew tries to find a way to add something to any event that reaches out, even if it’s a stack of signed books. A quick call costs nothing.'
+    },
+    probono:{
+      badge:'Pro bono',
+      title:'Drew does consider pro bono.',
+      msg:'A handful of times a year, for the right cause. Set up a call and you can dive into your pitch a little deeper together.'
+    }
+  };
+
+  // ── city autocomplete (dependency-free) ──────────────────────────
+  // Each entry: [City, Region/Province/State, Country]
+  var CITIES=[
+    ['Toronto','ON','Canada'],['Montreal','QC','Canada'],['Vancouver','BC','Canada'],['Calgary','AB','Canada'],
+    ['Ottawa','ON','Canada'],['Edmonton','AB','Canada'],['Winnipeg','MB','Canada'],['Halifax','NS','Canada'],
+    ['Mississauga','ON','Canada'],['Hamilton','ON','Canada'],['Quebec City','QC','Canada'],['Victoria','BC','Canada'],
+    ['Kitchener','ON','Canada'],['London','ON','Canada'],['Saskatoon','SK','Canada'],['Regina','SK','Canada'],
+    ['St. John’s','NL','Canada'],['Banff','AB','Canada'],['Whistler','BC','Canada'],['Niagara Falls','ON','Canada'],
+    ['Brampton','ON','Canada'],['Surrey','BC','Canada'],['Burnaby','BC','Canada'],['Richmond','BC','Canada'],
+    ['Richmond Hill','ON','Canada'],['Markham','ON','Canada'],['Vaughan','ON','Canada'],['Oakville','ON','Canada'],
+    ['Burlington','ON','Canada'],['Oshawa','ON','Canada'],['Whitby','ON','Canada'],['Ajax','ON','Canada'],
+    ['Pickering','ON','Canada'],['Milton','ON','Canada'],['Guelph','ON','Canada'],['Cambridge','ON','Canada'],
+    ['Waterloo','ON','Canada'],['Brantford','ON','Canada'],['Barrie','ON','Canada'],['Kingston','ON','Canada'],
+    ['Windsor','ON','Canada'],['Sudbury','ON','Canada'],['Thunder Bay','ON','Canada'],['Sault Ste. Marie','ON','Canada'],
+    ['Peterborough','ON','Canada'],['Kanata','ON','Canada'],['St. Catharines','ON','Canada'],['Sarnia','ON','Canada'],
+    ['Laval','QC','Canada'],['Gatineau','QC','Canada'],['Longueuil','QC','Canada'],['Sherbrooke','QC','Canada'],
+    ['Trois-Rivières','QC','Canada'],['Saguenay','QC','Canada'],['Lévis','QC','Canada'],['Terrebonne','QC','Canada'],
+    ['Mont-Tremblant','QC','Canada'],['Red Deer','AB','Canada'],['Lethbridge','AB','Canada'],['Medicine Hat','AB','Canada'],
+    ['Fort McMurray','AB','Canada'],['Grande Prairie','AB','Canada'],['Airdrie','AB','Canada'],['Canmore','AB','Canada'],
+    ['Jasper','AB','Canada'],['Kelowna','BC','Canada'],['Kamloops','BC','Canada'],['Nanaimo','BC','Canada'],
+    ['Abbotsford','BC','Canada'],['Coquitlam','BC','Canada'],['Langley','BC','Canada'],['Prince George','BC','Canada'],
+    ['Vernon','BC','Canada'],['Penticton','BC','Canada'],['Chilliwack','BC','Canada'],['Tofino','BC','Canada'],
+    ['Brandon','MB','Canada'],['Steinbach','MB','Canada'],['Moncton','NB','Canada'],['Fredericton','NB','Canada'],
+    ['Saint John','NB','Canada'],['Dartmouth','NS','Canada'],['Sydney','NS','Canada'],['Charlottetown','PE','Canada'],
+    ['Moose Jaw','SK','Canada'],['Prince Albert','SK','Canada'],['Yellowknife','NT','Canada'],
+    ['Whitehorse','YT','Canada'],['Iqaluit','NU','Canada'],['Corner Brook','NL','Canada'],
+    ['New York','NY','United States'],['Los Angeles','CA','United States'],['Chicago','IL','United States'],
+    ['Houston','TX','United States'],['Dallas','TX','United States'],['Austin','TX','United States'],
+    ['San Antonio','TX','United States'],['Phoenix','AZ','United States'],['San Francisco','CA','United States'],
+    ['San Jose','CA','United States'],['San Diego','CA','United States'],['Seattle','WA','United States'],
+    ['Denver','CO','United States'],['Boston','MA','United States'],['Washington','DC','United States'],
+    ['Atlanta','GA','United States'],['Miami','FL','United States'],['Orlando','FL','United States'],
+    ['Tampa','FL','United States'],['Nashville','TN','United States'],['Memphis','TN','United States'],
+    ['Las Vegas','NV','United States'],['Minneapolis','MN','United States'],['Detroit','MI','United States'],
+    ['Philadelphia','PA','United States'],['Pittsburgh','PA','United States'],['Charlotte','NC','United States'],
+    ['Raleigh','NC','United States'],['Columbus','OH','United States'],['Cleveland','OH','United States'],
+    ['Cincinnati','OH','United States'],['Indianapolis','IN','United States'],['Kansas City','MO','United States'],
+    ['St. Louis','MO','United States'],['New Orleans','LA','United States'],['Salt Lake City','UT','United States'],
+    ['Portland','OR','United States'],['Sacramento','CA','United States'],['Baltimore','MD','United States'],
+    ['Milwaukee','WI','United States'],['Louisville','KY','United States'],['Oklahoma City','OK','United States'],
+    ['Honolulu','HI','United States'],['Anchorage','AK','United States'],['Buffalo','NY','United States'],
+    ['Scottsdale','AZ','United States'],['Palm Springs','CA','United States'],['Naples','FL','United States'],
+    ['Aspen','CO','United States'],['Park City','UT','United States'],['Savannah','GA','United States'],
+    ['Jacksonville','FL','United States'],['Fort Worth','TX','United States'],['El Paso','TX','United States'],
+    ['Fort Lauderdale','FL','United States'],['West Palm Beach','FL','United States'],['Sarasota','FL','United States'],
+    ['Fort Myers','FL','United States'],['St. Petersburg','FL','United States'],['Tallahassee','FL','United States'],
+    ['Charleston','SC','United States'],['Greenville','SC','United States'],['Columbia','SC','United States'],
+    ['Myrtle Beach','SC','United States'],['Asheville','NC','United States'],['Durham','NC','United States'],
+    ['Greensboro','NC','United States'],['Winston-Salem','NC','United States'],['Knoxville','TN','United States'],
+    ['Chattanooga','TN','United States'],['Birmingham','AL','United States'],['Huntsville','AL','United States'],
+    ['Montgomery','AL','United States'],['Mobile','AL','United States'],['Jackson','MS','United States'],
+    ['Little Rock','AR','United States'],['Baton Rouge','LA','United States'],['Shreveport','LA','United States'],
+    ['Tucson','AZ','United States'],['Mesa','AZ','United States'],['Tempe','AZ','United States'],['Chandler','AZ','United States'],
+    ['Gilbert','AZ','United States'],['Glendale','AZ','United States'],['Flagstaff','AZ','United States'],['Sedona','AZ','United States'],
+    ['Albuquerque','NM','United States'],['Santa Fe','NM','United States'],['Reno','NV','United States'],
+    ['Henderson','NV','United States'],['Boise','ID','United States'],['Spokane','WA','United States'],
+    ['Tacoma','WA','United States'],['Bellevue','WA','United States'],['Eugene','OR','United States'],
+    ['Bend','OR','United States'],['Colorado Springs','CO','United States'],['Boulder','CO','United States'],
+    ['Fort Collins','CO','United States'],['Vail','CO','United States'],['Breckenridge','CO','United States'],
+    ['Telluride','CO','United States'],['Cheyenne','WY','United States'],['Jackson','WY','United States'],
+    ['Billings','MT','United States'],['Bozeman','MT','United States'],['Missoula','MT','United States'],
+    ['Fargo','ND','United States'],['Sioux Falls','SD','United States'],['Rapid City','SD','United States'],
+    ['Omaha','NE','United States'],['Lincoln','NE','United States'],['Des Moines','IA','United States'],
+    ['Cedar Rapids','IA','United States'],['Wichita','KS','United States'],['Topeka','KS','United States'],
+    ['Tulsa','OK','United States'],['Springfield','MO','United States'],['Columbia','MO','United States'],
+    ['Madison','WI','United States'],['Green Bay','WI','United States'],['St. Paul','MN','United States'],
+    ['Rochester','MN','United States'],['Grand Rapids','MI','United States'],['Ann Arbor','MI','United States'],
+    ['Lansing','MI','United States'],['Toledo','OH','United States'],['Dayton','OH','United States'],
+    ['Akron','OH','United States'],['Fort Wayne','IN','United States'],['South Bend','IN','United States'],
+    ['Lexington','KY','United States'],['Rochester','NY','United States'],['Syracuse','NY','United States'],
+    ['Albany','NY','United States'],['Yonkers','NY','United States'],['White Plains','NY','United States'],
+    ['Newark','NJ','United States'],['Jersey City','NJ','United States'],['Princeton','NJ','United States'],
+    ['Atlantic City','NJ','United States'],['Hartford','CT','United States'],['New Haven','CT','United States'],
+    ['Stamford','CT','United States'],['Providence','RI','United States'],['Newport','RI','United States'],
+    ['Worcester','MA','United States'],['Cambridge','MA','United States'],['Springfield','MA','United States'],
+    ['Portland','ME','United States'],['Burlington','VT','United States'],['Manchester','NH','United States'],
+    ['Allentown','PA','United States'],['Harrisburg','PA','United States'],['Wilmington','DE','United States'],
+    ['Richmond','VA','United States'],['Virginia Beach','VA','United States'],['Norfolk','VA','United States'],
+    ['Arlington','VA','United States'],['Alexandria','VA','United States'],['Charlottesville','VA','United States'],
+    ['Charleston','WV','United States'],['Anaheim','CA','United States'],['Long Beach','CA','United States'],
+    ['Oakland','CA','United States'],['Fresno','CA','United States'],['Bakersfield','CA','United States'],
+    ['Santa Barbara','CA','United States'],['Santa Monica','CA','United States'],['Pasadena','CA','United States'],
+    ['Irvine','CA','United States'],['Newport Beach','CA','United States'],['Napa','CA','United States'],
+    ['Lake Tahoe','CA','United States'],['Carmel','CA','United States'],['Provo','UT','United States'],
+    ['Charlotte Amalie','VI','United States'],['Kailua-Kona','HI','United States'],['Lahaina','HI','United States'],
+    ['London','','United Kingdom'],['Manchester','','United Kingdom'],['Birmingham','','United Kingdom'],
+    ['Edinburgh','','United Kingdom'],['Glasgow','','United Kingdom'],['Leeds','','United Kingdom'],
+    ['Dublin','','Ireland'],['Cork','','Ireland'],['Belfast','','United Kingdom'],
+    ['Paris','','France'],['Amsterdam','','Netherlands'],['Berlin','','Germany'],['Munich','','Germany'],
+    ['Frankfurt','','Germany'],['Zurich','','Switzerland'],['Geneva','','Switzerland'],['Madrid','','Spain'],
+    ['Barcelona','','Spain'],['Lisbon','','Portugal'],['Rome','','Italy'],['Milan','','Italy'],
+    ['Vienna','','Austria'],['Brussels','','Belgium'],['Copenhagen','','Denmark'],['Stockholm','','Sweden'],
+    ['Oslo','','Norway'],['Helsinki','','Finland'],['Reykjavik','','Iceland'],['Prague','','Czechia'],
+    ['Warsaw','','Poland'],['Athens','','Greece'],
+    ['Dubai','','United Arab Emirates'],['Abu Dhabi','','United Arab Emirates'],['Doha','','Qatar'],
+    ['Riyadh','','Saudi Arabia'],['Tel Aviv','','Israel'],['Istanbul','','Turkey'],['Cairo','','Egypt'],
+    ['Singapore','','Singapore'],['Hong Kong','','Hong Kong'],['Tokyo','','Japan'],['Osaka','','Japan'],
+    ['Seoul','','South Korea'],['Shanghai','','China'],['Beijing','','China'],['Bengaluru','','India'],
+    ['Mumbai','','India'],['New Delhi','','India'],['Bangkok','','Thailand'],['Kuala Lumpur','','Malaysia'],
+    ['Jakarta','','Indonesia'],['Manila','','Philippines'],
+    ['Sydney','NSW','Australia'],['Melbourne','VIC','Australia'],['Brisbane','QLD','Australia'],
+    ['Perth','WA','Australia'],['Adelaide','SA','Australia'],['Auckland','','New Zealand'],
+    ['Wellington','','New Zealand'],
+    ['Mexico City','','Mexico'],['Cancun','','Mexico'],['Monterrey','','Mexico'],['Guadalajara','','Mexico'],
+    ['Sao Paulo','','Brazil'],['Rio de Janeiro','','Brazil'],['Buenos Aires','','Argentina'],
+    ['Santiago','','Chile'],['Bogota','','Colombia'],['Lima','','Peru'],
+    ['Cape Town','','South Africa'],['Johannesburg','','South Africa'],['Nairobi','','Kenya']
+  ];
+  // ── province / state suggestions ─ Each entry: [Region, Abbrev, Country]
+  var REGIONS=[
+    ['Alberta','AB','Canada'],['British Columbia','BC','Canada'],['Manitoba','MB','Canada'],
+    ['New Brunswick','NB','Canada'],['Newfoundland and Labrador','NL','Canada'],['Nova Scotia','NS','Canada'],
+    ['Ontario','ON','Canada'],['Prince Edward Island','PE','Canada'],['Quebec','QC','Canada'],
+    ['Saskatchewan','SK','Canada'],['Northwest Territories','NT','Canada'],['Nunavut','NU','Canada'],
+    ['Yukon','YT','Canada'],
+    ['Alabama','AL','United States'],['Alaska','AK','United States'],['Arizona','AZ','United States'],
+    ['Arkansas','AR','United States'],['California','CA','United States'],['Colorado','CO','United States'],
+    ['Connecticut','CT','United States'],['Delaware','DE','United States'],['Florida','FL','United States'],
+    ['Georgia','GA','United States'],['Hawaii','HI','United States'],['Idaho','ID','United States'],
+    ['Illinois','IL','United States'],['Indiana','IN','United States'],['Iowa','IA','United States'],
+    ['Kansas','KS','United States'],['Kentucky','KY','United States'],['Louisiana','LA','United States'],
+    ['Maine','ME','United States'],['Maryland','MD','United States'],['Massachusetts','MA','United States'],
+    ['Michigan','MI','United States'],['Minnesota','MN','United States'],['Mississippi','MS','United States'],
+    ['Missouri','MO','United States'],['Montana','MT','United States'],['Nebraska','NE','United States'],
+    ['Nevada','NV','United States'],['New Hampshire','NH','United States'],['New Jersey','NJ','United States'],
+    ['New Mexico','NM','United States'],['New York','NY','United States'],['North Carolina','NC','United States'],
+    ['North Dakota','ND','United States'],['Ohio','OH','United States'],['Oklahoma','OK','United States'],
+    ['Oregon','OR','United States'],['Pennsylvania','PA','United States'],['Rhode Island','RI','United States'],
+    ['South Carolina','SC','United States'],['South Dakota','SD','United States'],['Tennessee','TN','United States'],
+    ['Texas','TX','United States'],['Utah','UT','United States'],['Vermont','VT','United States'],
+    ['Virginia','VA','United States'],['Washington','WA','United States'],['West Virginia','WV','United States'],
+    ['Wisconsin','WI','United States'],['Wyoming','WY','United States'],
+    ['District of Columbia','DC','United States'],['Puerto Rico','PR','United States'],
+    ['New South Wales','NSW','Australia'],['Victoria','VIC','Australia'],['Queensland','QLD','Australia'],
+    ['Western Australia','WA','Australia'],['South Australia','SA','Australia'],['Tasmania','TAS','Australia'],
+    ['Australian Capital Territory','ACT','Australia'],['Northern Territory','NT','Australia'],
+    ['England','','United Kingdom'],['Scotland','','United Kingdom'],['Wales','','United Kingdom'],
+    ['Northern Ireland','','United Kingdom']
+  ];
+  // ── company / organization suggestions ─ Each entry: [Name, Website]
+  var COMPANIES=[
+    // ─ Canada ─
+    ['Royal Bank of Canada','rbc.com'],['TD Bank Group','td.com'],['Scotiabank','scotiabank.com'],
+    ['Bank of Montreal','bmo.com'],['CIBC','cibc.com'],['National Bank of Canada','nbc.ca'],
+    ['Manulife','manulife.com'],['Sun Life','sunlife.com'],['Great-West Lifeco','greatwestlifeco.com'],
+    ['Brookfield Asset Management','brookfield.com'],['Power Corporation of Canada','powercorporation.com'],
+    ['Fairfax Financial','fairfax.ca'],['Intact Financial','intactfc.com'],['Desjardins','desjardins.com'],
+    ['Shopify','shopify.com'],['Constellation Software','csisoftware.com'],['OpenText','opentext.com'],
+    ['CGI','cgi.com'],['Lightspeed Commerce','lightspeedhq.com'],['BlackBerry','blackberry.com'],
+    ['Telus','telus.com'],['Rogers Communications','rogers.com'],['BCE (Bell Canada)','bce.ca'],
+    ['Enbridge','enbridge.com'],['TC Energy','tcenergy.com'],['Suncor Energy','suncor.com'],
+    ['Canadian Natural Resources','cnrl.com'],['Imperial Oil','imperialoil.ca'],['Cenovus Energy','cenovus.com'],
+    ['Pembina Pipeline','pembina.com'],['Fortis','fortisinc.com'],['Hydro One','hydroone.com'],
+    ['Canadian National Railway','cn.ca'],['Canadian Pacific Kansas City','cpkcr.com'],['Air Canada','aircanada.com'],
+    ['WestJet','westjet.com'],['Bombardier','bombardier.com'],['Magna International','magna.com'],
+    ['Linamar','linamar.com'],['Nutrien','nutrien.com'],['Agrium','nutrien.com'],['Teck Resources','teck.com'],
+    ['Barrick Gold','barrick.com'],['Agnico Eagle Mines','agnicoeagle.com'],['Franco-Nevada','franco-nevada.com'],
+    ['Nexen','cnoocinternational.com'],['Cameco','cameco.com'],['First Quantum Minerals','first-quantum.com'],
+    ['Loblaw Companies','loblaw.ca'],['George Weston','weston.ca'],['Metro','metro.ca'],
+    ['Empire Company (Sobeys)','empireco.ca'],['Alimentation Couche-Tard','couche-tard.com'],
+    ['Canadian Tire','canadiantire.ca'],['Dollarama','dollarama.com'],['Lululemon','lululemon.com'],
+    ['Aritzia','aritzia.com'],['Roots','roots.com'],['Hudson’s Bay','thebay.com'],['Indigo','indigo.ca'],
+    ['Restaurant Brands International','rbi.com'],['Tim Hortons','timhortons.com'],['Saputo','saputo.com'],
+    ['Maple Leaf Foods','mapleleaffoods.com'],['McCain Foods','mccain.com'],['Cineplex','cineplex.com'],
+    ['Thomson Reuters','thomsonreuters.com'],['Spin Master','spinmaster.com'],['Gildan Activewear','gildancorp.com'],
+    ['SNC-Lavalin (AtkinsRéalis)','atkinsrealis.com'],['WSP Global','wsp.com'],['Stantec','stantec.com'],
+    ['Onex','onex.com'],['CPP Investments','cppinvestments.com'],['Ontario Teachers’ Pension Plan','otpp.com'],
+    ['Wealthsimple','wealthsimple.com'],['Hootsuite','hootsuite.com'],['Clio','clio.com'],
+    ['Wattpad','wattpad.com'],['Coveo','coveo.com'],['Descartes Systems','descartes.com'],
+    ['Kinaxis','kinaxis.com'],['Dye & Durham','dyedurham.com'],['Nuvei','nuvei.com'],
+    // ─ United States ─
+    ['Apple','apple.com'],['Microsoft','microsoft.com'],['Alphabet (Google)','google.com'],
+    ['Amazon','amazon.com'],['Meta Platforms','meta.com'],['Nvidia','nvidia.com'],['Tesla','tesla.com'],
+    ['Netflix','netflix.com'],['Adobe','adobe.com'],['Salesforce','salesforce.com'],['Oracle','oracle.com'],
+    ['IBM','ibm.com'],['Intel','intel.com'],['Cisco Systems','cisco.com'],['Qualcomm','qualcomm.com'],
+    ['Broadcom','broadcom.com'],['Texas Instruments','ti.com'],['AMD','amd.com'],['Dell Technologies','dell.com'],
+    ['HP','hp.com'],['Hewlett Packard Enterprise','hpe.com'],['ServiceNow','servicenow.com'],
+    ['Intuit','intuit.com'],['Workday','workday.com'],['Snowflake','snowflake.com'],['Palantir','palantir.com'],
+    ['Uber','uber.com'],['Airbnb','airbnb.com'],['PayPal','paypal.com'],['Block (Square)','block.xyz'],
+    ['Stripe','stripe.com'],['Zoom','zoom.us'],['Spotify','spotify.com'],['Snap','snap.com'],
+    ['Pinterest','pinterest.com'],['Reddit','reddit.com'],['DoorDash','doordash.com'],['Coinbase','coinbase.com'],
+    ['JPMorgan Chase','jpmorganchase.com'],['Bank of America','bankofamerica.com'],['Wells Fargo','wellsfargo.com'],
+    ['Citigroup','citigroup.com'],['Goldman Sachs','goldmansachs.com'],['Morgan Stanley','morganstanley.com'],
+    ['American Express','americanexpress.com'],['Visa','visa.com'],['Mastercard','mastercard.com'],
+    ['Capital One','capitalone.com'],['Charles Schwab','schwab.com'],['BlackRock','blackrock.com'],
+    ['Berkshire Hathaway','berkshirehathaway.com'],['Fidelity Investments','fidelity.com'],
+    ['UBS Americas','ubs.com'],['U.S. Bancorp','usbank.com'],['PNC Financial','pnc.com'],
+    ['Walmart','walmart.com'],['Costco','costco.com'],['Target','target.com'],['The Home Depot','homedepot.com'],
+    ['Lowe’s','lowes.com'],['Best Buy','bestbuy.com'],['CVS Health','cvshealth.com'],['Walgreens','walgreens.com'],
+    ['Kroger','kroger.com'],['Albertsons','albertsons.com'],['The Coca-Cola Company','coca-colacompany.com'],
+    ['PepsiCo','pepsico.com'],['Procter & Gamble','pg.com'],['Mondelez International','mondelezinternational.com'],
+    ['Kraft Heinz','kraftheinzcompany.com'],['General Mills','generalmills.com'],['Nike','nike.com'],
+    ['McDonald’s','mcdonalds.com'],['Starbucks','starbucks.com'],['Chipotle','chipotle.com'],
+    ['Yum! Brands','yum.com'],['Estée Lauder','elcompanies.com'],['Colgate-Palmolive','colgatepalmolive.com'],
+    ['Johnson & Johnson','jnj.com'],['Pfizer','pfizer.com'],['Merck','merck.com'],['AbbVie','abbvie.com'],
+    ['Eli Lilly','lilly.com'],['Bristol Myers Squibb','bms.com'],['Amgen','amgen.com'],['Gilead Sciences','gilead.com'],
+    ['Moderna','modernatx.com'],['Thermo Fisher Scientific','thermofisher.com'],['Abbott','abbott.com'],
+    ['Medtronic','medtronic.com'],['UnitedHealth Group','unitedhealthgroup.com'],['CVS Aetna','aetna.com'],
+    ['Cigna','cigna.com'],['Humana','humana.com'],['Elevance Health','elevancehealth.com'],
+    ['ExxonMobil','exxonmobil.com'],['Chevron','chevron.com'],['ConocoPhillips','conocophillips.com'],
+    ['Schlumberger (SLB)','slb.com'],['Phillips 66','phillips66.com'],['Marathon Petroleum','marathonpetroleum.com'],
+    ['NextEra Energy','nexteraenergy.com'],['Duke Energy','duke-energy.com'],['Boeing','boeing.com'],
+    ['Lockheed Martin','lockheedmartin.com'],['RTX (Raytheon)','rtx.com'],['General Dynamics','gd.com'],
+    ['Northrop Grumman','northropgrumman.com'],['Honeywell','honeywell.com'],['General Electric','ge.com'],
+    ['Caterpillar','caterpillar.com'],['Deere & Company','deere.com'],['3M','3m.com'],['Emerson Electric','emerson.com'],
+    ['Ford Motor','ford.com'],['General Motors','gm.com'],['Stellantis North America','stellantis.com'],
+    ['Paccar','paccar.com'],['FedEx','fedex.com'],['UPS','ups.com'],['Delta Air Lines','delta.com'],
+    ['American Airlines','aa.com'],['United Airlines','united.com'],['Southwest Airlines','southwest.com'],
+    ['Union Pacific','up.com'],['Marriott International','marriott.com'],['Hilton','hilton.com'],
+    ['The Walt Disney Company','thewaltdisneycompany.com'],['Comcast','comcast.com'],['Warner Bros. Discovery','wbd.com'],
+    ['Paramount Global','paramount.com'],['AT&T','att.com'],['Verizon','verizon.com'],['T-Mobile US','t-mobile.com'],
+    ['Accenture','accenture.com'],['Deloitte','deloitte.com'],['PwC','pwc.com'],['EY','ey.com'],['KPMG','kpmg.com'],
+    ['McKinsey & Company','mckinsey.com'],['Boston Consulting Group','bcg.com'],['Bain & Company','bain.com'],
+    ['American Tower','americantower.com'],['Prologis','prologis.com'],['CBRE Group','cbre.com'],
+    ['S&P Global','spglobal.com'],['Moody’s','moodys.com'],['Booking Holdings','bookingholdings.com'],
+    // ─ Canada (additional) ─
+    ['ATCO','atco.com'],['Canadian Utilities','canadianutilities.com'],['Emera','emera.com'],
+    ['Capital Power','capitalpower.com'],['TransAlta','transalta.com'],['Algonquin Power & Utilities','algonquinpower.com'],
+    ['Parkland','parkland.ca'],['Keyera','keyera.com'],['AltaGas','altagas.ca'],['Tourmaline Oil','tourmalineoil.com'],
+    ['ARC Resources','arcresources.com'],['Ovintiv','ovintiv.com'],['Kinross Gold','kinross.com'],
+    ['Wheaton Precious Metals','wheatonpm.com'],['Lundin Mining','lundinmining.com'],['Ivanhoe Mines','ivanhoemines.com'],
+    ['West Fraser Timber','westfraser.com'],['Canfor','canfor.com'],['Cascades','cascades.com'],
+    ['CCL Industries','cclind.com'],['Finning International','finning.com'],['Toromont Industries','toromont.com'],
+    ['TFI International','tfiintl.com'],['Aecon Group','aecon.com'],['PCL Construction','pcl.com'],
+    ['CAE','cae.com'],['Celestica','celestica.com'],['MDA Space','mda.space'],['Telus International','telusinternational.com'],
+    ['Quebecor','quebecor.com'],['Cogeco','cogeco.com'],['Corus Entertainment','corusent.com'],['IMAX','imax.com'],
+    ['Canada Goose','canadagoose.com'],['Mountain Equipment Company','mec.ca'],['Sleep Country Canada','sleepcountry.ca'],
+    ['Shoppers Drug Mart','shoppersdrugmart.ca'],['RioCan REIT','riocan.com'],['Colliers International','colliers.com'],
+    ['FirstService','firstservice.com'],['iA Financial Group','ia.ca'],['Laurentian Bank','laurentianbank.ca'],
+    ['Canadian Western Bank','cwbank.com'],['Equitable Bank','equitablebank.ca'],['goeasy','goeasy.com'],
+    ['Element Fleet Management','elementfleet.com'],['Definity Financial','definityfinancial.com'],
+    ['Canopy Growth','canopygrowth.com'],['Tilray Brands','tilray.com'],['Aurora Cannabis','auroramj.com'],
+    ['Premium Brands Holdings','premiumbrandsholdings.com'],['Lassonde Industries','lassonde.com'],
+    ['High Liner Foods','highlinerfoods.com'],['Cohere','cohere.com'],['1Password','1password.com'],
+    ['Hopper','hopper.com'],['Faire','faire.com'],['Clearco','clear.co'],['Ada','ada.cx'],['Trulioo','trulioo.com'],
+    ['Docebo','docebo.com'],['PointClickCare','pointclickcare.com'],['Benevity','benevity.com'],
+    ['Vidyard','vidyard.com'],['Ecobee','ecobee.com'],['Wave','waveapps.com'],['Unbounce','unbounce.com'],
+    ['Thinkific','thinkific.com'],['Visier','visier.com'],['Absolute Software','absolute.com'],
+    ['Magnet Forensics','magnetforensics.com'],['Tucows','tucows.com'],['D2L','d2l.com'],
+    // ─ United States (additional) ─
+    ['Dropbox','dropbox.com'],['Twilio','twilio.com'],['Datadog','datadoghq.com'],['Cloudflare','cloudflare.com'],
+    ['MongoDB','mongodb.com'],['Okta','okta.com'],['CrowdStrike','crowdstrike.com'],['Palo Alto Networks','paloaltonetworks.com'],
+    ['Fortinet','fortinet.com'],['VMware','vmware.com'],['Micron Technology','micron.com'],
+    ['Applied Materials','appliedmaterials.com'],['Motorola Solutions','motorolasolutions.com'],['Corning','corning.com'],
+    ['Roku','roku.com'],['Unity','unity.com'],['Roblox','roblox.com'],['Electronic Arts','ea.com'],
+    ['Take-Two Interactive','take2games.com'],['DocuSign','docusign.com'],['HubSpot','hubspot.com'],
+    ['Zendesk','zendesk.com'],['Asana','asana.com'],['Box','box.com'],['GitLab','gitlab.com'],
+    ['Squarespace','squarespace.com'],['Etsy','etsy.com'],['eBay','ebay.com'],['Wayfair','wayfair.com'],
+    ['Chewy','chewy.com'],['Instacart','instacart.com'],['Lyft','lyft.com'],['Robinhood','robinhood.com'],
+    ['SoFi Technologies','sofi.com'],['Affirm','affirm.com'],['Toast','toasttab.com'],['Discord','discord.com'],
+    ['Yelp','yelp.com'],['Tripadvisor','tripadvisor.com'],['Expedia Group','expediagroup.com'],
+    ['Zillow','zillow.com'],['Redfin','redfin.com'],['Discover Financial','discover.com'],
+    ['Synchrony Financial','synchrony.com'],['Ally Financial','ally.com'],['Truist Financial','truist.com'],
+    ['Fifth Third Bank','53.com'],['KeyCorp','key.com'],['Regions Financial','regions.com'],
+    ['Citizens Financial Group','citizensbank.com'],['Huntington Bancshares','huntington.com'],['M&T Bank','mtb.com'],
+    ['State Street','statestreet.com'],['BNY','bny.com'],['Northern Trust','northerntrust.com'],
+    ['Raymond James','raymondjames.com'],['Nasdaq','nasdaq.com'],['Intercontinental Exchange','ice.com'],
+    ['CME Group','cmegroup.com'],['T. Rowe Price','troweprice.com'],['Invesco','invesco.com'],
+    ['Ameriprise Financial','ameriprise.com'],['Prudential Financial','prudential.com'],['MetLife','metlife.com'],
+    ['Aflac','aflac.com'],['Allstate','allstate.com'],['Progressive','progressive.com'],
+    ['The Travelers Companies','travelers.com'],['Chubb','chubb.com'],['American International Group','aig.com'],
+    ['The Hartford','thehartford.com'],['Marsh McLennan','marshmclennan.com'],['Aon','aon.com'],
+    ['Liberty Mutual','libertymutual.com'],['Nationwide','nationwide.com'],['Stryker','stryker.com'],
+    ['Boston Scientific','bostonscientific.com'],['Becton Dickinson','bd.com'],['Intuitive Surgical','intuitive.com'],
+    ['Edwards Lifesciences','edwards.com'],['Danaher','danaher.com'],['Zoetis','zoetis.com'],['IQVIA','iqvia.com'],
+    ['Regeneron Pharmaceuticals','regeneron.com'],['Vertex Pharmaceuticals','vrtx.com'],['Biogen','biogen.com'],
+    ['McKesson','mckesson.com'],['Cencora','cencora.com'],['Cardinal Health','cardinalhealth.com'],
+    ['HCA Healthcare','hcahealthcare.com'],['Centene','centene.com'],['Quest Diagnostics','questdiagnostics.com'],
+    ['Labcorp','labcorp.com'],['GE HealthCare','gehealthcare.com'],['Illumina','illumina.com'],['ResMed','resmed.com'],
+    ['TJX Companies','tjx.com'],['Ross Stores','rossstores.com'],['Dollar General','dollargeneral.com'],
+    ['Dollar Tree','dollartree.com'],['Macy’s','macys.com'],['Nordstrom','nordstrom.com'],['Kohl’s','kohls.com'],
+    ['Gap','gap.com'],['Ralph Lauren','ralphlauren.com'],['Tapestry','tapestry.com'],['VF Corporation','vfc.com'],
+    ['Levi Strauss','levistrauss.com'],['Under Armour','underarmour.com'],['Ulta Beauty','ulta.com'],
+    ['Williams-Sonoma','williams-sonomainc.com'],['Tractor Supply','tractorsupply.com'],['AutoZone','autozone.com'],
+    ['Hershey','thehersheycompany.com'],['Tyson Foods','tysonfoods.com'],['Kellanova','kellanova.com'],
+    ['Conagra Brands','conagrabrands.com'],['Domino’s Pizza','dominos.com'],['Wendy’s','wendys.com'],
+    ['Hyatt Hotels','hyatt.com'],['MGM Resorts','mgmresorts.com'],['Hertz','hertz.com'],
+    ['Waste Management','wm.com'],['ADP','adp.com'],['Cintas','cintas.com'],['Gartner','gartner.com'],
+    ['Equifax','equifax.com']
+  ];
+
+  var state={name:'',org:'',phone:'',email:'',event:'',date:'',city:'',region:'',theme:'',
+    audMakeup:[],attendees:'',startTime:'',goals:'',virtual:'',
+    needs:'',budget:'',pitch:'',situation:'',exitReason:''};
+
+  var steps=[].slice.call(document.querySelectorAll('.step'));
+  var nextBtn=document.getElementById('nextBtn'), backBtn=document.getElementById('backBtn');
+  var barFill=document.getElementById('barFill'), stepNum=document.getElementById('stepNum'), stepTotal=document.getElementById('stepTotal');
+  var navrow=document.getElementById('navrow'), progress=document.getElementById('progress');
+  var current='pleasantries', history=[];
+
+  var FLOW=['pleasantries','event','needs','budget','situation','result'];
+
+  function show(key){
+    current=key;
+    steps.forEach(function(s){ s.classList.toggle('active', s.getAttribute('data-key')===key); });
+    if(key==='result'){ progress.classList.add('hide'); navrow.classList.add('hide'); buildResult(); }
+    else if(key==='exit'){ progress.classList.add('hide'); navrow.classList.add('hide'); buildExit(); }
+    else {
+      progress.classList.remove('hide'); navrow.classList.remove('hide');
+      var i=FLOW.indexOf(key), total=FLOW.length-1; // exclude result from count
+      stepNum.textContent=i+1; stepTotal.textContent=total;
+      barFill.style.width=((i)/(total-1))*100+'%';
+      backBtn.style.visibility = history.length ? 'visible':'hidden';
+      nextBtn.textContent = FLOW[i+1]==='result' ? 'See my estimate' : (key==='budget' && state.budget==='probono' ? 'Send my pitch' : 'Continue');
+    }
+    validate();
+    save();
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  function goto(key){ history.push(current); show(key); }
+  function back(){ var prev=history.pop(); if(prev) show(prev); }
+
+  function next(){
+    if(current==='pleasantries') return goto('event');
+    if(current==='event') return goto('needs');
+    if(current==='needs'){
+      if(state.needs==='other'){ state.exitReason='other'; return goto('exit'); }
+      return goto('budget');
+    }
+    if(current==='budget'){
+      if(state.budget==='yikes'){ state.exitReason='declined'; return goto('exit'); }
+      if(state.budget==='probono'){ state.exitReason='probono'; return goto('exit'); }
+      return goto('situation');
+    }
+    if(current==='situation') return goto('result');
+  }
+
+  // ── validation ────────────────────────────────────────────────────
+  function emailOk(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function wordCount(v){ var w=(v||'').trim().split(/\s+/).filter(Boolean); return w.length; }
+
+  function validate(){
+    var ok=false;
+    if(current==='pleasantries') ok = state.name.trim() && state.org.trim() && emailOk(state.email);
+    else if(current==='event') ok = !!state.date && state.city.trim().length>1 && !!state.virtual;
+    else if(current==='needs') ok = !!state.needs;
+    else if(current==='budget'){
+      ok = !!state.budget;
+      if(state.budget==='probono') ok = wordCount(state.pitch)>0 && wordCount(state.pitch)<=200;
+    }
+    else if(current==='situation') ok = !!state.situation;
+    nextBtn.disabled=!ok;
+    return ok;
+  }
+
+  // ── wiring ────────────────────────────────────────────────────────
+  [['f_name','name'],['f_org','org'],['f_phone','phone'],['f_email','email'],
+   ['f_event','event'],['f_date','date'],['f_city','city'],['f_region','region'],['f_theme','theme'],
+   ['f_goals','goals'],['f_pitch','pitch']].forEach(function(p){
+    var el=document.getElementById(p[0]);
+    el.addEventListener('input',function(){ state[p[1]]=el.value; if(p[1]==='pitch') updatePitchCount(); validate(); save(); });
+  });
+
+  function updatePitchCount(){
+    var n=wordCount(state.pitch), el=document.getElementById('pitchCount');
+    el.textContent=n+' / 200 words';
+    el.classList.toggle('over', n>200);
+  }
+
+  [].slice.call(document.querySelectorAll('[data-group]')).forEach(function(group){
+    var g=group.getAttribute('data-group'), multi=group.hasAttribute('data-multi');
+    [].slice.call(group.querySelectorAll('.chip,.opt')).forEach(function(btn){
+      btn.addEventListener('click',function(){
+        var val=btn.getAttribute('data-val');
+        if(multi){
+          var i=state[g].indexOf(val);
+          if(i>-1) state[g].splice(i,1); else state[g].push(val);
+          btn.classList.toggle('sel');
+        } else {
+          state[g]=val;
+          [].slice.call(group.querySelectorAll('.sel')).forEach(function(b){b.classList.remove('sel');});
+          btn.classList.add('sel');
+          if(g==='budget'){
+            document.getElementById('pitchWrap').classList.toggle('hide', val!=='probono');
+            nextBtn.textContent = val==='probono' ? 'Send my pitch' : 'Continue';
+          }
+          // single-select option cards auto-advance (chips don't)
+          if(btn.classList.contains('opt') && g!=='budget'){ validate(); setTimeout(next,220); return; }
+          if(g==='budget' && (val==='yikes')){ validate(); setTimeout(next,220); return; }
+        }
+        validate(); save();
+      });
+    });
+  });
+
+  nextBtn.addEventListener('click',function(){ if(validate()) next(); });
+  backBtn.addEventListener('click',back);
+
+  // Enter advances (except in textareas), unless an autocomplete menu is open
+  document.getElementById('wiz').addEventListener('keydown',function(e){
+    if(e.key!=='Enter' || e.target.tagName==='TEXTAREA') return;
+    if(document.querySelector('.ac-menu.open')) return;
+    e.preventDefault();
+    if(validate()) next();
+  });
+
+  // ── autocomplete (one generic dropdown, three datasets; same UX as /book/) ──
+  function attachAC(inputId, menuId, search, onPick){
+    var input=document.getElementById(inputId), menu=document.getElementById(menuId);
+    var matches=[], active=-1;
+    function close(){ menu.classList.remove('open'); menu.innerHTML=''; matches=[]; active=-1; input.setAttribute('aria-expanded','false'); }
+    function render(){
+      menu.innerHTML='';
+      matches.forEach(function(e,i){
+        var row=document.createElement('div');
+        row.className='ac-item'+(i===active?' active':'');
+        row.setAttribute('role','option');
+        var c=document.createElement('span'); c.className='ac-city'; c.textContent=e.main;
+        var r=document.createElement('span'); r.className='ac-rest'; r.textContent=e.rest;
+        row.appendChild(c); row.appendChild(r);
+        row.addEventListener('mousedown',function(ev){ ev.preventDefault(); pick(i); });
+        menu.appendChild(row);
+      });
+      menu.classList.add('open');
+      input.setAttribute('aria-expanded','true');
+    }
+    function pick(i){ var e=matches[i]; if(!e) return; onPick(e); close(); validate(); save(); }
+    input.addEventListener('input',function(){
+      matches=search(input.value); active=-1;
+      if(matches.length) render(); else close();
+    });
+    input.addEventListener('keydown',function(e){
+      if(!menu.classList.contains('open')) return;
+      if(e.key==='ArrowDown'){ e.preventDefault(); active=Math.min(active+1,matches.length-1); render(); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); active=Math.max(active-1,0); render(); }
+      else if(e.key==='Enter'){
+        e.preventDefault(); e.stopPropagation();
+        if(active>-1) pick(active); else close();
+      }
+      else if(e.key==='Escape'){ e.stopPropagation(); close(); }
+    });
+    input.addEventListener('blur',function(){ setTimeout(close,120); });
+  }
+
+  // prefix matches first, then contains, capped at 7 — same ranking as /book/
+  function rankSearch(list, q, toEntry){
+    q=q.trim().toLowerCase(); if(q.length<1) return [];
+    var starts=[], contains=[];
+    for(var i=0;i<list.length;i++){
+      var entry=toEntry(list[i]);
+      if(entry.key.indexOf(q)===0 || (entry.alt && entry.alt===q)) starts.push(entry);
+      else if(entry.key.indexOf(q)>-1) contains.push(entry);
+      if(starts.length>=7) break;
+    }
+    return starts.concat(contains).slice(0,7);
+  }
+  function regionCountry(e){ return e[1] ? (e[1]+', '+e[2]) : e[2]; }
+
+  attachAC('f_city','cityAC',
+    function(q){ return rankSearch(CITIES,q,function(e){ return {key:e[0].toLowerCase(),main:e[0],rest:regionCountry(e),data:e}; }); },
+    function(e){
+      var cityInput=document.getElementById('f_city'), regionInput=document.getElementById('f_region');
+      cityInput.value=e.data[0]; state.city=e.data[0];
+      regionInput.value=regionCountry(e.data); state.region=regionCountry(e.data);
+    });
+
+  attachAC('f_region','regionAC',
+    function(q){ return rankSearch(REGIONS,q,function(e){ return {key:e[0].toLowerCase(),alt:(e[1]||'').toLowerCase(),main:e[0],rest:e[2],data:e}; }); },
+    function(e){
+      var regionInput=document.getElementById('f_region');
+      regionInput.value=e.data[0]+', '+e.data[2]; state.region=regionInput.value;
+    });
+
+  attachAC('f_org','orgAC',
+    function(q){ return rankSearch(COMPANIES,q,function(e){ return {key:e[0].toLowerCase(),main:e[0],rest:e[1],data:e}; }); },
+    function(e){
+      var orgInput=document.getElementById('f_org');
+      orgInput.value=e.data[0]; state.org=e.data[0];
+    });
+
+  // ── pricing (reused approach from /book/) ─────────────────────────
+  function seasonFactor(iso){
+    var m=-1; var mm=(iso||'').match(/^\d{4}-(\d{2})-\d{2}/); if(mm) m=+mm[1]-1;
+    if([8,9,10,1,2,3].indexOf(m)>-1) return {f:1.12,label:'peak season'};
+    if([6,7,11].indexOf(m)>-1) return {f:0.92,label:'off-peak'};
+    return {f:1,label:''};
+  }
+  function fmtRange(lo,hi){ return '$'+(Math.round(lo/500)*500).toLocaleString('en-US')+' – $'+(Math.round(hi/500)*500).toLocaleString('en-US'); }
+  function prettyDate(iso){ if(!iso) return ''; var p=iso.split('-'); if(p.length!==3) return iso;
+    var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]-1]; return mo+' '+(+p[2])+', '+p[0]; }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function locString(){ return [state.city,state.region].filter(Boolean).join(', '); }
+
+  function buildResult(){
+    var band=NEEDS[state.needs]||NEEDS.keynote;
+    var sf=seasonFactor(state.date), lo=band.lo*sf.f, hi=band.hi*sf.f;
+    if(state.attendees==='1,500+'){ lo*=1.05; hi*=1.08; }
+    var est=fmtRange(lo,hi);
+    document.getElementById('estVal').textContent=est;
+    document.getElementById('estCap').textContent='Estimated cost'+(sf.label?(' · '+sf.label):'');
+
+    // Cost flexibility comes from the budget reaction. "Low" is intentionally
+    // unreachable: the reactions that would imply it (yikes / probono) exit
+    // to the call page before ever seeing this screen.
+    var flexLabel = state.budget==='flex' ? '<span class="flex-high">High</span>' : '<span class="flex-med">Medium</span>';
+
+    document.getElementById('resMatrix').innerHTML=
+      '<div class="row"><span>Date</span><span>'+esc(prettyDate(state.date)||'·')+'</span></div>'+
+      '<div class="row"><span>Availability</span><span>Pending. Confirmed within 1 business day</span></div>'+
+      '<div class="row"><span>Estimated cost</span><span>'+esc(est)+'</span></div>'+
+      '<div class="row"><span>Cost flexibility</span><span>'+flexLabel+'</span></div>';
+
+    var badge=document.getElementById('resBadge'), msg=document.getElementById('resMsg');
+    if(state.situation==='booking'){ badge.textContent='Great fit'; badge.className='badge good';
+      msg.textContent='This looks promising. Send the details and Drew will confirm the date and a firm quote, usually the same day.'; }
+    else { badge.textContent='Your estimate'; badge.className='badge';
+      msg.textContent='Here is a ballpark to plan around. Send the details and Drew will come back with a firm number and availability.'; }
+
+    var rows=[
+      ['Name',state.name],['Organization',state.org],['Email',state.email],['Phone',state.phone||'·'],
+      ['Event',state.event||'·'],['Date',prettyDate(state.date)||'·'],['Location',locString()||'·'],
+      ['Theme',state.theme||'·'],['Audience',(state.audMakeup.join(', ')||'·')],
+      ['Attendees',state.attendees||'·'],['Start time',state.startTime||'·'],['Virtual',state.virtual||'·'],
+      ['Needs',band.label],['Budget reaction',BUDGET_LABELS[state.budget]||'·'],
+      ['Situation',SITUATION_LABELS[state.situation]||'·'],['Goals',state.goals||'·']
+    ];
+    var html='<h4>Your inquiry</h4>';
+    rows.forEach(function(r){ html+='<div class="row"><span>'+r[0]+'</span><span>'+esc(r[1])+'</span></div>'; });
+    document.getElementById('resSummary').innerHTML=html;
+    document.getElementById('sendBtn').setAttribute('href',mailtoHref(est));
+    save();
+  }
+
+  function buildExit(){
+    var ex=EXITS[state.exitReason]||EXITS.other;
+    document.getElementById('exitBadge').textContent=ex.badge;
+    document.getElementById('exitTitle').textContent=ex.title;
+    document.getElementById('exitMsg').textContent=ex.msg;
+    document.getElementById('exitMail').setAttribute('href',mailtoHref(''));
+    save();
+  }
+
+  function mailtoHref(estShown){
+    var band=NEEDS[state.needs]||{label:'·'};
+    var lines=[
+      'New booking inquiry ('+(state.exitReason?('call requested · '+state.exitReason):'estimate shown')+')','',
+      'Name: '+state.name,'Organization: '+state.org,'Email: '+state.email,'Phone: '+(state.phone||'-'),'',
+      'Event: '+(state.event||'-'),'Date: '+(prettyDate(state.date)||'-'),'Location: '+(locString()||'-'),
+      'Theme: '+(state.theme||'-'),'Audience: '+(state.audMakeup.join(', ')||'-'),
+      'Attendees: '+(state.attendees||'-'),'Start time: '+(state.startTime||'-'),'Virtual: '+(state.virtual||'-'),'',
+      'Needs: '+band.label,'Budget reaction: '+(BUDGET_LABELS[state.budget]||'-'),
+      'Situation: '+(SITUATION_LABELS[state.situation]||'-'),
+      'Goals: '+(state.goals||'-')
+    ];
+    if(estShown) lines.push('','Estimate shown: '+estShown);
+    if(state.pitch) lines.push('','Pro-bono pitch:',state.pitch);
+    var subject='Booking inquiry: '+(state.org||state.name||'new event');
+    return 'mailto:drew@dayoneleadership.com?subject='+encodeURIComponent(subject)+'&body='+encodeURIComponent(lines.join('\n'));
+  }
+
+  // ── persistence (light restore: values only, always restart at step 1) ──
+  function save(){ try{ localStorage.setItem(SAVE_KEY,JSON.stringify(state)); }catch(e){} }
+  (function restore(){
+    try{
+      var saved=JSON.parse(localStorage.getItem(SAVE_KEY)||'null');
+      if(!saved) return;
+      Object.keys(state).forEach(function(k){ if(saved[k]!==undefined) state[k]=saved[k]; });
+      state.exitReason='';
+      [['f_name','name'],['f_org','org'],['f_phone','phone'],['f_email','email'],
+       ['f_event','event'],['f_date','date'],['f_city','city'],['f_region','region'],['f_theme','theme'],
+       ['f_goals','goals'],['f_pitch','pitch']].forEach(function(p){
+        var el=document.getElementById(p[0]); if(el && state[p[1]]) el.value=state[p[1]];
+      });
+      [].slice.call(document.querySelectorAll('[data-group]')).forEach(function(group){
+        var g=group.getAttribute('data-group'), multi=group.hasAttribute('data-multi');
+        [].slice.call(group.querySelectorAll('.chip,.opt')).forEach(function(btn){
+          var val=btn.getAttribute('data-val');
+          if(multi ? state[g].indexOf(val)>-1 : state[g]===val) btn.classList.add('sel');
+        });
+      });
+      if(state.budget==='probono') document.getElementById('pitchWrap').classList.remove('hide');
+      updatePitchCount();
+    }catch(e){}
+  })();
+
+  show('pleasantries');
+})();
+</script>
+</body>
+</html>
