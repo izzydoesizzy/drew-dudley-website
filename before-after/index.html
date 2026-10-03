@@ -56,7 +56,21 @@
   .pricing td:first-child{width:auto;}
   .pricing td{white-space:nowrap;}
 
-  figure{margin:2.2rem 0 0;}
+  .item{margin-top:3rem;padding-top:2.4rem;border-top:1px dashed var(--line);}
+  .item:first-of-type{border-top:none;padding-top:0;}
+  .ask{background:var(--ink2);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:6px;padding:1.1rem 1.3rem;}
+  .ask .who{display:block;font-size:.68rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;}
+  .ask p,.ask li{font-size:1.02rem;line-height:1.6;color:var(--text);}
+  .ask p + p{margin-top:.6rem;}
+  .ask ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+  .ask li{position:relative;padding-left:1.1rem;}
+  .ask li::before{content:"\2013";position:absolute;left:0;color:var(--gold);}
+  .ask .quoted{margin-top:.6rem;padding-left:1rem;border-left:1px solid var(--line);color:var(--muted);}
+  .did{margin-top:1rem;font-size:1rem;color:var(--muted);max-width:52rem;}
+  .did b{color:var(--text);}
+  .did .tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7fbf8f;margin-right:.5rem;}
+  .did .tag.wait{color:#e0a85a;}
+  figure{margin:1.4rem 0 0;}
   figure figcaption{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:.8rem;}
   figure figcaption span{font-weight:400;color:var(--muted);}
   figure a{display:block;border-radius:6px;overflow:hidden;border:1px solid var(--line);background:#2a2622;}
@@ -91,6 +105,7 @@
       <span><i style="border-color:#8a7e6e"></i> Before (grey frame)</span>
       <span><i style="border-color:#c4922a"></i> After (gold frame)</span>
       <span>Click any image to open it full size.</span>
+      <span>Drew's original words are quoted above each change.</span>
     </div>
     <nav class="toc">
       <a href="#fonts">Font &amp; colour</a>
@@ -103,36 +118,37 @@
   </div>
 </div>
 
-<!-- FONTS -->
+<!-- FONT &AMP; COLOUR TWEAKS -->
 <section class="part" id="fonts">
   <div class="wrap">
     <p class="label">Font &amp; colour tweaks</p>
     <h2>Easier to read, same dark design.</h2>
-    <p>All six readability requests are in. White and gold are unchanged.</p>
-    <div class="tbl"><table>
-      <thead><tr><th>Request</th><th>What changed</th></tr></thead>
-      <tbody>
-        <tr><td>Lighten the bronze</td><td>The bronze text ("Across 1,000+ keynotes", "As seen in", "rank Drew in the top 5") is now a lighter sand colour.</td></tr>
-        <tr><td>Lighten reviewer names</td><td>The names and titles under each review are now a light cream.</td></tr>
-        <tr><td>Enlarge 10M+ and "As seen in"</td><td>Both lines are about 30% larger.</td></tr>
-        <tr><td>Bold the scroll</td><td>The scrolling banner keeps its italics and is now bold.</td></tr>
-        <tr><td>Larger reviews</td><td>Review text is about 15% larger, still in italics.</td></tr>
-        <tr><td>"From the Book" label</td><td>Larger, bold and a lighter gold.</td></tr>
-      </tbody>
-    </table></div>
+    <p>Drew's words are shown first, then what changed. White and gold text are unchanged.</p>
 
-    <figure>
-      <figcaption>Hero <span>· lighter bronze, larger 10M+ and "As seen in" lines, TED added, new buttons</span></figcaption>
-      <a href="images/cmp-hero.png" target="_blank" rel="noopener"><img src="images/cmp-hero.png" alt="Hero, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Scrolling banner <span>· now bold italic</span></figcaption>
-      <a href="images/cmp-marquee.png" target="_blank" rel="noopener"><img src="images/cmp-marquee.png" alt="Scrolling banner, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Reviews <span>· larger text, lighter names, bolder "From the Book" label, videos as the top row</span></figcaption>
-      <a href="images/cmp-reviews.png" target="_blank" rel="noopener"><img src="images/cmp-reviews.png" alt="Reviews, before and after" loading="lazy" /></a>
-    </figure>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Could the bronze be lightened please?&rdquo;</li><li>&ldquo;Could the following also be enlarged afterwards: 10M+ and &ldquo;As seen in&rdquo; lines&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>The bronze text (&ldquo;Across 1,000+ keynotes&rdquo;, &ldquo;As seen in&rdquo;, &ldquo;rank Drew in the top 5&rdquo;) is now a lighter sand colour. The 10M+ and &ldquo;As seen in&rdquo; lines are about 30% larger.</p>
+      <figure>
+        <figcaption>Hero <span>&middot; top of the homepage</span></figcaption>
+        <a href="images/cmp-hero.png" target="_blank" rel="noopener"><img src="images/cmp-hero.png" alt="Hero, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;I love the italics on the scroll, but would they be easier to read if they were in bold?&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>The scrolling banner keeps its italics and is now <b>bold</b>.</p>
+      <figure>
+        <figcaption>Scrolling banner</figcaption>
+        <a href="images/cmp-marquee.png" target="_blank" rel="noopener"><img src="images/cmp-marquee.png" alt="Scrolling banner, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Could the names of reviewers be lightened please?&rdquo;</li><li>&ldquo;Could all the reviews be made a little larger? I like them italicized but want to improve readability.&rdquo;</li><li>&ldquo;&ldquo;From the Book&rdquo; needs to be enlarged, bolded, lightened (or some combo) to ensure readability&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Reviewer names and titles are now a light cream. Review text is about 15% larger and <b>no longer italic</b>, for readability. The &ldquo;From the Book&rdquo; label is larger, bold and a lighter gold.</p>
+      <figure>
+        <figcaption>Reviews <span>&middot; the video row is covered under Graphics &amp; design</span></figcaption>
+        <a href="images/cmp-reviews.png" target="_blank" rel="noopener"><img src="images/cmp-reviews.png" alt="Reviews, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -141,124 +157,155 @@
   <div class="wrap">
     <p class="label">Content</p>
     <h2>New copy, word for word.</h2>
-    <div class="tbl"><table>
-      <thead><tr><th>Request</th><th>Now reads</th></tr></thead>
-      <tbody>
-        <tr><td>Cut Roadmap to Impact</td><td>Replaced with Drew's new text and a <b>Set up a consultation</b> button that opens the booking wizard. The old section is saved and ready to put back.</td></tr>
-        <tr><td>TED, below the booking button</td><td>"Top 15 most inspiring <b>TED</b> talks of all time"</td></tr>
-        <tr><td>95% stat</td><td>95% "of clients rank Drew 'one of the 5 best speakers we've ever booked'"</td></tr>
-        <tr><td>Under Impact</td><td>750+ "Organizations trust Drew" (was 400+ Organizations)</td></tr>
-        <tr><td>Above the logos</td><td>"Trusted by 750+ companies globally"</td></tr>
-        <tr><td>Bio</td><td>"When Drew Dudley's students <b>at the University of Toronto</b> secretly nominated him…"</td></tr>
-        <tr><td>Under "Book Drew"</td><td>"Tell <b>us</b> about your event."</td></tr>
-      </tbody>
-    </table></div>
 
-    <figure>
-      <figcaption>The Content section <span>· Roadmap to Impact replaced with the new text and consultation link</span></figcaption>
-      <a href="images/cmp-content.png" target="_blank" rel="noopener"><img src="images/cmp-content.png" alt="Content section, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Impact numbers <span>· 95% caption and 750+</span></figcaption>
-      <a href="images/cmp-impact.png" target="_blank" rel="noopener"><img src="images/cmp-impact.png" alt="Impact numbers, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Logo wall <span>· 750+ companies globally</span></figcaption>
-      <a href="images/cmp-logos.png" target="_blank" rel="noopener"><img src="images/cmp-logos.png" alt="Logo wall heading, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Bio <span>· "at the University of Toronto" added</span></figcaption>
-      <a href="images/cmp-bio.png" target="_blank" rel="noopener"><img src="images/cmp-bio.png" alt="Bio, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Book Drew <span>· "Tell us about your event."</span></figcaption>
-      <a href="images/cmp-book.png" target="_blank" rel="noopener"><img src="images/cmp-book.png" alt="Book Drew section, before and after" loading="lazy" /></a>
-    </figure>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><p>&ldquo;Let&rsquo;s cut the current whole content section about Roadmap to Impact. I&rsquo;m going to put it back cause I love what you did, but I don&rsquo;t want to advertise the old content, and clearly waiting until I confirm the new content is a bottleneck.</p><p>Let&rsquo;s replace with this:</p><p class="quoted">All Drew&rsquo;s keynotes are built on the foundational idea that leadership exists in powerful moments of interpersonal impact. Each presentation is customized to show your audience HOW to create those moments.<br><br>Feel free to set up a no-obligation consultation to explore what Drew can create for your audience. &lt;LINK TO BOOKING WIZARD&gt;&rdquo;</p></div>
+      <p class="did"><span class="tag">Done</span>The Roadmap to Impact section is replaced with this text, word for word. The link is a <b>Set up a consultation</b> button that opens the booking wizard. The old section is saved and ready to put back.</p>
+      <figure>
+        <figcaption>The Content section</figcaption>
+        <a href="images/cmp-content.png" target="_blank" rel="noopener"><img src="images/cmp-content.png" alt="Content section, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;95% of clients rank Drew &ldquo;one of the 5 best speakers we&rsquo;ve ever booked&rdquo;&rdquo;</li><li>&ldquo;Let&rsquo;s make it &ldquo;trusted by 750+ organizations&rdquo; under Impact &hellip;&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>The 95% caption now reads &ldquo;of clients rank Drew &lsquo;one of the 5 best speakers we&rsquo;ve ever booked&rsquo;&rdquo;. The Impact number is now <b>750+</b>, captioned &ldquo;Organizations trust Drew&rdquo; (see Open items).</p>
+      <figure>
+        <figcaption>Impact numbers</figcaption>
+        <a href="images/cmp-impact.png" target="_blank" rel="noopener"><img src="images/cmp-impact.png" alt="Impact numbers, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;&hellip; and &ldquo;750+ companies globally&rdquo; above the logos.&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Now reads &ldquo;Trusted by <b>750+</b> companies globally&rdquo;.</p>
+      <figure>
+        <figcaption>Logo wall heading</figcaption>
+        <a href="images/cmp-logos.png" target="_blank" rel="noopener"><img src="images/cmp-logos.png" alt="Logo wall heading, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Add, &ldquo;at the University of Toronto&rdquo; after &ldquo;Drew Dudley&rsquo;s students&rdquo; in the bio.&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Now reads &ldquo;When Drew Dudley&rsquo;s students <b>at the University of Toronto</b> secretly nominated him&hellip;&rdquo;</p>
+      <figure>
+        <figcaption>Bio</figcaption>
+        <a href="images/cmp-bio.png" target="_blank" rel="noopener"><img src="images/cmp-bio.png" alt="Bio, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Under &ldquo;Book Drew&rdquo; let&rsquo;s make it &ldquo;us&rdquo; rather than &ldquo;me&rdquo;&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Now reads &ldquo;Tell <b>us</b> about your event.&rdquo;</p>
+      <figure>
+        <figcaption>Book Drew</figcaption>
+        <a href="images/cmp-book.png" target="_blank" rel="noopener"><img src="images/cmp-book.png" alt="Book Drew section, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Put &ldquo;TED&rdquo; between &ldquo;inspiring&rdquo; and &ldquo;talks&rdquo; below booking button&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Now reads &ldquo;Top 15 most inspiring <b>TED</b> talks of all time&rdquo;. You can see it in the hero screenshot under Font &amp; colour.</p>
+    </div>
   </div>
 </section>
 
-<!-- GRAPHICS -->
+<!-- GRAPHICS &AMP; DESIGN -->
 <section class="part" id="graphics">
   <div class="wrap">
     <p class="label">Graphics &amp; design</p>
     <h2>Videos up top, a door to The Gathering Place.</h2>
-    <ul class="notes">
-      <li><b>New Drew Dudley logo.</b> The typed name is now a logo spot in the top bar, the large hero name, the footer and the booking wizard header. The logo appears in all four places as soon as the file is added. Until then the typed name shows, so nothing looks broken.</li>
-      <li><b>Videos as the top row of reviews.</b> The three audience-reaction videos now sit together in one row above the written reviews (see the reviews comparison above). On phones they stack.</li>
-      <li><b>The Gathering Place.</b> Next to "Book Drew", the reel button now reads <b>See Drew Onstage</b>. Below it is a <b>Hear from The Gathering Place</b> button with the Gathering Place logo, linking to the Gathering Place page. It uses the hearthstone mark for now; the full logo goes in when the file is added.</li>
-    </ul>
-    <figure class="narrow">
-      <figcaption>Hero buttons on a phone</figcaption>
-      <a href="images/after-mobile-hero-actions.png" target="_blank" rel="noopener"><img src="images/after-mobile-hero-actions.png" alt="Hero buttons on a phone: Book Drew, See Drew Onstage, Hear from The Gathering Place" loading="lazy" /></a>
-    </figure>
+
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Could you replace the current text of my name with the new Drew Dudley logo?&rdquo;</li></ul></div>
+      <p class="did"><span class="tag wait">Waiting on logo file</span>The typed name is now a logo spot in the top bar, the large hero name, the footer and the booking wizard header. The logo appears in all four places as soon as the file is added. Until then the typed name shows, so nothing looks broken.</p>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Instead of integrating the review videos into the text reviews, can we make the whole top row of reviews the videos?&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>The three audience-reaction videos now sit together as the top row, above the written reviews. You can see this in the reviews screenshot under Font &amp; colour. On phones they stack.</p>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Can we add a prominent link to The Gathering Place (using the full logo) on the landing page? Bottom right? Or perhaps next to the button to watch my sizzle reel? &ldquo;See Drew onstage&rdquo; as one button and &ldquo;Hear from The Gathering Place&rdquo; as the other? I trust your instincts.&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Next to &ldquo;Book Drew&rdquo;, the reel button now reads <b>See Drew Onstage</b>. Below it is a <b>Hear from The Gathering Place</b> button with the Gathering Place logo, linking to the Gathering Place page. It uses the hearthstone mark for now; the full logo goes in when the file is added.</p>
+      <figure class="narrow">
+        <figcaption>Hero buttons on a phone <span>&middot; desktop version is in the hero screenshot above</span></figcaption>
+        <a href="images/after-mobile-hero-actions.png" target="_blank" rel="noopener"><img src="images/after-mobile-hero-actions.png" alt="Hero buttons on a phone" loading="lazy" /></a>
+      </figure>
+    </div>
   </div>
 </section>
 
-<!-- WIZARD -->
+<!-- BOOKING WIZARD -->
 <section class="part" id="wizard">
   <div class="wrap">
     <p class="label">Booking wizard</p>
     <h2>Page by page.</h2>
-    <div class="tbl"><table>
-      <thead><tr><th>Page</th><th>Change</th></tr></thead>
-      <tbody>
-        <tr><td>1 · Basics</td><td>All text on the page is lighter. New <b>Role / Position</b> field after Organization.</td></tr>
-        <tr><td>2 · Event</td><td>New <b>Unsure</b> box under the date. Ticking it opens a box asking: "What's the general range of dates?"</td></tr>
-        <tr><td>Hybrid</td><td>Split into <b>Hybrid (Drew live)</b> and <b>Hybrid (Drew virtual)</b>. This question sits on page 2.</td></tr>
-        <tr><td>4 · "Yikes! Nope."</td><td>"Totally understandable. We encourage you to set up a conversation regardless, as factors other than fee could make your event a good fit."</td></tr>
-        <tr><td>Next page</td><td>"Don't write it off yet" / "Let's set up a connection anyway." Everything else kept, minus the last sentence about it costing nothing. "Call" now reads "conversation" everywhere, including the button.</td></tr>
-        <tr><td>5 · Estimate</td><td>"firm quote" now reads "more detailed estimate". The fee follows Drew's pricing (below).</td></tr>
-      </tbody>
-    </table></div>
 
-    <figure>
-      <figcaption>Page 1 <span>· lighter text, Role / Position added</span></figcaption>
-      <a href="images/cmp-wiz1.png" target="_blank" rel="noopener"><img src="images/cmp-wiz1.png" alt="Wizard page 1, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Page 2 <span>· Unsure ticked with a date range; hybrid split in two</span></figcaption>
-      <a href="images/cmp-wiz2.png" target="_blank" rel="noopener"><img src="images/cmp-wiz2.png" alt="Wizard page 2, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Page 4 <span>· new "Yikes! Nope." copy</span></figcaption>
-      <a href="images/cmp-wiz4.png" target="_blank" rel="noopener"><img src="images/cmp-wiz4.png" alt="Wizard page 4, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>The page after "Yikes! Nope."</figcaption>
-      <a href="images/cmp-wiz4b.png" target="_blank" rel="noopener"><img src="images/cmp-wiz4b.png" alt="Follow-up page, before and after" loading="lazy" /></a>
-    </figure>
-    <figure>
-      <figcaption>Page 5, the estimate <span>· keynote, in person, October</span></figcaption>
-      <a href="images/cmp-wiz5.png" target="_blank" rel="noopener"><img src="images/cmp-wiz5.png" alt="Estimate page, before and after" loading="lazy" /></a>
-    </figure>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><p><b>Page 1</b></p><ul><li>&ldquo;Let&rsquo;s lighten all fonts to make it easier to read.&rdquo;</li><li>&ldquo;Add &ldquo;Role/Position&rdquo; after &ldquo;Organization Name&rdquo; on the basic info page&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>All text on page 1 is lighter. A new <b>Role / Position</b> field sits right after Organization.</p>
+      <figure>
+        <figcaption>Page 1</figcaption>
+        <a href="images/cmp-wiz1.png" target="_blank" rel="noopener"><img src="images/cmp-wiz1.png" alt="Wizard page 1, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><p><b>Page 2</b></p><ul><li>&ldquo;Can we add an &ldquo;unsure&rdquo; box with a text box asking for a general range of dates?&rdquo;</li></ul><p><b>Page 3</b></p><ul><li>&ldquo;Could we split &ldquo;hybrid&rdquo; into Hybrid (Drew Live) and Hybrid (Drew Virtual)&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>A new <b>Unsure</b> box sits under the date. Ticking it opens a box asking &ldquo;What&rsquo;s the general range of dates?&rdquo; Hybrid is now two choices: <b>Hybrid (Drew live)</b> and <b>Hybrid (Drew virtual)</b>. That question is on page 2 of the wizard, so both changes appear in this screenshot.</p>
+      <figure>
+        <figcaption>Page 2 <span>&middot; after: Unsure ticked</span></figcaption>
+        <a href="images/cmp-wiz2.png" target="_blank" rel="noopener"><img src="images/cmp-wiz2.png" alt="Wizard page 2, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><p><b>Page 4</b></p><ul><li>&ldquo;Under &ldquo;Yikes! Nope.&rdquo; Let&rsquo;s make it: Totally understandable. We encourage you to set up a conversation regardless, as factors other than fee could make your event a good fit.&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Done, word for word.</p>
+      <figure>
+        <figcaption>Page 4</figcaption>
+        <a href="images/cmp-wiz4.png" target="_blank" rel="noopener"><img src="images/cmp-wiz4.png" alt="Wizard page 4, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Make the message on the next page: Don&rsquo;t write it off yet / Let&rsquo;s set up a connection anyway. [Leave everything else, but remove the last sentence about it costing nothing, and change call to &ldquo;conversation&rdquo; anywhere it appears.]&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>The page now reads &ldquo;Don&rsquo;t write it off yet&rdquo; / &ldquo;Let&rsquo;s set up a connection anyway.&rdquo; The rest of the message is kept, minus the last sentence. &ldquo;Call&rdquo; now reads &ldquo;conversation&rdquo; everywhere, including the <b>Set up a conversation</b> button.</p>
+      <figure>
+        <figcaption>The page after &ldquo;Yikes! Nope.&rdquo;</figcaption>
+        <a href="images/cmp-wiz4b.png" target="_blank" rel="noopener"><img src="images/cmp-wiz4b.png" alt="Follow-up page, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><p><b>Page 5</b></p><ul><li>&ldquo;Let&rsquo;s make &ldquo;firm quote&rdquo; &ldquo;more detailed estimate&rdquo;&rdquo;</li></ul></div>
+      <p class="did"><span class="tag">Done</span>Now reads &ldquo;&hellip;Drew will confirm the date and a <b>more detailed estimate</b>&rdquo;. The fee itself follows Drew&rsquo;s pricing notes (next section).</p>
+      <figure>
+        <figcaption>Page 5, the estimate <span>&middot; keynote, in person, October</span></figcaption>
+        <a href="images/cmp-wiz5.png" target="_blank" rel="noopener"><img src="images/cmp-wiz5.png" alt="Estimate page, before and after" loading="lazy" /></a>
+      </figure>
+    </div>
   </div>
 </section>
 
-<!-- PRICING -->
+<!-- ESTIMATE PRICING -->
 <section class="part" id="pricing">
   <div class="wrap">
     <p class="label">Estimate pricing</p>
-    <h2>Drew's fees, by season and format.</h2>
-    <p>The estimate now shows the exact fee from Drew's notes. Peak season is February–June and September–November. Off-peak is December–January and July–August.</p>
-    <div class="tbl"><table class="pricing">
-      <thead><tr><th>Format</th><th>Peak</th><th>Off-peak</th><th>Peak, virtual</th><th>Off-peak, virtual</th></tr></thead>
-      <tbody>
-        <tr><td>Keynote only</td><td>$15,000</td><td>$12,500</td><td>$12,000</td><td>$10,000</td></tr>
-        <tr><td>Keynote + small interactive</td><td>$17,500</td><td>$14,500</td><td>$14,000</td><td>$11,600</td></tr>
-        <tr><td>Keynote + large interactive</td><td>$20,000</td><td>$15,000</td><td>$16,000</td><td>$12,000</td></tr>
-        <tr><td>Fee flexibility shown</td><td>Moderate</td><td>High</td><td>Moderate</td><td>High</td></tr>
-      </tbody>
-    </table></div>
-    <p>"Virtual" means a virtual event or Hybrid (Drew virtual): 20% off. Hybrid (Drew live) and in-person events have no change. If the date is marked <b>Unsure</b>, the estimate shows the off-peak-to-peak range for that format.</p>
+    <h2>Drew&rsquo;s fees, by season and format.</h2>
 
-    <figure class="narrow">
-      <figcaption>Example <span>· large interactive, Hybrid (Drew virtual), January</span></figcaption>
-      <a href="images/after-wiz-5-estimate-offpeak-virtual.png" target="_blank" rel="noopener"><img src="images/after-wiz-5-estimate-offpeak-virtual.png" alt="Estimate: $12,000, off-peak, High flexibility" loading="lazy" /></a>
-    </figure>
-    <figure class="narrow">
-      <figcaption>Example <span>· small interactive, Hybrid (Drew live), date unsure</span></figcaption>
-      <a href="images/after-wiz-5-estimate-unsure.png" target="_blank" rel="noopener"><img src="images/after-wiz-5-estimate-unsure.png" alt="Estimate: $14,500 to $17,500, depends on season" loading="lazy" /></a>
-    </figure>
+    <div class="item">
+      <div class="ask"><span class="who">Drew's note</span><p>&ldquo;Some notes for calculating the estimates:</p><p class="quoted">Peak Season: February-June and September-November<br>Off-Peak Season: December-January and July-August<br><br>Keynote only cost: Peak 15K &middot; Off-Peak 12.5k<br>Keynote plus small interactive: Peak - 17.5k &middot; Off-Peak - 14.5k<br>Keynote plus large interactive: Peak: 20k &middot; Off-Peak: 15k<br><br>Virtual OR Hybrid (Drew Virtual): Reduce total cost 20%<br>Virtual but Drew live, no change in cost.<br><br>Always list Potential Fee Flexibility as &ldquo;Moderate&rdquo; in high-season and &ldquo;High&rdquo; in low season.&rdquo;</p></div>
+      <p class="did"><span class="tag">Done</span>The estimate now shows the exact fee from these notes. Full table below. If the date is marked <b>Unsure</b>, the season isn&rsquo;t known, so the estimate shows the off-peak-to-peak range for that format.</p>
+      <div class="tbl"><table class="pricing">
+        <thead><tr><th>Format</th><th>Peak</th><th>Off-peak</th><th>Peak, virtual</th><th>Off-peak, virtual</th></tr></thead>
+        <tbody>
+          <tr><td>Keynote only</td><td>$15,000</td><td>$12,500</td><td>$12,000</td><td>$10,000</td></tr>
+          <tr><td>Keynote + small interactive</td><td>$17,500</td><td>$14,500</td><td>$14,000</td><td>$11,600</td></tr>
+          <tr><td>Keynote + large interactive</td><td>$20,000</td><td>$15,000</td><td>$16,000</td><td>$12,000</td></tr>
+          <tr><td>Fee flexibility shown</td><td>Moderate</td><td>High</td><td>Moderate</td><td>High</td></tr>
+        </tbody>
+      </table></div>
+      <figure class="narrow">
+        <figcaption>Example <span>&middot; large interactive, Hybrid (Drew virtual), January</span></figcaption>
+        <a href="images/after-wiz-5-estimate-offpeak-virtual.png" target="_blank" rel="noopener"><img src="images/after-wiz-5-estimate-offpeak-virtual.png" alt="Estimate: $12,000, off-peak, High flexibility" loading="lazy" /></a>
+      </figure>
+      <figure class="narrow">
+        <figcaption>Example <span>&middot; small interactive, Hybrid (Drew live), date unsure</span></figcaption>
+        <a href="images/after-wiz-5-estimate-unsure.png" target="_blank" rel="noopener"><img src="images/after-wiz-5-estimate-unsure.png" alt="Estimate: $14,500 to $17,500, depends on season" loading="lazy" /></a>
+      </figure>
+    </div>
   </div>
 </section>
 
