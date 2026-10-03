@@ -6,8 +6,8 @@
 <title>Book Drew Dudley · Keynote Inquiry (Preview)</title>
 <meta name="description" content="Tell Drew about your event and get an instant estimate. Preview build of the new booking flow." />
 <!-- Booking wizard V2 (July 2026) — built to Drew's written spec; linked from V2B as the
-     live booking flow. Price bands and the Availability row are placeholders pending
-     Drew's real fee ranges and a calendar data source. The prior wizard remains at /book/.
+     live booking flow. Fees follow Drew's Oct 2026 pricing notes (see PRICING below); the
+     Availability row is still a placeholder pending a calendar data source. The prior wizard remains at /book/.
      Assets (logos, photos, video) to pull manually from Drew's Dropbox:
      https://www.dropbox.com/scl/fo/2w7hsitfmccw2dvtz6b4x/AJiNuj_xyFOiDuzh2a3nOnE -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,6 +29,11 @@
   .shell{position:relative;z-index:2;max-width:640px;margin:0 auto;padding:2.5rem 1.5rem 4rem;min-height:100vh;display:flex;flex-direction:column;}
   .topbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:2.2rem;}
   .brand{font-family:var(--serif);font-weight:700;font-size:1.4rem;}
+  .brand-logo{display:block;height:32px;width:auto;}
+  .brand-logo + .brand-text{display:none;}
+  /* Page 1 (basics): lighter text, per Drew Oct 2026 */
+  .step[data-key=pleasantries]{--muted:#d6cbbb;--muted2:#b3a691;}
+  .step[data-key=pleasantries] .field input::placeholder{color:#857a6b;}
   .home-link{font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);transition:color .2s;}
   .home-link:hover{color:var(--gold);}
 
@@ -78,6 +83,9 @@
   .field input::placeholder,.field textarea::placeholder{color:var(--muted2);}
   .field textarea{resize:none;}
   input[type=date]{color-scheme:dark;}
+  .field input:disabled{opacity:.4;}
+  .field > label.unsure{display:flex;text-transform:none;letter-spacing:0;font-weight:500;margin-bottom:0;align-items:center;gap:.55rem;margin-top:.7rem;font-size:.9rem;color:var(--muted);cursor:pointer;user-select:none;}
+  .unsure input{width:18px;height:18px;accent-color:var(--gold);cursor:pointer;flex-shrink:0;}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:.9rem;}
   @media(max-width:480px){.row2{grid-template-columns:1fr;}}
   .wordcount{font-size:.74rem;color:var(--muted2);text-align:right;margin-top:.35rem;}
@@ -139,7 +147,7 @@
 <body>
 <div class="shell">
   <div class="topbar">
-    <a href="../v2b/index.html" class="brand">Drew Dudley</a>
+    <a href="../v2b/index.html" class="brand" aria-label="Drew Dudley, home"><img class="brand-logo" src="../assets/drew-dudley-logo.png" alt="Drew Dudley" onerror="this.remove()" /><span class="brand-text">Drew Dudley</span></a>
     <a href="../v2b/index.html" class="home-link">← Back to site</a>
   </div>
 
@@ -155,14 +163,15 @@
       <p class="q-eyebrow">First, the pleasantries</p>
       <h2 class="q-title">Who are we talking to?</h2>
       <p class="q-help">A few basics so Drew knows who to get back to.</p>
+      <div class="field"><label for="f_name">Name</label><input id="f_name" type="text" autocomplete="name" placeholder="Your full name" /></div>
       <div class="row2">
-        <div class="field"><label for="f_name">Name</label><input id="f_name" type="text" autocomplete="name" placeholder="Your full name" /></div>
         <div class="field"><label for="f_org">Organization</label>
           <div class="ac-field">
             <input id="f_org" type="text" autocomplete="off" placeholder="Start typing…" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="orgAC" />
             <div class="ac-menu" id="orgAC" role="listbox"></div>
           </div>
         </div>
+        <div class="field"><label for="f_role">Role / Position</label><input id="f_role" type="text" autocomplete="organization-title" placeholder="e.g. Director of Events" /></div>
       </div>
       <div class="row2">
         <div class="field"><label for="f_email">Email</label><input id="f_email" type="email" autocomplete="email" placeholder="you@company.com" /></div>
@@ -176,9 +185,12 @@
       <h2 class="q-title">Now tell us about your event.</h2>
       <p class="q-help">Whatever you know so far. Rough answers are fine.</p>
       <div class="row2">
-        <div class="field"><label for="f_date">Event date</label><input id="f_date" type="date" /></div>
+        <div class="field"><label for="f_date">Event date</label><input id="f_date" type="date" />
+          <label class="unsure" for="f_dateUnsure"><input id="f_dateUnsure" type="checkbox" /> Unsure</label>
+        </div>
         <div class="field"><label for="f_event">Event name <span class="optional">(optional)</span></label><input id="f_event" type="text" placeholder="e.g. 2027 Leadership Summit" /></div>
       </div>
+      <div class="field hide" id="dateRangeWrap"><label for="f_dateRange">What's the general range of dates?</label><input id="f_dateRange" type="text" placeholder="e.g. Spring 2027, or sometime between March and May" /></div>
       <div class="row2">
         <div class="field"><label for="f_city">City</label>
           <div class="ac-field">
@@ -197,7 +209,8 @@
         <div class="chips" data-group="virtual">
           <button type="button" class="chip" data-val="No, in person">No, in person</button>
           <button type="button" class="chip" data-val="Yes, virtual">Yes, virtual</button>
-          <button type="button" class="chip" data-val="Hybrid">Hybrid</button>
+          <button type="button" class="chip" data-val="Hybrid (Drew live)">Hybrid (Drew live)</button>
+          <button type="button" class="chip" data-val="Hybrid (Drew virtual)">Hybrid (Drew virtual)</button>
         </div>
       </div>
       <div class="field"><label>Attendees <span class="optional">(optional)</span></label>
@@ -253,7 +266,7 @@
       <h2 class="q-title">Most quotes fall between $10,000 and $20,000.</h2>
       <p class="q-help">Which of the following best describes your reaction to that?</p>
       <div class="opts" data-group="budget">
-        <button type="button" class="opt" data-val="yikes"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"Yikes! Nope."</span><span class="os">Fair enough. There may still be a way to work together.</span></span></button>
+        <button type="button" class="opt" data-val="yikes"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"Yikes! Nope."</span><span class="os">Totally understandable. We encourage you to set up a conversation regardless, as factors other than fee could make your event a good fit.</span></span></button>
         <button type="button" class="opt" data-val="flex"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"We're close if he's willing to flex a little…"</span></span></button>
         <button type="button" class="opt" data-val="works"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"This could work financially if he's a good fit."</span></span></button>
         <button type="button" class="opt" data-val="probono"><span class="tick"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6.5l2.5 2.5L10 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><span class="ot">"I don't have a budget but have a great pitch for why it's karmically lucrative and he should do it pro bono."</span></span></button>
@@ -294,13 +307,13 @@
       </div>
     </section>
 
-    <!-- EXIT (the "booking page": no online quote, book a call instead; copy varies by exit path) -->
+    <!-- EXIT (the "booking page": no online quote, book a conversation instead; copy varies by exit path) -->
     <section class="step" data-key="exit">
       <div class="result">
         <div class="badge" id="exitBadge">Let's talk</div>
         <h2 class="q-title" id="exitTitle" style="margin-bottom:1rem;">Let's find a time.</h2>
         <p class="msg" id="exitMsg"></p>
-        <a href="https://thegreenroomspeakers.com/book/drew-dudley/dayoneleadership" target="_blank" rel="noopener" class="btn btn-gold" style="justify-content:center;">Set up a call</a>
+        <a href="https://thegreenroomspeakers.com/book/drew-dudley/dayoneleadership" target="_blank" rel="noopener" class="btn btn-gold" style="justify-content:center;">Set up a conversation</a>
         <span class="alt">or email directly: <a href="mailto:drew@dayoneleadership.com" id="exitMail">drew@dayoneleadership.com</a></span>
       </div>
     </section>
@@ -318,16 +331,19 @@
 
 <script>
 (function(){
-  var SAVE_KEY='dd_book_preview_v1'; // distinct from the live wizard's key
+  var SAVE_KEY='dd_book_preview_v2'; // distinct from the live wizard's key
 
-  // Placeholder price bands per needs category, anchored to Drew's stated
-  // "$10,000–$20,000 most quotes" range. Confirm real bands with Drew.
+  // PRICING (Drew, Oct 2026). Fee by needs category and season:
+  //   peak = Feb–Jun and Sep–Nov · off-peak = Dec–Jan and Jul–Aug.
+  // Fully virtual, or hybrid with Drew virtual: total reduced 20%.
+  // Hybrid with Drew live (or in person): no change.
   var NEEDS={
-    'keynote':{lo:10000,hi:20000,label:'Keynote'},
-    'keynote-large':{lo:14000,hi:25000,label:'Keynote + large interactive session(s)'},
-    'keynote-small':{lo:12000,hi:22000,label:'Keynote + interactive session(s)'},
-    'other':{lo:0,hi:0,label:'Podcast / Q&A / something else'}
+    'keynote':{peak:15000,off:12500,label:'Keynote'},
+    'keynote-large':{peak:20000,off:15000,label:'Keynote + large interactive session(s)'},
+    'keynote-small':{peak:17500,off:14500,label:'Keynote + interactive session(s)'},
+    'other':{peak:0,off:0,label:'Podcast / Q&A / something else'}
   };
+  var VIRTUAL_DISCOUNT={'Yes, virtual':0.8,'Hybrid (Drew virtual)':0.8};
   var BUDGET_LABELS={yikes:'"Yikes! Nope."',flex:'"We’re close if he’s willing to flex a little…"',
     works:'"This could work financially if he’s a good fit."',probono:'Pro-bono pitch'};
   var SITUATION_LABELS={booking:'Ready to book, checking availability and pricing',
@@ -338,17 +354,17 @@
     other:{
       badge:'No problem',
       title:'Drew’s always up for that.',
-      msg:'Podcasts, Q&As, fireside chats, something nobody’s tried yet: if he can make it work, he’s interested. The fastest way to explore it is a quick call.'
+      msg:'Podcasts, Q&As, fireside chats, something nobody’s tried yet: if he can make it work, he’s interested. The fastest way to explore it is a quick conversation.'
     },
     declined:{
       badge:'Don’t write it off yet',
-      title:'Set up a call anyway.',
-      msg:'Budgets are budgets, and that’s okay. Drew tries to find a way to add something to any event that reaches out, even if it’s a stack of signed books. A quick call costs nothing.'
+      title:'Let’s set up a connection anyway.',
+      msg:'Budgets are budgets, and that’s okay. Drew tries to find a way to add something to any event that reaches out, even if it’s a stack of signed books.'
     },
     probono:{
       badge:'Pro bono',
       title:'Drew does consider pro bono.',
-      msg:'A handful of times a year, for the right cause. Set up a call and you can dive into your pitch a little deeper together.'
+      msg:'A handful of times a year, for the right cause. Set up a conversation and you can dive into your pitch a little deeper together.'
     }
   };
 
@@ -633,7 +649,7 @@
     ['Equifax','equifax.com']
   ];
 
-  var state={name:'',org:'',phone:'',email:'',event:'',date:'',city:'',region:'',theme:'',
+  var state={name:'',org:'',role:'',phone:'',email:'',event:'',date:'',dateUnsure:false,dateRange:'',city:'',region:'',theme:'',
     audMakeup:[],attendees:'',startTime:'',goals:'',virtual:'',
     needs:'',budget:'',pitch:'',situation:'',exitReason:''};
 
@@ -687,8 +703,8 @@
 
   function validate(){
     var ok=false;
-    if(current==='pleasantries') ok = state.name.trim() && state.org.trim() && emailOk(state.email);
-    else if(current==='event') ok = !!state.date && state.city.trim().length>1 && !!state.virtual;
+    if(current==='pleasantries') ok = state.name.trim() && state.org.trim() && state.role.trim() && emailOk(state.email);
+    else if(current==='event') ok = (state.dateUnsure ? !!state.dateRange.trim() : !!state.date) && state.city.trim().length>1 && !!state.virtual;
     else if(current==='needs') ok = !!state.needs;
     else if(current==='budget'){
       ok = !!state.budget;
@@ -700,11 +716,24 @@
   }
 
   // ── wiring ────────────────────────────────────────────────────────
-  [['f_name','name'],['f_org','org'],['f_phone','phone'],['f_email','email'],
-   ['f_event','event'],['f_date','date'],['f_city','city'],['f_region','region'],['f_theme','theme'],
-   ['f_goals','goals'],['f_pitch','pitch']].forEach(function(p){
+  var FIELDS=[['f_name','name'],['f_org','org'],['f_role','role'],['f_phone','phone'],['f_email','email'],
+   ['f_event','event'],['f_date','date'],['f_dateRange','dateRange'],['f_city','city'],['f_region','region'],['f_theme','theme'],
+   ['f_goals','goals'],['f_pitch','pitch']];
+  FIELDS.forEach(function(p){
     var el=document.getElementById(p[0]);
     el.addEventListener('input',function(){ state[p[1]]=el.value; if(p[1]==='pitch') updatePitchCount(); validate(); save(); });
+  });
+
+  // "Unsure" date: swap the date picker for a free-text range
+  var unsureBox=document.getElementById('f_dateUnsure');
+  function syncUnsure(){
+    document.getElementById('f_date').disabled=state.dateUnsure;
+    document.getElementById('dateRangeWrap').classList.toggle('hide',!state.dateUnsure);
+  }
+  unsureBox.addEventListener('change',function(){
+    state.dateUnsure=unsureBox.checked; syncUnsure();
+    if(state.dateUnsure) document.getElementById('f_dateRange').focus();
+    validate(); save();
   });
 
   function updatePitchCount(){
@@ -824,14 +853,15 @@
       orgInput.value=e.data[0]; state.org=e.data[0];
     });
 
-  // ── pricing (reused approach from /book/) ─────────────────────────
-  function seasonFactor(iso){
-    var m=-1; var mm=(iso||'').match(/^\d{4}-(\d{2})-\d{2}/); if(mm) m=+mm[1]-1;
-    if([8,9,10,1,2,3].indexOf(m)>-1) return {f:1.12,label:'peak season'};
-    if([6,7,11].indexOf(m)>-1) return {f:0.92,label:'off-peak'};
-    return {f:1,label:''};
+  // ── pricing ───────────────────────────────────────────────────────
+  // Returns 'peak', 'off', or '' when the date is unknown.
+  function season(iso){
+    var mm=(iso||'').match(/^\d{4}-(\d{2})-\d{2}/); if(!mm) return '';
+    var m=+mm[1]; // 1–12
+    return (m===12||m===1||m===7||m===8) ? 'off' : 'peak';
   }
-  function fmtRange(lo,hi){ return '$'+(Math.round(lo/500)*500).toLocaleString('en-US')+' – $'+(Math.round(hi/500)*500).toLocaleString('en-US'); }
+  function money(n){ return '$'+Math.round(n).toLocaleString('en-US'); }
+  function dateText(){ return state.dateUnsure ? ('Unsure'+(state.dateRange?': '+state.dateRange:'')) : prettyDate(state.date); }
   function prettyDate(iso){ if(!iso) return ''; var p=iso.split('-'); if(p.length!==3) return iso;
     var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]-1]; return mo+' '+(+p[2])+', '+p[0]; }
   function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
@@ -839,32 +869,31 @@
 
   function buildResult(){
     var band=NEEDS[state.needs]||NEEDS.keynote;
-    var sf=seasonFactor(state.date), lo=band.lo*sf.f, hi=band.hi*sf.f;
-    if(state.attendees==='1,500+'){ lo*=1.05; hi*=1.08; }
-    var est=fmtRange(lo,hi);
+    var sz=state.dateUnsure ? '' : season(state.date), mult=VIRTUAL_DISCOUNT[state.virtual]||1;
+    var est, cap=[], flexLabel;
+    // Fee flexibility follows the season: Moderate in peak, High off-peak.
+    if(sz==='peak'){ est=money(band.peak*mult); cap.push('peak season'); flexLabel='<span class="flex-med">Moderate</span>'; }
+    else if(sz==='off'){ est=money(band.off*mult); cap.push('off-peak'); flexLabel='<span class="flex-high">High</span>'; }
+    else { est=money(band.off*mult)+' – '+money(band.peak*mult); cap.push('depends on season');
+      flexLabel='<span class="flex-med">Moderate</span> (peak) · <span class="flex-high">High</span> (off-peak)'; }
     document.getElementById('estVal').textContent=est;
-    document.getElementById('estCap').textContent='Estimated cost'+(sf.label?(' · '+sf.label):'');
-
-    // Cost flexibility comes from the budget reaction. "Low" is intentionally
-    // unreachable: the reactions that would imply it (yikes / probono) exit
-    // to the call page before ever seeing this screen.
-    var flexLabel = state.budget==='flex' ? '<span class="flex-high">High</span>' : '<span class="flex-med">Medium</span>';
+    document.getElementById('estCap').textContent='Estimated cost · '+cap.join(' · ');
 
     document.getElementById('resMatrix').innerHTML=
-      '<div class="row"><span>Date</span><span>'+esc(prettyDate(state.date)||'·')+'</span></div>'+
+      '<div class="row"><span>Date</span><span>'+esc(dateText()||'·')+'</span></div>'+
       '<div class="row"><span>Availability</span><span>Pending. Confirmed within 1 business day</span></div>'+
       '<div class="row"><span>Estimated cost</span><span>'+esc(est)+'</span></div>'+
       '<div class="row"><span>Cost flexibility</span><span>'+flexLabel+'</span></div>';
 
     var badge=document.getElementById('resBadge'), msg=document.getElementById('resMsg');
     if(state.situation==='booking'){ badge.textContent='Great fit'; badge.className='badge good';
-      msg.textContent='This looks promising. Send the details and Drew will confirm the date and a firm quote, usually the same day.'; }
+      msg.textContent='This looks promising. Send the details and Drew will confirm the date and a more detailed estimate, usually the same day.'; }
     else { badge.textContent='Your estimate'; badge.className='badge';
       msg.textContent='Here is a ballpark to plan around. Send the details and Drew will come back with a firm number and availability.'; }
 
     var rows=[
-      ['Name',state.name],['Organization',state.org],['Email',state.email],['Phone',state.phone||'·'],
-      ['Event',state.event||'·'],['Date',prettyDate(state.date)||'·'],['Location',locString()||'·'],
+      ['Name',state.name],['Organization',state.org],['Role',state.role||'·'],['Email',state.email],['Phone',state.phone||'·'],
+      ['Event',state.event||'·'],['Date',dateText()||'·'],['Location',locString()||'·'],
       ['Theme',state.theme||'·'],['Audience',(state.audMakeup.join(', ')||'·')],
       ['Attendees',state.attendees||'·'],['Start time',state.startTime||'·'],['Virtual',state.virtual||'·'],
       ['Needs',band.label],['Budget reaction',BUDGET_LABELS[state.budget]||'·'],
@@ -889,9 +918,9 @@
   function mailtoHref(estShown){
     var band=NEEDS[state.needs]||{label:'·'};
     var lines=[
-      'New booking inquiry ('+(state.exitReason?('call requested · '+state.exitReason):'estimate shown')+')','',
-      'Name: '+state.name,'Organization: '+state.org,'Email: '+state.email,'Phone: '+(state.phone||'-'),'',
-      'Event: '+(state.event||'-'),'Date: '+(prettyDate(state.date)||'-'),'Location: '+(locString()||'-'),
+      'New booking inquiry ('+(state.exitReason?('conversation requested · '+state.exitReason):'estimate shown')+')','',
+      'Name: '+state.name,'Organization: '+state.org,'Role: '+(state.role||'-'),'Email: '+state.email,'Phone: '+(state.phone||'-'),'',
+      'Event: '+(state.event||'-'),'Date: '+(dateText()||'-'),'Location: '+(locString()||'-'),
       'Theme: '+(state.theme||'-'),'Audience: '+(state.audMakeup.join(', ')||'-'),
       'Attendees: '+(state.attendees||'-'),'Start time: '+(state.startTime||'-'),'Virtual: '+(state.virtual||'-'),'',
       'Needs: '+band.label,'Budget reaction: '+(BUDGET_LABELS[state.budget]||'-'),
@@ -912,9 +941,7 @@
       if(!saved) return;
       Object.keys(state).forEach(function(k){ if(saved[k]!==undefined) state[k]=saved[k]; });
       state.exitReason='';
-      [['f_name','name'],['f_org','org'],['f_phone','phone'],['f_email','email'],
-       ['f_event','event'],['f_date','date'],['f_city','city'],['f_region','region'],['f_theme','theme'],
-       ['f_goals','goals'],['f_pitch','pitch']].forEach(function(p){
+      FIELDS.forEach(function(p){
         var el=document.getElementById(p[0]); if(el && state[p[1]]) el.value=state[p[1]];
       });
       [].slice.call(document.querySelectorAll('[data-group]')).forEach(function(group){
@@ -925,6 +952,7 @@
         });
       });
       if(state.budget==='probono') document.getElementById('pitchWrap').classList.remove('hide');
+      unsureBox.checked=!!state.dateUnsure; syncUnsure();
       updatePitchCount();
     }catch(e){}
   })();
