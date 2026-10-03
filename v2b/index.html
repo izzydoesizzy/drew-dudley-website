@@ -21,14 +21,13 @@
     --cream2:#ebe3d6;
     --paper-ink:#1a1512;  /* text on cream */
     --text:#f0ebe2;
-    --muted:#cbbfae;      /* "bronze" body text, lightened Oct 2026 for readability (was #9a8f82) */
-    --muted2:#9d9080;     /* secondary text (was #6a5e52) */
-    --name:#ddd2c2;       /* reviewer names */
+    --muted:#cbbfae;      /* "bronze" text, lightened Oct 2026 per Drew (was #9a8f82) */
+    --muted2:#6a5e52;
+    --name:#ddd2c2;       /* reviewer names, lightened Oct 2026 per Drew */
     --line:#2e2822;
     --line-cream:#d8cdbb;
     --gold:#c4922a;
     --gold-h:#d4a85a;
-    --gold2:#e0bb6e;      /* light gold for small text on dark */
     --serif:'Cormorant Garamond',Georgia,serif; /* stand-in — swap for Drew's brand font when he sends logo/font assets */
     --sans:'Inter',system-ui,sans-serif;
     --maxw:1280px;
@@ -92,7 +91,7 @@
   .hero-sub{margin:2rem 0 2.6rem;font-size:1.15rem;line-height:1.6;color:var(--muted);max-width:30rem;}
   .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;}
   .btn-tgp{background:rgba(196,146,42,.07);border-color:rgba(196,146,42,.45);color:var(--text);padding:.55rem 1.6rem .55rem .7rem;}
-  .btn-tgp:hover{border-color:var(--gold);color:var(--gold2);transform:translateY(-2px);}
+  .btn-tgp:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px);}
   .btn-tgp .tgp-mark{width:40px;height:40px;object-fit:contain;flex-shrink:0;}
   .btn-tgp .tgp-full{height:40px;width:auto;}
   .btn-tgp .tgp-full + .tgp-mark{display:none;}
@@ -112,9 +111,9 @@
   .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--ink2);overflow:hidden;padding:1.15rem 0;}
   .marquee-track{display:flex;gap:3rem;white-space:nowrap;width:max-content;animation:scroll-x 32s linear infinite;}
   .marquee:hover .marquee-track{animation-play-state:paused;}
-  .marquee-item{font-family:var(--serif);font-style:italic;font-weight:700;font-size:1.45rem;color:var(--text);display:flex;align-items:center;gap:3rem;}
+  .marquee-item{font-family:var(--serif);font-style:italic;font-weight:700;font-size:1.35rem;color:var(--text);display:flex;align-items:center;gap:3rem;}
   .marquee-item span{color:var(--muted2);}
-  .marquee-item .marquee-star{color:var(--gold);font-style:normal;}
+  .marquee-star{color:var(--gold);font-style:normal;}
   @keyframes scroll-x{to{transform:translateX(-50%);}}
   @media(prefers-reduced-motion:reduce){.marquee-track{animation:none;}}
 
@@ -332,11 +331,11 @@
   .ttile:hover{transform:translateY(-4px);border-color:var(--gold);}
   .ttile.feature{background:linear-gradient(155deg,#1f1810,#13100c);border-color:rgba(196,146,42,.3);}
   .ttile .stars{color:var(--gold);letter-spacing:.18em;font-size:.78rem;margin-bottom:.8rem;}
-  .ttile p{font-family:var(--serif);font-style:italic;font-weight:500;font-size:1.26rem;line-height:1.42;color:var(--text);}
-  .ttile.feature p{font-size:1.4rem;line-height:1.38;}
+  .ttile p{font-family:var(--serif);font-style:italic;font-size:1.26rem;line-height:1.4;color:var(--text);}
+  .ttile.feature p{font-size:1.4rem;line-height:1.36;}
   .ttile .by{margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line);}
   .ttile .by .org{display:block;font-size:1.02rem;font-weight:700;letter-spacing:.01em;color:var(--text);line-height:1.25;}
-  .ttile .by .who{display:block;font-size:.86rem;letter-spacing:.02em;color:var(--name);margin-top:.3rem;}
+  .ttile .by .who{display:block;font-size:.74rem;letter-spacing:.04em;color:var(--name);margin-top:.28rem;}
   .ttile.video{padding:.55rem;}
   .ttile.video .vwrap{position:relative;aspect-ratio:1/1;border-radius:12px;overflow:hidden;background:#000;}
   .ttile.video video{width:100%;height:100%;object-fit:cover;display:block;}
@@ -346,9 +345,8 @@
   .vrow{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:80rem;margin:0 auto 1rem;}
   @media(max-width:760px){.vrow{grid-template-columns:1fr;max-width:26rem;}}
   .vrow .ttile{margin-bottom:0;}
-  .ttile.video .vcap .vlabel{font-size:.8rem;color:var(--muted);}
   .ttile.bookrev{background:linear-gradient(155deg,#181207,#100d08);border-color:rgba(196,146,42,.45);}
-  .ttile.bookrev .blabel{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);background:rgba(196,146,42,.12);border:1px solid rgba(224,187,110,.55);border-radius:100px;padding:.4rem .9rem;margin-bottom:1rem;}
+  .ttile.bookrev .blabel{display:inline-block;font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#e0bb6e;border:1px solid rgba(196,146,42,.4);border-radius:100px;padding:.28rem .7rem;margin-bottom:.9rem;}
 
   /* ════ VISUAL POLISH PASS ════ */
   /* film grain overlay (subtle, non-interactive) */
@@ -361,9 +359,8 @@
     background:radial-gradient(closest-side, rgba(196,146,42,.16), rgba(196,146,42,.05) 55%, transparent 75%);}
   .hero .wrap{position:relative;z-index:2;}
   .hero-chips{display:flex;flex-wrap:wrap;gap:.6rem;margin-top:1.6rem;}
-  .hero-chip{display:inline-block;padding:.6rem 1.15rem;border:1px solid var(--line);
-    border-radius:100px;background:rgba(196,146,42,.06);font-size:.95rem;line-height:1.45;letter-spacing:.03em;color:var(--muted);}
-  .hero-chip .st{margin-right:.35rem;}
+  .hero-chip{display:inline-flex;align-items:center;gap:.5rem;padding:.6rem 1.15rem;border:1px solid var(--line);
+    border-radius:100px;background:rgba(196,146,42,.06);font-size:.95rem;letter-spacing:.08em;color:var(--muted);}
   .hero-chip b{color:var(--gold);font-weight:700;}
   .hero-chip .st{color:var(--gold);}
 
@@ -415,9 +412,7 @@
   /* The Content (simplified, Oct 2026) */
   .content-intro{max-width:52rem;}
   .content-lead{font-family:var(--serif);font-weight:600;line-height:1.2;letter-spacing:-.01em;font-size:clamp(1.9rem,3.6vw,2.9rem);color:var(--text);margin-top:1.2rem;}
-  .content-lead em{font-style:italic;color:var(--gold);}
   .content-sub{font-size:1.2rem;line-height:1.7;color:var(--muted);margin-top:1.6rem;max-width:42rem;}
-  .content-sub b{color:var(--text);font-weight:700;}
   .content-cta{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;margin-top:2.6rem;padding-top:2.2rem;border-top:1px solid var(--line);}
   .content-cta p{font-size:1.08rem;line-height:1.6;color:var(--muted);max-width:30rem;}
 
@@ -513,7 +508,7 @@
       </div>
       <div class="hero-chips">
         <div class="hero-chip"><span class="st">★</span> <b>10M+</b> views · Top 15 most inspiring TED talks of all time</div>
-        <div class="hero-chip"><span class="st">★</span> As seen in <b>TIME</b>, <b>Forbes</b>, <b>Inc.</b> &amp; <b>Business Insider</b></div>
+        <div class="hero-chip"><span class="st">★</span> As seen in <b>TIME</b>, <b>Forbes</b>, <b>Inc.</b>&amp; <b>Business Insider</b></div>
       </div>
     </div>
     <div class="hero-portrait">
@@ -690,8 +685,8 @@
   <div class="wrap">
     <div class="content-intro reveal">
       <p class="label">The Content</p>
-      <p class="content-lead">All Drew&rsquo;s keynotes are built on the foundational idea that leadership exists in <em>powerful moments of interpersonal impact.</em></p>
-      <p class="content-sub">Each presentation is customized to show your audience <b>HOW</b> to create those moments.</p>
+      <p class="content-lead">All Drew&rsquo;s keynotes are built on the foundational idea that leadership exists in powerful moments of interpersonal impact.</p>
+      <p class="content-sub">Each presentation is customized to show your audience HOW to create those moments.</p>
       <div class="content-cta">
         <p>Feel free to set up a no-obligation consultation to explore what Drew can create for your audience.</p>
         <a href="../book-v2/index.html" class="btn btn-gold">Set up a consultation
@@ -747,7 +742,7 @@
       <div class="foot-col">
         <h4>Explore</h4>
         <a href="#proof">Impact</a>
-        <a href="#watch">See Drew Onstage</a>
+        <a href="#watch">Watch the Reel</a>
         <a href="#topics">Content</a>
         <a href="#praise">The Response</a>
       </div>
@@ -763,7 +758,7 @@
       <div class="foot-col">
         <h4>Resources</h4>
         <a href="../assets/Drew%20Dudley%20Biography%20and%20Introduction%202025.pdf" target="_blank" rel="noopener">Speaker Bio</a>
-        <!-- "Keynote Topics" (Roadmap to Impact PDF) link parked with the Roadmap section, Oct 2026. -->
+        <a href="../assets/The%20Roadmap%20to%20Impact%20Universe_Drew%20Dudley%20Speaking%20Topics.pdf" target="_blank" rel="noopener">Keynote Topics</a>
         <!-- FAQ + Speaker Kit links removed "for now" per Drew (July 2026). PDFs still live in /assets/ if he wants them back. -->
 
       </div>

@@ -23,6 +23,7 @@ A best-in-class speaker site for **Drew Dudley** — WSJ bestselling author and 
 |--|------|-----------|
 | **Book V2** | `/book-v2/` | **The booking flow V2B now links to.** Built to Drew's written spec: pleasantries → event details → needs → budget-reaction branch ("$10K–$20K, how do you feel?") → situation → estimate with Date / Availability / Cost Flexibility. "Yikes", pro-bono, and podcast/other paths exit to a set-up-a-call page (Green Room link). City/region/company autocomplete borrowed from `/book/`. Fees follow Drew's Oct 2026 pricing (peak Feb–Jun & Sep–Nov, off-peak Dec–Jan & Jul–Aug; virtual or hybrid-with-Drew-virtual −20%; fee flexibility Moderate in peak, High off-peak). The Availability row is still a placeholder pending a calendar source. |
 | **TGP Teaser** | `/gathering-place-teaser/` | Unlinked, direct URL only. Minimal single-viewport Gathering Place placeholder per Drew's spec: fire background, hearthstone logo, "Invitation-only until Fall 2026", email capture. The "password poem" effect he mentioned is NOT built; waiting on an example of what he means. |
+| **Before & After** | `/before-after/` | Unlinked, direct URL only. Before/after screenshots of Drew's October 2026 feedback changes (homepage + booking wizard), for Drew's review. |
 
 ```bash
 open index.html      # V1
