@@ -70,6 +70,10 @@
   .did b{color:var(--text);}
   .did .tag{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#7fbf8f;margin-right:.5rem;}
   .did .tag.wait{color:#e0a85a;}
+  .suggest{margin-top:2rem;background:var(--ink2);border:1px dashed rgba(196,146,42,.55);border-radius:6px;padding:1.2rem 1.4rem;}
+  .suggest .who{display:block;font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:.6rem;}
+  .suggest p{font-size:1.02rem;line-height:1.65;color:var(--text);max-width:52rem;}
+  .suggest p + p{margin-top:.7rem;color:var(--muted);}
   figure{margin:1.4rem 0 0;}
   figure figcaption{font-size:.95rem;font-weight:600;color:var(--text);margin-bottom:.8rem;}
   figure figcaption span{font-weight:400;color:var(--muted);}
@@ -226,6 +230,15 @@
         <figcaption>On a phone</figcaption>
         <a href="images/cmp-mobile-hero.png" target="_blank" rel="noopener"><img src="images/cmp-mobile-hero.png" alt="Phone view, before and after" loading="lazy" /></a>
       </figure>
+      <div class="suggest">
+        <span class="who">Suggestion for Drew</span>
+        <p>Two logos on the first screen may be too much: one in the top bar and a large one again in the hero. We could keep the logo in the top bar and drop the big name from the hero, so the page opens straight on &ldquo;Keynote speaker &middot; Leadership expert&rdquo;, the tagline and the buttons.</p>
+        <p>This is a suggestion only. Nothing has been changed on the site; the mockup below shows how it would look.</p>
+      </div>
+      <figure>
+        <figcaption>Current vs suggested <span>&middot; mockup, not applied</span></figcaption>
+        <a href="images/suggestion-one-logo.png" target="_blank" rel="noopener"><img src="images/suggestion-one-logo.png" alt="Current hero with two logos, and a suggested hero with the logo in the top bar only" loading="lazy" /></a>
+      </figure>
     </div>
     <div class="item">
       <div class="ask"><span class="who">Drew's note</span><ul><li>&ldquo;Instead of integrating the review videos into the text reviews, can we make the whole top row of reviews the videos?&rdquo;</li></ul></div>
@@ -327,6 +340,7 @@
     <p class="label">Open items</p>
     <h2>What we need from Drew.</h2>
     <ul class="notes">
+      <li><b>Logo once or twice?</b> See the suggestion under Graphics &amp; design: keep the logo in the top bar only, or in the top bar and the hero as it is now.</li>
       <li><b>Full Gathering Place logo.</b> We couldn't download the Dropbox folder from our build environment. Please send the full Gathering Place logo directly (PNG or SVG, transparent background if possible). Until then the button uses the hearthstone mark.</li>
       <li><b>750+ wording.</b> It reads "750+ / Organizations trust Drew". Happy to change it to exactly "Trusted by 750+ organizations".</li>
       <li><b>Role / Position.</b> It's required, like name and email. It can be optional if you'd rather keep the form shorter.</li>
