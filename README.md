@@ -85,7 +85,7 @@ drew-dudley-website/
 - [ ] Confirm/replace estimate bands in `/book/` with Drew's real fee ranges
 - [ ] Approve hero taglines and the "coming soon" Gathering Place link target (V1)
 - [ ] Swap testimonial still-frames for real audience-reaction clips when available
-- [ ] Drop Drew's new logo at `assets/drew-dudley-logo.png` (replaces the typed name in the nav, hero, footer and wizard automatically)
+- [x] Drew's new logo is in at `assets/drew-dudley-logo.svg` (nav, hero, footer, wizard header): a solid-gold vector traced from the supplied PNG. If Drew's designer has an official SVG, swap it in
 - [ ] Drop the full Gathering Place logo at `assets/tgp-full-logo.png` (replaces the hearthstone mark on the hero button)
 - [ ] Restore the Roadmap to Impact section from `content/roadmap-to-impact-section.html` once the new content is confirmed
 ```
